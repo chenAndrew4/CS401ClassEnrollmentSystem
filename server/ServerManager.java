@@ -14,9 +14,10 @@ final class ServerManager{
 	
 	public ServerManager() {
 		serverConfigIni = "config.ini";
-		if (!doesServerConfigExist()) {
+		
+		if (!doesServerConfigExist())
 			createServerConfig();
-		}
+		
 		readServerConfig();
 	}
 	
@@ -102,10 +103,9 @@ final class ServerManager{
 		if (! ServerManager.ipv4Pattern.matcher(ip).matches())
 			throw new Exception("This is not a valid IPv4 address!");
 		else {
-			
+			ipAddress = ip;
+			saveServerConfig();
 		}
-		ipAddress = ip;
-		saveServerConfig();
 	}
 	
 	public void setPort(Integer number) throws java.lang.Exception {
