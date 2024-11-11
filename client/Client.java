@@ -27,7 +27,7 @@ class Client{
 		panel.add(port);
 		
 		
-		loginChoice = JOptionPane.showOptionDialog(null, panel, "Class Enrollment System - Login", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("assets/icons/login_32.png"), loginChoices, loginChoices[1]);
+		loginChoice = JOptionPane.showOptionDialog(null, panel, "CCES - Login", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("assets/icons/login_32.png"), loginChoices, loginChoices[1]);
 		
 		if (loginChoice == 0) {
 			// User clicked 'Login'
@@ -35,8 +35,8 @@ class Client{
 			// While login credentials are invalid, keep asking user to login until they click 'Exit'
 			if (username.getText().compareTo("test") != 0 && password.getText().compareTo("test") != 0) {
 				do {
-					JOptionPane.showMessageDialog(null, "Invalid username and/or password!", "Authentication Error", JOptionPane.ERROR_MESSAGE, new ImageIcon("assets/icons/invalid_creds_32.png"));
-					loginChoice = JOptionPane.showOptionDialog(null, panel, "Class Enrollment System - Login", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("assets/icons/login_32.png"), loginChoices, loginChoices[1]);
+					JOptionPane.showMessageDialog(null, "Invalid username and/or password!", "CCES - Authentication Error", JOptionPane.ERROR_MESSAGE, new ImageIcon("assets/icons/invalid_creds_32.png"));
+					loginChoice = JOptionPane.showOptionDialog(null, panel, "CCES - Login", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("assets/icons/login_32.png"), loginChoices, loginChoices[1]);
 				} while (username.getText().compareTo("test") != 0 && password.getText().compareTo("test") != 0 && loginChoice == 0);
 				if (loginChoice == 1)
 					// User clicked 'Exit'
@@ -46,7 +46,7 @@ class Client{
 			// Generate and render portal
 			// ...
 			JFrame portal = new JFrame();
-			portal.setTitle("Class Enrollment System - User: test");
+			portal.setTitle("College Course Enrollment System - User: test");
 			portal.setIconImage(new ImageIcon("assets/icons/app_32.png").getImage());
 			portal.setSize(1000, 800);
 			portal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
