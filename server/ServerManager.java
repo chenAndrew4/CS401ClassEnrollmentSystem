@@ -1,4 +1,7 @@
+import java.awt.HeadlessException;
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
@@ -38,9 +41,8 @@ final class ServerManager{
 	}
 	
 	private void readServerConfig() {
-		try {	
-			// Scanner to get line by line
-			Scanner scanner = new Scanner(new File(serverConfigIni));
+		try (// Scanner to get line by line
+		Scanner scanner = new Scanner(new File(serverConfigIni))) {	
 			// For error msg on which line it detected corruption
 			int line = 1;
 			while (scanner.hasNextLine()) {
@@ -65,14 +67,18 @@ final class ServerManager{
 					sessionTimeout = Integer.parseInt(parsed[1]);
 			}
 			
+			scanner.close();
+			
 //			System.out.println("ipAddress = " + ipAddress);
 //			System.out.println("port = " + port);
 //			System.out.println("sessionTimeout = " + sessionTimeout);
 			
 		} catch(FileNotFoundException ex){
 			JOptionPane.showMessageDialog(null, "File Not Found", ex.toString(), JOptionPane.ERROR_MESSAGE);
+		} catch (HeadlessException | NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 	}
 	
 	private void saveServerConfig() {
@@ -87,8 +93,14 @@ final class ServerManager{
 		}
 	}
 	
-	public String getIpAddress() {
-		return ipAddress;
+	public InetAddress getIpAddress() throws UnknownHostException {
+		try {
+			return InetAddress.getByName(this.ipAddress);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public Integer getPort() {
