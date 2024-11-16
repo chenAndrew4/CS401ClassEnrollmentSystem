@@ -27,7 +27,7 @@ public class Log {
 		this.formattedDateTime = LocalDateTime.now().format(this.dateTimeFormatter);
 	}
 	
-    public void message(Message msg){
+	public void message(Message msg){
     	updateDateTime();
     	this.jtextArea.append("[" + this.formattedDateTime + "]     Type: " + msg.getType() + "\n");
     	updateDateTime();
@@ -36,13 +36,17 @@ public class Log {
     	this.jtextArea.append("[" + this.formattedDateTime + "]     Text: " + msg.getText() + "\n");
     }
     
-    public void receivedMessage(String clientIpAddrPort, Message msg) {
+	public void receivedMessage(String clientIpAddrPort, Message msg) {
     	println("Received from: " + clientIpAddrPort);
     	message(msg);
     }
     
-    public void sendingMessage(String clientIpAddrPort, Message msg) {
+	public void sendingMessage(String clientIpAddrPort, Message msg) {
     	println("Sending to: " + clientIpAddrPort);
     	message(msg);
+    }
+	
+	public void error(String str) {
+    	println("ERROR: " + str);
     }
 }

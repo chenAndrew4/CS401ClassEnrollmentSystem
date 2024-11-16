@@ -19,6 +19,8 @@ public class Server {
 		ServerSocket server = null;
 		Log log = null;
 		
+		// Render GUI
+		
 		JFrame severLogFrame = new JFrame();
 		severLogFrame.setTitle("College Course Enrollment System - Server");
 		severLogFrame.setIconImage(new ImageIcon("assets/icons/server_32.png").getImage());
@@ -40,6 +42,11 @@ public class Server {
 		severLogFrame.setVisible(true);
 		
 		log = new Log(logTextArea);
+		
+		// Import databases
+		Users users = new Users(log);
+		
+		users.importDB();
 		
 		try {
 			log.println("Server is binded to: " + serverManager.getIpAddress().toString().replace("/", "") + ":" + serverManager.getPort());
