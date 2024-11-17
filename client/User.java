@@ -1,18 +1,28 @@
-public class User{
-	private String username;
-	private String password;
-	private String firstName;
-	private String lastName;
-	private String institutionID;
-	private AccountType accountType;
+import java.io.Serializable;
+import java.util.Random;
+
+public class User implements Serializable{
+	private Integer id; // Column 1 in users.db
+	private String username; // Column 2 in users.db
+	private String password; // Column 3 in users.db
+	private String firstName; // Column 4 in users.db
+	private String lastName; // Column 5 in users.db
+	private String institutionID; // Column 6 in users.db
+	private AccountType accountType; // Column 7 in users.db
 	
 	public User() {
+		Random random = new Random();
+		this.id = random.nextInt(100000);
 		this.username = null;
 		this.password = null;
 		this.firstName = null;
 		this.lastName = null;
 		this.institutionID = null;
 		this.accountType = null;
+	}
+	
+	public Integer getID() {
+		return this.id;
 	}
 	
 	public String getUsername() {
@@ -39,6 +49,10 @@ public class User{
 		return this.accountType;
 	}
 	
+	public void setID(Integer id) {
+		this.id = id;
+	}
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -61,5 +75,9 @@ public class User{
 	
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
+	}
+	
+	public String toString() {
+		return this.id.toString() + "," + this.username + "," + this.password + "," + this.firstName + "," + this.lastName + "," + this.institutionID + "," + this.accountType;
 	}
 }

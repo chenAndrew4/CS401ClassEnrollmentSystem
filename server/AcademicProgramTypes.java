@@ -1,0 +1,4 @@
+enum AcademicProgramTypes{
+	UGM,
+	NM
+}

@@ -33,7 +33,7 @@ public class Log {
     	updateDateTime();
     	this.jtextArea.append("[" + this.formattedDateTime + "]     Status: " + msg.getStatus() + "\n");
     	updateDateTime();
-    	this.jtextArea.append("[" + this.formattedDateTime + "]     Text: " + msg.getText() + "\n");
+    	this.jtextArea.append("[" + this.formattedDateTime + "]     User: " + msg.getUser() + "\n");
     }
     
 	public void receivedMessage(String clientIpAddrPort, Message msg) {

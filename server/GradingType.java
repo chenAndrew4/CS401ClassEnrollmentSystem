@@ -1,0 +1,4 @@
+enum GradingType{
+	CreditNoCredit,
+	Graded
+}

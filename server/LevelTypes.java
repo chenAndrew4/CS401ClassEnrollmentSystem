@@ -1,0 +1,4 @@
+enum LevelTypes{
+	Lower,
+	Upper,
+}

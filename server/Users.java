@@ -2,12 +2,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Scanner;
 
-public class Users{
+public class Users implements Serializable{
 	private ArrayList<User> users;
 	private String dbFileNamePath;
 	private Log log;

@@ -31,7 +31,7 @@ public class Message implements Serializable {
     	this.user = user;
     }
     
-    // Used by the server to respond to the client's request
+    // Primarily used by the server to respond to the client's request
     public Message(MessageType type, MessageStatus status, User user){
     	this.type = type;
     	this.status = status;

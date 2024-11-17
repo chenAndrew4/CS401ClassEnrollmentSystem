@@ -8,19 +8,20 @@ class ClientHandler implements Runnable {
 		private final Connection connectionStatus;
 		private final Log log;
 		private String clientIpAddrPort = null;
+		private Users users;
 
 		// Constructor
-		public ClientHandler(Socket socket, Log log)
+		public ClientHandler(Socket socket, Log log, Users users)
 		{
 			this.clientSocket = socket;
 			this.connectionStatus = new Connection();
 			this.log = log;
 			this.clientIpAddrPort = this.clientSocket.getInetAddress().getHostAddress().replace("/", "") + ":" + this.clientSocket.getPort();
+			this.users = users;
 		}
 		
 		public void run()
 		{
-			Message message = null;
 			boolean quit = false;
 			
 	        // get the input stream from the connected socket
@@ -56,10 +57,11 @@ class ClientHandler implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        
+				        
 			try {
 				while (!quit) {
 			        while (inputStream.available() > 0) {
+			        	Message message = new Message();
 				        // read the message from the socket
 				        try {
 							message = (Message) objectInputStream.readObject();
@@ -68,16 +70,24 @@ class ClientHandler implements Runnable {
 							e.printStackTrace();
 						}
 				        
+				        // Log what we received to the JTextArea
 				        this.log.receivedMessage(clientIpAddrPort, message);
+
 				        
 			        	if (message.type.equals(MessageType.LOGIN)) {
-			        		Message response = new Message(MessageStatus.ERROR, "You are are neither verified or unverified!");
+			        		Message response;
 			        		
 			        		if (this.connectionStatus.isUnVerified()) {
-			        			this.connectionStatus.setVerified();
-			        			response = new Message(MessageType.LOGIN, MessageStatus.SUCCESS, "Login successful!");
+			        			User user = message.user;
+			        			// Check user credentials
+			        			if (this.users.isValidLogin(user.getUsername(), user.getPassword())) {
+				        			this.connectionStatus.setVerified();
+				        			response = new Message(MessageType.LOGIN, MessageStatus.SUCCESS);
+			        			} else {
+			        				response = new Message(MessageType.LOGIN, MessageStatus.ERROR);
+			        			}
 			        		} else {
-			        			response = new Message(MessageType.LOGIN, MessageStatus.ERROR, "You are already logged in!");
+			        			response = new Message(MessageType.LOGIN, MessageStatus.ERROR);
 			        		}
 			        		
 			        		this.log.sendingMessage(clientIpAddrPort, response);
@@ -87,13 +97,14 @@ class ClientHandler implements Runnable {
 			        		// Do not continue, terminate thread
 			        		quit = true;
 			        		
-			        		Message response = new Message(MessageStatus.ERROR, "You are are neither verified or unverified!");
+			        		Message response;
 			        		
 			        		if (this.connectionStatus.isVerified()) {
 			        			this.connectionStatus.setUnVerified();
-			        			response = new Message(MessageType.LOGOUT, MessageStatus.SUCCESS, "Logout successful!");
+			        			response = new Message(MessageType.LOGOUT, MessageStatus.SUCCESS);
 			        		} else {
-			        			response = new Message(MessageType.LOGOUT, MessageStatus.ERROR, "You are already logged out!");
+			        			// User is already logged out!
+			        			response = new Message(MessageType.LOGOUT, MessageStatus.ERROR);
 			        		}
 			        		
 			        		this.log.sendingMessage(clientIpAddrPort, response);
@@ -101,7 +112,7 @@ class ClientHandler implements Runnable {
 			        		
 			        	} else if (message.type.equals(MessageType.DEBUG)) {
 			        		if (this.connectionStatus.isVerified()) {
-			        			Message response = new Message(MessageType.DEBUG, MessageStatus.SUCCESS, message.text.toUpperCase());
+			        			Message response = new Message(MessageType.DEBUG, MessageStatus.SUCCESS);
 			        			
 				        		this.log.sendingMessage(clientIpAddrPort, response);
 				        		objectOutputStream.writeObject(response);

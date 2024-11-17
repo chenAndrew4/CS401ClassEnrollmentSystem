@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Random;
 
-public class User{
+public class User implements Serializable{
 	private Integer id; // Column 1 in users.db
 	private String username; // Column 2 in users.db
 	private String password; // Column 3 in users.db

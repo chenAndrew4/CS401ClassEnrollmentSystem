@@ -73,7 +73,7 @@ public class Server {
 				log.println("New Connection from: " + client.getInetAddress().getHostAddress() + ":" + client.getPort());
 
 				// create a new thread object
-				ClientHandler clientSock = new ClientHandler(client, log);
+				ClientHandler clientSock = new ClientHandler(client, log, users);
 
 				// This thread will handle the client
 				// separately

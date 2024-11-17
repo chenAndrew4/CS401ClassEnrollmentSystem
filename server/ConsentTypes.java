@@ -1,0 +1,4 @@
+enum ConsentTypes{
+	Deptartment,
+	None
+}
