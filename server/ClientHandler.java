@@ -82,7 +82,8 @@ class ClientHandler implements Runnable {
 			        			// Check user credentials
 			        			if (this.users.isValidLogin(user.getUsername(), user.getPassword())) {
 				        			this.connectionStatus.setVerified();
-				        			response = new Message(MessageType.LOGIN, MessageStatus.SUCCESS);
+				        			User actualUser = this.users.getUser(user.getUsername());
+				        			response = new Message(MessageType.LOGIN, MessageStatus.SUCCESS, actualUser);
 			        			} else {
 			        				response = new Message(MessageType.LOGIN, MessageStatus.ERROR);
 			        			}

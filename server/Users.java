@@ -49,6 +49,18 @@ public class Users implements Serializable{
 		return false;
 	}
 	
+	public User getUser(String username) {
+		ListIterator<User> listOfUsers = this.users.listIterator();
+		
+		while(listOfUsers.hasNext()) {
+			User user = listOfUsers.next();
+			if (user.getUsername().equals(username))
+				return user;
+		}
+		
+		return new User();
+	}
+	
 	public ArrayList<User> getUsersByInstitution(String institutionID){
 		ArrayList<User> list = new ArrayList<User>();
 		ListIterator<User> listOfUsers = this.users.listIterator();

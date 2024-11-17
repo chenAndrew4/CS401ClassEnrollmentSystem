@@ -141,10 +141,13 @@ class Client{
 					return;
 			}
 			
+			// Get the actual user from the database. We created ones earlier as a means to communicate with the server with objects.
+			user = response.getUser();
+			
 			// Generate and render portal
 			// ...
 			JFrame portal = new JFrame();
-			portal.setTitle("College Course Enrollment System - User: " + user.getUsername());
+			portal.setTitle("College Course Enrollment System - User: " + user.getUsername() + " ID: " + user.getID());
 			portal.setIconImage(new ImageIcon("assets/icons/app_32.png").getImage());
 			portal.setSize(1000, 800);
 			portal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
