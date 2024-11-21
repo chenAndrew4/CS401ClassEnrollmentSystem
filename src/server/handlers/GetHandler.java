@@ -13,9 +13,10 @@ public class GetHandler {
 //
 //        if (course != null) {
         //**** to do need to add course
-            return new Message(MessageType.GET_SYLLABUS, new Course()).setStatus(MessageStatus.SUCCESS);
+//            return new Message(MessageType.GET_SYLLABUS, new Course()).setStatus(MessageStatus.SUCCESS);
 //        } else {
 //            return new Message(MessageType.GET, "Class not found").setStatus(MessageStatus.ERROR);
 //        }
+        return null;
     }
 }

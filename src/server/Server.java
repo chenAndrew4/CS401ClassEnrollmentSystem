@@ -16,24 +16,22 @@ public class Server {
 	private Log log;
 	private ServerGUI gui;
 	private ServerSocket serverSocket;
-	private SessionManager sessionManager = new SessionManager();
-	private UserManager userManager;
-	private CourseManager courseManager;
+	private SessionManager sessionManager;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ServerGUI gui = new ServerGUI();
 		Server server = new Server(gui);
 		server.start();
 	}
 
-	public Server(ServerGUI gui) {
+	public Server(ServerGUI gui) throws IOException {
 		this.gui = gui;
 		this.serverManager = new ServerManager();
 		this.pool = Executors.newCachedThreadPool();
 		this.log = gui.getLog();
-		this.userManager = new UserManager(log);
-		this.userManager.importDB();
-		this.courseManager = new CourseManager();
+		this.sessionManager = SessionManager.getInstance();
+//		this.userManager.importDB();
+//		this.courseManager = CourseManager.getInstance();
 	}
 
 //	public SessionManager getSessionManager() {
@@ -55,7 +53,7 @@ public class Server {
 				try {
 					Socket clientSocket = serverSocket.accept();
 					log.println("New Connection from: " + clientSocket.getInetAddress().getHostAddress() + ":" + clientSocket.getPort());
-					pool.execute(new ClientHandler(clientSocket, log, userManager, courseManager,sessionManager));
+					pool.execute(new ClientHandler(clientSocket, log));
 //					pool.submit(new ClientHandler(clientSocket, log, new Users(log)));
 				} catch (IOException e) {
 					System.err.println("Error accepting client connection: " + e.getMessage());
@@ -64,8 +62,7 @@ public class Server {
 		} catch (IOException e) {
 			log.println("Server Error: " + e.getMessage());
 		} finally {
-			pool.shutdown();
-			log.println("Server shut down.");
+			end();
 		}
 	}
 	public void end() {

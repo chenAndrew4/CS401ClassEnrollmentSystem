@@ -1,6 +1,7 @@
 package shared.models;
 
 import shared.enums.AccountType;
+import shared.enums.Institutes;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,7 +14,7 @@ public class User implements Serializable{
 	private String password; // Column 3 in users.db
 	private String firstName; // Column 4 in users.db
 	private String lastName; // Column 5 in users.db
-	private String institutionID; // Column 6 in users.db
+	private Institutes institutionID; // Column 6 in users.db
 	private AccountType accountType; // Column 7 in users.db
 	private String sessionToken;
 	private boolean isAuthenicated;
@@ -27,6 +28,18 @@ public class User implements Serializable{
 		this.lastName = null;
 		this.institutionID = null;
 		this.accountType = null;
+		this.sessionToken = null;
+		this.isAuthenicated = false;
+	}
+
+	public User(String userID, String username, String firstName, String lastName, String password, Institutes institutes, AccountType accountType) {
+		this.userId = userID;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.institutionID = institutes;
+		this.accountType = accountType;
 		this.sessionToken = null;
 		this.isAuthenicated = false;
 	}
@@ -58,7 +71,7 @@ public class User implements Serializable{
 		return this.lastName;
 	}
 	
-	public String getInstitutionID() {
+	public Institutes getInstitutionID() {
 		return this.institutionID;
 	}
 	
@@ -86,7 +99,7 @@ public class User implements Serializable{
 		this.lastName = lastname;
 	}
 	
-	public void setInstitutionID(String institutionID) {
+	public void setInstitutionID(Institutes institutionID) {
 		this.institutionID = institutionID;
 	}
 	
@@ -114,7 +127,19 @@ public class User implements Serializable{
 		return Objects.hash(userId, username, password, firstName, lastName, institutionID, accountType);
 	}
 
+//	public String toString() {
+//		return this.userId.toString() + "," + this.username + "," + this.firstName + "," + this.lastName + "," + this.institutionID + "," + this.accountType;
+//	}
+
+	@Override
 	public String toString() {
-		return this.userId.toString() + "," + this.username + "," + this.firstName + "," + this.lastName + "," + this.institutionID + "," + this.accountType;
+		return "User{" +
+				"userId='" + userId + '\'' +
+				", username='" + username + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", institutionID=" + institutionID +
+				", accountType=" + accountType +
+				'}';
 	}
 }

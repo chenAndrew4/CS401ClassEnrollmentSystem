@@ -7,21 +7,24 @@ import shared.models.Message;
 import shared.models.User;
 import server.UserManager;
 
+import java.io.IOException;
+
 public class CreateAccountHandler {
-    public static Message handleCreateAccount(Message message, UserManager userManager, Log log) {
+    public static Message handleCreateAccount(Message request, Log log) throws IOException {
         // create a user
         // *** to do
-        User newUser = (User)message.getContent();
+        User newUser = (User) request.getContent();
+        UserManager userManager = UserManager.getInstance(log, newUser.getInstitutionID());
 
         // Check if the username already exists
 //        Object MessageType;
-        if (userManager.doesUsernameExist(newUser.getUsername())) {
+        if (userManager.doesUsernameExistByInstitute(newUser.getInstitutionID(), newUser.getUsername())) {
             log.println("Attempt to create an account with an existing username: " + newUser.getUsername());
             return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.FAILURE, "Username already exists");
         }
 
         // Add user to database
-        boolean success = userManager.addUser(newUser);
+        boolean success = userManager.addUserByInstitute(newUser.getInstitutionID(), newUser);
         if (success) {
             log.println("Account created for user: " + newUser.getUsername());
             return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.SUCCESS, "Account created successfully");
@@ -29,5 +32,6 @@ public class CreateAccountHandler {
             log.println("Failed to create account for user: " + newUser.getUsername());
             return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.ERROR, "Failed to create account");
         }
+
     }
 }

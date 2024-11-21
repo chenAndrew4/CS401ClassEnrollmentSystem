@@ -11,9 +11,8 @@ public class SessionManager {
     private static SessionManager instance;
     private final Map<String, Session> activeSessions;
 
-    public SessionManager() {
+    private SessionManager() {
         this.activeSessions = new HashMap<>();
-
     }
 
     public static synchronized SessionManager getInstance() {

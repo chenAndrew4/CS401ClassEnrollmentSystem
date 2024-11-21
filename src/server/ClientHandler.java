@@ -13,20 +13,16 @@ class ClientHandler implements Runnable {
 		private final Connection connectionStatus;
 		private final Log log;
 		private String clientIpAddPort = null;
-		private final SessionManager sessionManager;
-		private final UserManager userManager;
-		private final CourseManager courseManager;
+//		private final SessionManager sessionManager;
 
 		// Constructor
-		public ClientHandler(Socket socket, Log log, UserManager userManager, CourseManager courseManager, SessionManager sessionManager)
+		public ClientHandler(Socket socket, Log log)
 		{
 			this.clientSocket = socket;
 			this.connectionStatus = new Connection();
 			this.log = log;
 			this.clientIpAddPort = this.clientSocket.getInetAddress().getHostAddress().replace("/", "") + ":" + this.clientSocket.getPort();
-			this.sessionManager = sessionManager;
-			this.userManager = userManager;
-			this.courseManager = courseManager;
+//			this.sessionManager = sessionManager;
 		}
 //	// Constructor
 //		public ClientHandler(Socket socket, Log log, SessionManager sessionManager)
@@ -52,7 +48,7 @@ class ClientHandler implements Runnable {
 				log.receivedMessage(clientIpAddPort, message);
 
 				// Delegate message handling to the appropriate handler
-				Message response = MessageHandler.handleMessage(message, log, userManager, courseManager, sessionManager);
+				Message response = MessageHandler.handleMessage(message, log);
 
 				if (response != null) {
 					log.sendingMessage(clientIpAddPort, response);

@@ -1,20 +1,18 @@
 package client;
 
-import client.ServerHandler;
-import client.requests.EnrollmentRequest;
-import shared.enums.MessageStatus;
-import shared.enums.MessageType;
-import shared.models.*;
+import client.gui.SJSU.LoginGUI;
+import shared.models.requests.EnrollCourseRequest;
+import shared.models.requests.LoginRequest;
+import shared.enums.*;
 
-import java.awt.*;
 import javax.swing.*;
 
 import shared.models.Message;
 import shared.models.User;
 import shared.enums.MessageType;
 import shared.enums.MessageStatus;
+import shared.models.responses.LoginResponse;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class Client {
@@ -22,25 +20,32 @@ public class Client {
 	private String port;
 	private ServerHandler serverHandler;
 	private User currentUser;
+	private Institutes instituteID;
 
 	public Client(String hostname, String port) {
 		this.hostname = hostname;
 		this.port = port;
 	}
 
-	public boolean login(String username, String password) {
+	public boolean login(String username, String password, Institutes instituteID) {
 		try {
 			currentUser = new User();
 			currentUser.setUsername(username);
 			currentUser.setPassword(password);
+			currentUser.setInstitutionID(instituteID);
+			this.instituteID = instituteID;
 
 			serverHandler = new ServerHandler(hostname, port);
-			Message response = serverHandler.sendMessage(new Message(MessageType.LOGIN, currentUser));
+
+			Message loginRequest = new Message(MessageType.LOGIN, new LoginRequest(instituteID, currentUser));
+			Message response = serverHandler.sendMessage(loginRequest);
 
 			if (response.getStatus() == MessageStatus.SUCCESS) {
-				currentUser = (User) response.getContent();
+				LoginResponse loginResponse = (LoginResponse) response.getContent();
+				currentUser = loginResponse.getUser();
 				return true;
 			}
+
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -48,8 +53,8 @@ public class Client {
         }
         return false;
 	}
-	public boolean enrollInCourse(String courseId) {
-        Message enrollRequest = new Message(MessageType.ENROLL_COURSE, new EnrollmentRequest(courseId, currentUser.getUserId() ,currentUser.getSessionToken()));
+	public boolean enrollInCourse(String courseId, String sectionID) {
+        Message enrollRequest = new Message(MessageType.ENROLL_COURSE, new EnrollCourseRequest(instituteID, currentUser.getSessionToken(), courseId, sectionID));
         Message response = serverHandler.sendMessage(enrollRequest);
         if (response.getStatus() == MessageStatus.SUCCESS) {
             System.out.println("Enrolled successfully.");
