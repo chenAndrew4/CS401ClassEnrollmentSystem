@@ -1,13 +1,13 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 public class AddWaitlistRequest extends BaseRequest {
     private String sectionId;
     private int maxWaitlistSize;
 
-    public AddWaitlistRequest(Institutes instituteID, String sessionToken, String sectionId, int maxWaitlistSize) {
-        super(instituteID, sessionToken);
+    public AddWaitlistRequest(Institutions institutionID, String sessionToken, String sectionId, int maxWaitlistSize) {
+        super(institutionID, sessionToken);
         this.sectionId = sectionId;
         this.maxWaitlistSize = maxWaitlistSize;
     }

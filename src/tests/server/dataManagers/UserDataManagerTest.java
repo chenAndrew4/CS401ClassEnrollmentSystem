@@ -28,7 +28,7 @@ public class UserDataManagerTest {
             u1.setPassword("password");
             u1.setFirstName("Connor");
             u1.setLastName("McMillan");
-            u1.setInstitutionID(Institutes.SJSU);
+            u1.setInstitutionID(Institutions.SJSU);
             u1.setAccountType(AccountType.Administrator);
             Student u2 = new Student();
             u2.setUserId("e4eaaaf2-d142-11e1-b3e4-080027620cdc");
@@ -36,7 +36,7 @@ public class UserDataManagerTest {
             u2.setPassword("password");
             u2.setFirstName("Connor");
             u2.setLastName("McMillan");
-            u2.setInstitutionID(Institutes.SJSU);
+            u2.setInstitutionID(Institutions.SJSU);
             u2.setAccountType(AccountType.Student);
             testUsers.add(u1);
             testUsers.add(u2);
@@ -75,7 +75,7 @@ public class UserDataManagerTest {
             course.setCourseID("CS101");
             course.setName("Introduction to Computer Science");
             course.setDescription("Basic principles of computer science.");
-            course.setInstitutionID(Institutes.CSUEB);
+            course.setInstitutionID(Institutions.SJSU);
             course.setNotes("No prior experience required.");
             course.setLevel(LevelType.Lower);
             course.setAcademicProgram(AcademicProgramType.UGM);
@@ -98,12 +98,13 @@ public class UserDataManagerTest {
         //
         @Test
         public void testSaveUser() {
-            userDataManager.saveUsersByInstitute(Institutes.SJSU, testUserMap);
+            userDataManager.saveUsersByInstitution(Institutions.SJSU, testUserMap);
         }
 
         @Test
         public void testLoadUser() throws IOException {
-            userMap = userDataManager.loadUsersByInstitute(Institutes.SJSU);
+            userMap = userDataManager.loadUsersByInstitution(Institutions.SJSU);
+            userMap = userDataManager.loadUsersByInstitution(Institutions.SJSU);
             for (User u : userMap.values()) {
                 System.out.println(u.getUsername());
             }

@@ -3,7 +3,7 @@ package shared.enums;
 import java.util.List;
 import java.util.Map;
 
-public enum Institutes {
+public enum Institutions {
     CSUEB(Map.of(
             Campus.HAYWARD, List.of(Location.MEIKLEJOHN_HALL, Location.LIBRARY),
             Campus.CONCORD, List.of(Location.SCIENCE_BUILDING, Location.STUDENT_UNION)
@@ -18,7 +18,7 @@ public enum Institutes {
 
     private final Map<Campus, List<Location>> campusLocations;
 
-    Institutes(Map<Campus, List<Location>> campusLocations) {
+    Institutions(Map<Campus, List<Location>> campusLocations) {
         this.campusLocations = campusLocations;
     }
 

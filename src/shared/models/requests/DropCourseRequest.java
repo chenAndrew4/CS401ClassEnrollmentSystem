@@ -1,13 +1,13 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 public class DropCourseRequest extends BaseRequest {
     private String courseId;
     private String sectionId;
 
-    public DropCourseRequest(Institutes instituteID, String sessionToken, String courseId, String sectionId) {
-        super(instituteID, sessionToken);
+    public DropCourseRequest(Institutions institutionID, String sessionToken, String courseId, String sectionId) {
+        super(institutionID, sessionToken);
         this.courseId = courseId;
         this.sectionId = sectionId;
     }

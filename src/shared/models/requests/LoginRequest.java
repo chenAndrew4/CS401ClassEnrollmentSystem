@@ -1,13 +1,13 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 import shared.models.User;
 
 public class LoginRequest extends BaseRequest {
     private User user;
 
-    public LoginRequest(Institutes instituteID, User user) {
-        super(instituteID, null);
+    public LoginRequest(Institutions institutionID, User user) {
+        super(institutionID, null);
         this.user = user;
     }
 

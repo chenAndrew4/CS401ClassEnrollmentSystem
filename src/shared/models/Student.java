@@ -2,7 +2,7 @@ package shared.models;
 
 import server.CourseManager;
 import shared.enums.AccountType;
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,8 +18,8 @@ public class Student extends User implements Serializable {
         this.waitlistedCourses = new ArrayList<>();
     }
 
-    public Student(String userID, String username, String firstName, String lastName, String password, Institutes institutes, AccountType accountType) {
-        super(userID, username, firstName, lastName, password, institutes, accountType);
+    public Student(String userID, String username, String firstName, String lastName, String password, Institutions institution, AccountType accountType) {
+        super(userID, username, firstName, lastName, password, institution, accountType);
         this.enrolledCourses = new ArrayList<>();
         this.waitlistedCourses = new ArrayList<>();
     }

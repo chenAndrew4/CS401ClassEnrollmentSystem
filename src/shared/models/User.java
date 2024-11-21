@@ -1,7 +1,7 @@
 package shared.models;
 
 import shared.enums.AccountType;
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -14,7 +14,7 @@ public class User implements Serializable{
 	private String password; // Column 3 in users.db
 	private String firstName; // Column 4 in users.db
 	private String lastName; // Column 5 in users.db
-	private Institutes institutionID; // Column 6 in users.db
+	private Institutions institutionID; // Column 6 in users.db
 	private AccountType accountType; // Column 7 in users.db
 	private String sessionToken;
 	private boolean isAuthenicated;
@@ -32,13 +32,13 @@ public class User implements Serializable{
 		this.isAuthenicated = false;
 	}
 
-	public User(String userID, String username, String firstName, String lastName, String password, Institutes institutes, AccountType accountType) {
+	public User(String userID, String username, String firstName, String lastName, String password, Institutions institution, AccountType accountType) {
 		this.userId = userID;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.institutionID = institutes;
+		this.institutionID = institution;
 		this.accountType = accountType;
 		this.sessionToken = null;
 		this.isAuthenicated = false;
@@ -71,7 +71,7 @@ public class User implements Serializable{
 		return this.lastName;
 	}
 	
-	public Institutes getInstitutionID() {
+	public Institutions getInstitutionID() {
 		return this.institutionID;
 	}
 	
@@ -99,7 +99,7 @@ public class User implements Serializable{
 		this.lastName = lastname;
 	}
 	
-	public void setInstitutionID(Institutes institutionID) {
+	public void setInstitutionID(Institutions institutionID) {
 		this.institutionID = institutionID;
 	}
 	

@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class CourseSection implements Serializable {
     private String sectionID;     // Unique identifier for each section
+    private String courseID;
     private int enrollmentLimit;  // Max students for this section
     private WaitList waitlist;    // Section's waitlist
     private ClassRoster classRoster;  // Students enrolled in the section
@@ -49,6 +50,14 @@ public class CourseSection implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
     }
 
     public String getSectionID() {

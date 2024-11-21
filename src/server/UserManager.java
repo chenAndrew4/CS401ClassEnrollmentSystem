@@ -2,7 +2,7 @@ package server;
 
 import server.dataManagers.UserDataManager;
 import server.utils.Log;
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 import shared.models.User;
 
 import java.io.IOException;
@@ -11,59 +11,59 @@ import java.util.*;
 
 public class UserManager implements Serializable{
 	private static UserManager instance;
-	private Map<Institutes, Map<String, User>> userMap;
+	private Map<Institutions, Map<String, User>> userMap;
 	private Log log;
 	private UserDataManager userDataManager;
-	private Map<Institutes, Boolean> imported;
-	private Map<Institutes, Boolean> modified;
+	private Map<Institutions, Boolean> imported;
+	private Map<Institutions, Boolean> modified;
 
 	private UserManager() {}
 
-	public static synchronized UserManager getInstance(Log log, Institutes instituteID) throws IOException {
+	public static synchronized UserManager getInstance(Log log, Institutions institutionID) throws IOException {
 		if (instance == null) {
-			instance = new UserManager(log, instituteID);
-			instance.imported.put(instituteID, true);
+			instance = new UserManager(log, institutionID);
+			instance.imported.put(institutionID, true);
 		}
 		return instance;
 	}
 
 //	public static synchronized UserManager getInstance() throws IOException {
 //		if (instance == null) {
-//			System.out.println("call getInstance(Log log, Institutes institutes) first");
+//			System.out.println("call getInstance(Log log, Institutions institution) first");
 //			return null;
 //		}
 //		return instance;
 //	}
 
-	public void isImported(Institutes instituteID) {
-		if (!imported.containsKey(instituteID)) {
-			userMap.put(instituteID,userDataManager.loadUsersByInstitute(instituteID));
-			imported.put(instituteID, true);
+	public void isImported(Institutions institutionID) {
+		if (!imported.containsKey(institutionID)) {
+			userMap.put(institutionID,userDataManager.loadUsersByInstitution(institutionID));
+			imported.put(institutionID, true);
 		}
-//		imported.get(instituteID);
+//		imported.get(institutionID);
 	}
 
-//	public void setImported(Institutes instituteID, boolean imported) {
-//		this.imported.put(instituteID, true);
+//	public void setImported(Institutions institutionID, boolean imported) {
+//		this.imported.put(institutionID, true);
 //	}
 
-	private UserManager(Log log, Institutes instituteID) {
+	private UserManager(Log log, Institutions institutionID) {
 		this.userMap = new HashMap<>();
 		this.log = log;
 		this.userDataManager = UserDataManager.getInstance();
 		imported = new HashMap<>();
 		modified = new HashMap<>();
-		isImported(instituteID);
+		isImported(institutionID);
 	}
 	
-	public boolean addUserByInstitute(Institutes instituteID, User user) {
-		isImported(instituteID);
-		this.userMap.get(instituteID).put(user.getUsername(), user);
-		this.modified.put(instituteID, true);
+	public boolean addUserByInstitution(Institutions institutionID, User user) {
+		isImported(institutionID);
+		this.userMap.get(institutionID).put(user.getUsername(), user);
+		this.modified.put(institutionID, true);
 		return true;
 	}
 	
-	public boolean doesUsernameExistByInstitute(Institutes instituteID, String username) {
+	public boolean doesUsernameExistByInstitution(Institutions institutionID, String username) {
 //		ListIterator<User> listOfuserMap = this.userMap.listIterator();
 //
 //		while(listOfUsers.hasNext()) {
@@ -71,11 +71,11 @@ public class UserManager implements Serializable{
 //				return true;
 //		}
 //		return false;
-		isImported(instituteID);
-		return userMap.get(instituteID).containsKey(username);
+		isImported(institutionID);
+		return userMap.get(institutionID).containsKey(username);
 	}
 
-	public boolean doesUsernameAndPasswordEqualByInstitute(Institutes instituteID, String username, String password) {
+	public boolean doesUsernameAndPasswordEqualByInstitution(Institutions institutionID, String username, String password) {
 //		ListIterator<User> listOfUsers = this.users.listIterator();
 //
 //		while(listOfUsers.hasNext()) {
@@ -84,8 +84,8 @@ public class UserManager implements Serializable{
 //				return true;
 //			}
 //		}
-		isImported(instituteID);
-		Map<String, User> curMap = userMap.get(instituteID);
+		isImported(institutionID);
+		Map<String, User> curMap = userMap.get(institutionID);
 		return curMap.containsKey(username)&&curMap.get(username).getPassword().equals(password);
 	}
 	
@@ -99,7 +99,7 @@ public class UserManager implements Serializable{
 //		return users.containsKey(username)&&users.get(username).getPassword().equals(password);
 //	}
 	
-	public User getUserByInstitute(Institutes instituteID, String username) {
+	public User getUserByInstitution(Institutions institutionID, String username) {
 //		ListIterator<User> listOfUsers = this.users.listIterator();
 //
 //		while(listOfUsers.hasNext()) {
@@ -109,11 +109,11 @@ public class UserManager implements Serializable{
 //		}
 //
 //		return new User();
-		isImported(instituteID);
-		return userMap.get(instituteID).get(username);
+		isImported(institutionID);
+		return userMap.get(institutionID).get(username);
 	}
 	
-	public List<User> getUsersByInstitution(Institutes instituteID){
+	public List<User> getUsersByInstitution(Institutions institutionID){
 		List<User> list = new ArrayList<User>();
 //		ListIterator<User> listOfUsers = this.users.listIterator();
 //
@@ -124,13 +124,13 @@ public class UserManager implements Serializable{
 //		}
 		
 //		return list;
-		isImported(instituteID);
-		return new ArrayList<>(userMap.get(instituteID).values());
+		isImported(institutionID);
+		return new ArrayList<>(userMap.get(institutionID).values());
 	}
 	
 	// This method is used to add a new user. You need to check if the username wanting to be associated with a user is already being used by another user.
 	// This will return false if username already exists, otherwise true.
-	public boolean isUsernameValidByInstitute(Institutes instituteID, String username) {
+	public boolean isUsernameValidByInstitution(Institutions institutionID, String username) {
 //		ListIterator<User> listOfUsers = this.users.listIterator();
 //
 //		while(listOfUsers.hasNext()) {
@@ -139,30 +139,30 @@ public class UserManager implements Serializable{
 //		}
 		
 //		return true;
-		isImported(instituteID);
-		return !userMap.get(instituteID).containsKey(username);
+		isImported(institutionID);
+		return !userMap.get(institutionID).containsKey(username);
 	}
 	
-	public boolean removeUserByInstitute(Institutes instituteID, String username) {
+	public boolean removeUserByInstitution(Institutions institutionID, String username) {
 //		ListIterator<User> listOfUsers = this.users.listIterator();
 //
 //		while(listOfUsers.hasNext()) {
 //			if (listOfUsers.next().getUsername().equals(username))
 //				this.users.remove(listOfUsers.nextIndex());
 //		}
-		isImported(instituteID);
-		if (this.userMap.containsKey(instituteID)){
-			Map<String, User> curMap =  userMap.get(instituteID);
+		isImported(institutionID);
+		if (this.userMap.containsKey(institutionID)){
+			Map<String, User> curMap =  userMap.get(institutionID);
 			if (curMap.containsKey(username)) {
 				curMap.remove(username);
-				this.modified.put(instituteID, true);
+				this.modified.put(institutionID, true);
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public void updateUserByInstitutes(Institutes instituteID, User user) {
+	public void updateUserByInstitutions(Institutions institutionID, User user) {
 //		ListIterator<User> listOfUsers = this.users.listIterator();
 //
 //		while(listOfUsers.hasNext()) {
@@ -177,18 +177,18 @@ public class UserManager implements Serializable{
 //
 //			}
 //		}
-		isImported(instituteID);
-		if (this.userMap.containsKey(instituteID)){
-			Map<String, User> curMap =  userMap.get(instituteID);
+		isImported(institutionID);
+		if (this.userMap.containsKey(institutionID)){
+			Map<String, User> curMap =  userMap.get(institutionID);
 			if (curMap.containsKey(user.getUsername())) {
 				curMap.put(user.getUsername(), user);
-				this.modified.put(instituteID, true);
+				this.modified.put(institutionID, true);
 			}
 		}
 	}
 	
-	public void importDBByInstitute(Institutes instituteID) {
-			isImported(instituteID);
+	public void importDBByInstitution(Institutions institutionID) {
+			isImported(institutionID);
 //		try {
 //			// Open file by creating a handle
 //			File file = new File(dbFileNamePath);
@@ -234,7 +234,7 @@ public class UserManager implements Serializable{
 //				user.setPassword(parsed[2]);
 //				user.setFirstName(parsed[3]);
 //				user.setLastName(parsed[4]);
-//				user.setInstitutionID(Institutes.valueOf(parsed[5]));
+//				user.setInstitutionID(Institutions.valueOf(parsed[5]));
 //				user.setAccountType(Helpers.stringToAccountType(parsed[6]));
 //
 //				this.log.println("Adding user: " + user.getUsername());
@@ -245,10 +245,10 @@ public class UserManager implements Serializable{
 //		}
 	}
 	
-	public void commitDBByInstitute(Institutes instituteID) {
-		isImported(instituteID);
-		if (modified.containsKey(instituteID) && modified.get(instituteID)) {
-			userDataManager.saveUsersByInstitute(instituteID, userMap.get(instituteID));
+	public void commitDBByInstitution(Institutions institutionID) {
+		isImported(institutionID);
+		if (modified.containsKey(institutionID) && modified.get(institutionID)) {
+			userDataManager.saveUsersByInstitution(institutionID, userMap.get(institutionID));
 		}
 //		try {
 //			PrintWriter writer = new PrintWriter();

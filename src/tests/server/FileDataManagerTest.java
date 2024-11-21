@@ -31,7 +31,7 @@ public class FileDataManagerTest {
         u1.setPassword("password");
         u1.setFirstName("Connor");
         u1.setLastName("McMillan");
-        u1.setInstitutionID(Institutes.CSUEB);
+        u1.setInstitutionID(Institutions.CSUEB);
         u1.setAccountType(AccountType.Administrator);
         Student u2 = new Student();
         u2.setUserId("e4eaaaf2-d142-11e1-b3e4-080027620cdd");
@@ -39,7 +39,7 @@ public class FileDataManagerTest {
         u2.setPassword("password");
         u2.setFirstName("Connor");
         u2.setLastName("McMillan");
-        u2.setInstitutionID(Institutes.CSUEB);
+        u2.setInstitutionID(Institutions.CSUEB);
         u2.setAccountType(AccountType.Student);
         testUsers.add(u1);
         testUsers.add(u2);
@@ -78,7 +78,7 @@ public class FileDataManagerTest {
         course.setCourseID("CS101");
         course.setName("Introduction to Computer Science");
         course.setDescription("Basic principles of computer science.");
-        course.setInstitutionID(Institutes.CSUEB);
+        course.setInstitutionID(Institutions.CSUEB);
         course.setNotes("No prior experience required.");
         course.setLevel(LevelType.Lower);
         course.setAcademicProgram(AcademicProgramType.UGM);
@@ -101,12 +101,12 @@ public class FileDataManagerTest {
     //
     @Test
     public void testSaveUser() {
-        userDataManager.saveUsersByInstitute(Institutes.CSUEB, testUserMap);
+        userDataManager.saveUsersByInstitution(Institutions.CSUEB, testUserMap);
     }
 
     @Test
     public void testLoadUser() throws IOException {
-        userMap = userDataManager.loadUsersByInstitute(Institutes.CSUEB);
+        userMap = userDataManager.loadUsersByInstitution(Institutions.CSUEB);
         for (User u : userMap.values()) {
             System.out.println(u.getUsername());
         }

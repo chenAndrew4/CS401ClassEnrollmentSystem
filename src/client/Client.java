@@ -20,24 +20,24 @@ public class Client {
 	private String port;
 	private ServerHandler serverHandler;
 	private User currentUser;
-	private Institutes instituteID;
+	private Institutions institutionID;
 
 	public Client(String hostname, String port) {
 		this.hostname = hostname;
 		this.port = port;
 	}
 
-	public boolean login(String username, String password, Institutes instituteID) {
+	public boolean login(String username, String password, Institutions institutionID) {
 		try {
 			currentUser = new User();
 			currentUser.setUsername(username);
 			currentUser.setPassword(password);
-			currentUser.setInstitutionID(instituteID);
-			this.instituteID = instituteID;
+			currentUser.setInstitutionID(institutionID);
+			this.institutionID = institutionID;
 
 			serverHandler = new ServerHandler(hostname, port);
 
-			Message loginRequest = new Message(MessageType.LOGIN, new LoginRequest(instituteID, currentUser));
+			Message loginRequest = new Message(MessageType.LOGIN, new LoginRequest(institutionID, currentUser));
 			Message response = serverHandler.sendMessage(loginRequest);
 
 			if (response.getStatus() == MessageStatus.SUCCESS) {
@@ -54,7 +54,7 @@ public class Client {
         return false;
 	}
 	public boolean enrollInCourse(String courseId, String sectionID) {
-        Message enrollRequest = new Message(MessageType.ENROLL_COURSE, new EnrollCourseRequest(instituteID, currentUser.getSessionToken(), courseId, sectionID));
+        Message enrollRequest = new Message(MessageType.ENROLL_COURSE, new EnrollCourseRequest(institutionID, currentUser.getSessionToken(), courseId, sectionID));
         Message response = serverHandler.sendMessage(enrollRequest);
         if (response.getStatus() == MessageStatus.SUCCESS) {
             System.out.println("Enrolled successfully.");

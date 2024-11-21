@@ -1,12 +1,12 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 public class DeleteScheduleRequest extends BaseRequest {
     private String scheduleId;
 
-    public DeleteScheduleRequest(Institutes instituteID, String sessionToken, String scheduleId) {
-        super(instituteID, sessionToken);
+    public DeleteScheduleRequest(Institutions institutionID, String sessionToken, String scheduleId) {
+        super(institutionID, sessionToken);
         this.scheduleId = scheduleId;
     }
 

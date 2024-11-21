@@ -2,7 +2,7 @@ package server.dataManagers;
 
 import server.FileDataManager;
 import server.ServerManager;
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 import shared.models.User;
 
 import java.io.*;
@@ -25,51 +25,51 @@ public class UserDataManager {
     private static final String FILE_PREFIX = ServerManager.DB_FILE_PATH_PREFIX;
     private static final String FILE_SUFFIX = ServerManager.USERS_DB_FILE_PATH_SUFFIX;
 
-    // Save the entire map of institute users to their respective files
-    public void saveAllUsers(Map<Institutes, Map<String, User>> instituteUsers) {
-        for (Map.Entry<Institutes, Map<String, User>> entry : instituteUsers.entrySet()) {
-            Institutes instituteID = entry.getKey();
+    // Save the entire map of institution users to their respective files
+    public void saveAllUsers(Map<Institutions, Map<String, User>> institutionUsers) {
+        for (Map.Entry<Institutions, Map<String, User>> entry : institutionUsers.entrySet()) {
+            Institutions institutionID = entry.getKey();
             Map<String, User> users = entry.getValue();
-            saveUsersByInstitute(instituteID, users);
+            saveUsersByInstitution(institutionID, users);
         }
     }
 
-    // Save users for a specific institute
-    public void saveUsersByInstitute(Institutes instituteID, Map<String, User> users) {
-        String filePath = FILE_PREFIX + instituteID + "/" + FILE_SUFFIX;
+    // Save users for a specific institution
+    public void saveUsersByInstitution(Institutions institutionID, Map<String, User> users) {
+        String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(users);
-            System.out.println("Users saved successfully for institute: " + instituteID);
+            System.out.println("Users saved successfully for institution: " + institutionID);
         } catch (Exception e) {
-            System.err.println("Error saving users for institute: " + instituteID);
+            System.err.println("Error saving users for institution: " + institutionID);
             e.printStackTrace();
         }
     }
 
-    // Load all institute users from their files
-    public Map<Institutes, Map<String, User>> loadAllUsers(List<Institutes> instituteIDs) {
-        Map<Institutes, Map<String, User>> instituteUsers = new HashMap<>();
-        for (Institutes instituteID : instituteIDs) {
-            instituteUsers.put(instituteID, loadUsersByInstitute(instituteID));
+    // Load all institution users from their files
+    public Map<Institutions, Map<String, User>> loadAllUsers(List<Institutions> institutionIDs) {
+        Map<Institutions, Map<String, User>> institutionUsers = new HashMap<>();
+        for (Institutions institutionID : institutionIDs) {
+            institutionUsers.put(institutionID, loadUsersByInstitution(institutionID));
         }
-        return instituteUsers;
+        return institutionUsers;
     }
 
-    // Load users for a specific institute
+    // Load users for a specific institution
     @SuppressWarnings("unchecked")
-    public Map<String, User> loadUsersByInstitute(Institutes instituteID) {
-        String filePath = FILE_PREFIX + instituteID + "/" + FILE_SUFFIX;
+    public Map<String, User> loadUsersByInstitution(Institutions institutionID) {
+        String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
         Map<String, User> users = null;
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             users = (Map<String, User>) ois.readObject();
-            System.out.println("Users loaded successfully for institute: " + instituteID);
+            System.out.println("Users loaded successfully for institution: " + institutionID);
         } catch (FileNotFoundException e) {
-            System.err.println("File not found for institute: " + instituteID + ". Returning empty map.");
+            System.err.println("File not found for institution: " + institutionID + ". Returning empty map.");
             users = new HashMap<>();
         } catch (Exception e) {
-            System.err.println("Error loading users for institute: " + instituteID);
+            System.err.println("Error loading users for institution: " + institutionID);
             e.printStackTrace();
         }
 

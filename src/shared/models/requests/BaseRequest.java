@@ -1,21 +1,21 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 import java.io.Serializable;
 
 public abstract class BaseRequest implements Serializable {
-    private Institutes instituteID;
+    private Institutions institutionID;
     private String sessionToken;
 
 
-    public BaseRequest(Institutes instituteID, String sessionToken) {
-        this.instituteID = instituteID;
+    public BaseRequest(Institutions institutionID, String sessionToken) {
+        this.institutionID = institutionID;
         this.sessionToken = sessionToken;
     }
 
-    public Institutes getInstituteID() {
-        return instituteID;
+    public Institutions getInstitutionID() {
+        return institutionID;
     }
 
     public String getSessionToken() {

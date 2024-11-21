@@ -10,7 +10,7 @@ public class Course implements Serializable {
 	private String courseID;
 	private String name;
 	private String description;
-	private Institutes institutionID;
+	private Institutions institutionID;
 	private String notes;
 	private LevelType level;
 	private AcademicProgramType academicProgram;
@@ -21,7 +21,8 @@ public class Course implements Serializable {
 
 	public Course() {}
 
-	public Course(String name, String description, Institutes institutionID, String notes, LevelType level, AcademicProgramType academicProgram, Float units, Department department) {
+	public Course(String courseID, String name, String description, Institutions institutionID, String notes, LevelType level, AcademicProgramType academicProgram, Float units, Department department) {
+		this.courseID = courseID;
 		this.name = name;
 		this.description = description;
 		this.institutionID = institutionID;
@@ -30,7 +31,6 @@ public class Course implements Serializable {
 		this.academicProgram = academicProgram;
 		this.units = units;
 		this.department = department;
-		this.courseID = IDGenerator.getInstance().generateUniqueCourseID(department.name());
 	}
 
 	public String getCourseID() {
@@ -63,11 +63,11 @@ public class Course implements Serializable {
 		return this;
 	}
 
-	public Institutes getInstitutionID() {
+	public Institutions getInstitutionID() {
 		return institutionID;
 	}
 
-	public Course setInstitutionID(Institutes institutionID) {
+	public Course setInstitutionID(Institutions institutionID) {
 		this.institutionID = institutionID;
 		return this;
 	}

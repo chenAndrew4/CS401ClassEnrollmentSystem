@@ -1,12 +1,12 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 public class DeleteWaitlistRequest extends BaseRequest {
     private String sectionId;
 
-    public DeleteWaitlistRequest(Institutes instituteID, String sessionToken, String sectionId) {
-        super(instituteID, sessionToken);
+    public DeleteWaitlistRequest(Institutions institutionID, String sessionToken, String sectionId) {
+        super(institutionID, sessionToken);
         this.sectionId = sectionId;
     }
 

@@ -18,13 +18,13 @@ public class CreateAccountHandler {
 
         // Check if the username already exists
 //        Object MessageType;
-        if (userManager.doesUsernameExistByInstitute(newUser.getInstitutionID(), newUser.getUsername())) {
+        if (userManager.doesUsernameExistByInstitution(newUser.getInstitutionID(), newUser.getUsername())) {
             log.println("Attempt to create an account with an existing username: " + newUser.getUsername());
             return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.FAILURE, "Username already exists");
         }
 
         // Add user to database
-        boolean success = userManager.addUserByInstitute(newUser.getInstitutionID(), newUser);
+        boolean success = userManager.addUserByInstitution(newUser.getInstitutionID(), newUser);
         if (success) {
             log.println("Account created for user: " + newUser.getUsername());
             return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.SUCCESS, "Account created successfully");

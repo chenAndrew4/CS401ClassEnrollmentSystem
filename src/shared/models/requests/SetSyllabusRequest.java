@@ -1,13 +1,13 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 public class SetSyllabusRequest extends BaseRequest {
     private String sectionId;
     private String syllabus;
 
-    public SetSyllabusRequest(Institutes instituteID, String sessionToken, String sectionId, String syllabus) {
-        super(instituteID, sessionToken);
+    public SetSyllabusRequest(Institutions institutionID, String sessionToken, String sectionId, String syllabus) {
+        super(institutionID, sessionToken);
         this.sectionId = sectionId;
         this.syllabus = syllabus;
     }

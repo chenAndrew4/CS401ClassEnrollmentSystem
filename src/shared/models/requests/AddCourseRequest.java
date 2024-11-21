@@ -1,13 +1,13 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 import shared.models.Course;
 
 public class AddCourseRequest extends BaseRequest {
     private Course course;
 
-    public AddCourseRequest(Institutes instituteID, String sessionToken, Course course) {
-        super(instituteID, sessionToken);
+    public AddCourseRequest(Institutions institutionID, String sessionToken, Course course) {
+        super(institutionID, sessionToken);
         this.course = course;
     }
 

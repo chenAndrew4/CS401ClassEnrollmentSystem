@@ -1,11 +1,11 @@
 package shared.models.requests;
 
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 public class LogoutRequest extends BaseRequest {
     private String userID;
-    public LogoutRequest(Institutes instituteID, String sessionToken,String userID) {
-        super(instituteID, sessionToken);
+    public LogoutRequest(Institutions institutionID, String sessionToken,String userID) {
+        super(institutionID, sessionToken);
         this.userID = userID;
     }
 }

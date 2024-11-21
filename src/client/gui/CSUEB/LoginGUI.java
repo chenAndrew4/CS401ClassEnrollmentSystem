@@ -2,7 +2,7 @@ package client.gui.CSUEB;
 
 import client.Client;
 import client.ClientConfig;
-import shared.enums.Institutes;
+import shared.enums.Institutions;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,9 +12,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class LoginGUI {
-    private static Institutes instituteID;
+    private static Institutions institutionID;
     public static void main(String[] args) {
-        instituteID = Institutes.CSUEB;
+        institutionID = Institutions.CSUEB;
         SwingUtilities.invokeLater(LoginGUI::renderLoginGUI);
     }
 
@@ -42,7 +42,7 @@ public class LoginGUI {
                 Image resizedImage = originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH); // Resize to 50x50
                 ImageIcon resizedIcon = new ImageIcon(resizedImage);
 
-            int loginChoice = JOptionPane.showOptionDialog(null, panel, instituteID + " - CCES - Login",
+            int loginChoice = JOptionPane.showOptionDialog(null, panel, institutionID + " - CCES - Login",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                     resizedIcon, loginChoices, loginChoices[0]);
 
@@ -58,13 +58,13 @@ public class LoginGUI {
 
             Client client = new Client(hostname, port);
 
-            if (client.login(username, password, instituteID)) {
+            if (client.login(username, password, institutionID)) {
                 // Show the portal if login is successful
                 client.showPortal(username);
                 break;
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid credentials or server connection issue.",
-                        instituteID + "CCES - Authentication Error", JOptionPane.ERROR_MESSAGE,
+                        institutionID + "CCES - Authentication Error", JOptionPane.ERROR_MESSAGE,
                         new ImageIcon(ClientConfig.INVALID_CREDS_FILE_PATH));
             }
             } catch (IOException e) {

@@ -1,6 +1,97 @@
 package shared.models;
 
-import java.io.Serializable;
+import shared.enums.AccountType;
+import shared.enums.Institutions;
 
-public class Faculty implements Serializable {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+//design ScheduleManager and WaitListManager suitable for multiple institutes
+public class Faculty extends User {
+    private List<Course> assignedCourses; // Courses assigned to the faculty
+    private String department;            // Faculty's department
+    private List<Schedule> teachingSchedule;  // Faculty's schedule
+
+    // Constructor
+    public Faculty(String userID, String username, String firstName, String lastName, String password, Institutions institutionID, String department) {
+        super(userID, username,firstName, lastName, password, institutionID, AccountType.Faculty);
+        this.assignedCourses = new ArrayList<>();
+        this.department = department;
+        this.teachingSchedule = new ArrayList<>();
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    // Getter for assigned courses
+    public List<Course> getAssignedCourses() {
+        return assignedCourses;
+    }
+
+    // Add a course to the faculty's assigned courses
+    public boolean assignCourse(Course course) {
+        if (!assignedCourses.contains(course)) {
+            assignedCourses.add(course);
+            return true;
+        }
+        return false;
+    }
+
+    // Remove a course from the faculty's assigned courses
+    public boolean unassignCourse(Course course) {
+        return assignedCourses.remove(course);
+    }
+
+    // View class roster for a specific course
+    public List<String> viewClassRoster(String sectionID) {
+        for (Course course : assignedCourses) {
+            for (CourseSection s : course.getSections()) {
+                if (s.getSectionID().equals(sectionID)) {
+                    return s.getClassRoster().getEnrolledStudents();
+                }
+            }
+
+        }
+        return new ArrayList<>(); // Return empty list if course not found
+    }
+
+    // Update the syllabus for a course
+    public boolean updateSyllabus(Course course, String newSyllabus) {
+        if (assignedCourses.contains(course)) {
+            course.setNotes(newSyllabus); // Assuming `setNotes` can store syllabus
+            return true;
+        }
+        return false;
+    }
+
+    // View faculty's teaching schedule
+    public List<Schedule> viewSchedule() {
+        return teachingSchedule;
+    }
+
+    // Add schedule for the faculty
+    public boolean addTeachingSchedule(Schedule schedule) {
+        if (teachingSchedule != null) {
+            teachingSchedule.add(schedule);
+            return true;
+        }
+        return false;
+    }
+
+    // Remove schedule for the faculty
+    public boolean removeTeachingSchedule(Schedule schedule) {
+        if (teachingSchedule != null) {
+            teachingSchedule.remove(schedule);
+            return true;
+        }
+        return false;
+    }
 }
+
+
