@@ -32,7 +32,7 @@ public class Student extends User implements Serializable {
         }
 
         // Fetch the course section (example implementation using a CourseManager)
-        CourseSection section = CourseManager.getInstance().getSectionById(sectionID);
+        CourseSection section = CourseManager.getInstance().getSectionById(getInstitutionID(),sectionID);
 
         if (section == null) {
             return false; // Invalid sectionID
@@ -63,13 +63,13 @@ public class Student extends User implements Serializable {
     public void dropCourse(String sectionID) {
         if (enrolledCourses.remove(sectionID)) {
             // Remove from enrolled courses
-            CourseSection section = CourseManager.getInstance().getSectionById(sectionID);
+            CourseSection section = CourseManager.getInstance().getSectionById(getInstitutionID(),sectionID);
             if (section != null) {
                 section.getClassRoster().removeStudent(this);
             }
         } else if (waitlistedCourses.remove(sectionID)) {
             // Remove from waitlisted courses
-            CourseSection section = CourseManager.getInstance().getSectionById(sectionID);
+            CourseSection section = CourseManager.getInstance().getSectionById(getInstitutionID(),sectionID);
             if (section != null) {
                 section.getWaitlist().removeFromWaitlist(this);
             }
@@ -80,9 +80,9 @@ public class Student extends User implements Serializable {
     public List<Course> viewSchedule() {
         List<Course> schedule = new ArrayList<>();
         for (String sectionID : enrolledCourses) {
-            CourseSection section = CourseManager.getInstance().getSectionById(sectionID);
+            CourseSection section = CourseManager.getInstance().getSectionById(getInstitutionID(), sectionID);
             if (section != null) {
-                Course course = CourseManager.getInstance().getCourseBySectionId(sectionID);
+                Course course = CourseManager.getInstance().getCourseBySectionId(getInstitutionID() ,sectionID);
                 schedule.add(course);
             }
         }
@@ -91,7 +91,7 @@ public class Student extends User implements Serializable {
 
     // Get position on waitlist
     public int getWaitlistPositions(String sectionID) {
-        CourseSection section = CourseManager.getInstance().getSectionById(sectionID);
+        CourseSection section = CourseManager.getInstance().getSectionById(getInstitutionID(),sectionID);
         if (section != null) {
             return section.getWaitlist().getPosition(this);
         }
