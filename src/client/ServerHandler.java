@@ -1,6 +1,10 @@
 package client;
 
+import client.handlers.ResponseHandler;
+import shared.enums.MessageType;
 import shared.models.Message;
+import shared.models.requests.BaseRequest;
+import shared.models.responses.BaseResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Map;
 
 class ServerHandler {
 	private String hostname;
@@ -18,6 +23,7 @@ class ServerHandler {
 	static InputStream inputStream;
 	static ObjectOutputStream objectOutputStream;
 	static ObjectInputStream objectInputStream;
+	private Map<MessageType, ResponseHandler> responseHandlers;
 	
 	public ServerHandler(String hostname, String port) throws Exception {
 		this.hostname = hostname;
@@ -98,12 +104,12 @@ class ServerHandler {
 		return this.port;
 	}
 	
-	public Message sendMessage(Message message) {
-		Message response = new Message();
+	public BaseResponse sendRequest(BaseRequest request) {
+		BaseResponse response = new BaseResponse();
         
         // Send message 
         try {
-			objectOutputStream.writeObject(message);
+			objectOutputStream.writeObject(request);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,7 +124,7 @@ class ServerHandler {
         
         // Wait and read server response
         try {
-			response = (Message) objectInputStream.readObject();
+			response = (BaseResponse) objectInputStream.readObject();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,5 +135,23 @@ class ServerHandler {
 		
 		return response;
 	}
-	
+
+	private void handleResponse() {
+		try {
+			BaseResponse response = (BaseResponse) objectInputStream.readObject();
+			ResponseHandler handler = responseHandlers.get(response.getType());
+			if (handler != null) {
+				handler.handleResponse(response);
+			} else {
+				System.out.println("No handler found for response type: " + response.getType());
+			}
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void registerResponseHandler(MessageType messageType, ResponseHandler handler) {
+		responseHandlers.put(messageType, handler);
+	}
+
 }

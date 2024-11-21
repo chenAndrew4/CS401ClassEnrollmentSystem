@@ -6,31 +6,34 @@ import shared.enums.MessageType;
 import shared.models.Message;
 import shared.models.User;
 import server.UserManager;
+import shared.models.requests.BaseRequest;
+import shared.models.requests.CreateAccountRequest;
+import shared.models.responses.CreateAccountResponse;
 
 import java.io.IOException;
 
 public class CreateAccountHandler {
-    public static Message handleCreateAccount(Message request, Log log) throws IOException {
+    public static CreateAccountResponse handleCreateAccount(BaseRequest request, Log log) throws IOException {
         // create a user
         // *** to do
-        User newUser = (User) request.getContent();
+        CreateAccountRequest createAccountRequest = (CreateAccountRequest) request;
+        User newUser = createAccountRequest.getNewUser();
         UserManager userManager = UserManager.getInstance(log, newUser.getInstitutionID());
 
         // Check if the username already exists
-//        Object MessageType;
         if (userManager.doesUsernameExistByInstitution(newUser.getInstitutionID(), newUser.getUsername())) {
             log.println("Attempt to create an account with an existing username: " + newUser.getUsername());
-            return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.FAILURE, "Username already exists");
+            return new CreateAccountResponse(MessageType.CREATE_ACCOUNT, MessageStatus.FAILURE, "Username already exists", newUser.getUserId());
         }
 
         // Add user to database
         boolean success = userManager.addUserByInstitution(newUser.getInstitutionID(), newUser);
         if (success) {
             log.println("Account created for user: " + newUser.getUsername());
-            return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.SUCCESS, "Account created successfully");
+            return new CreateAccountResponse(MessageType.CREATE_ACCOUNT, MessageStatus.SUCCESS, "Account created successfully",  newUser.getUserId());
         } else {
             log.println("Failed to create account for user: " + newUser.getUsername());
-            return new Message(MessageType.CREATE_ACCOUNT, MessageStatus.ERROR, "Failed to create account");
+            return new CreateAccountResponse(MessageType.CREATE_ACCOUNT, MessageStatus.ERROR, "Failed to create account",  newUser.getUserId());
         }
 
     }

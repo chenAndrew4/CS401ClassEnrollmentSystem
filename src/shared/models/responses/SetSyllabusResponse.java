@@ -1,12 +1,15 @@
 package shared.models.responses;
 
+import shared.enums.MessageStatus;
+import shared.enums.MessageType;
+
 public class SetSyllabusResponse extends BaseResponse {
     private String courseId;
     private String sectionId;
     private String syllabus;
 
-    public SetSyllabusResponse(String message, String courseId, String sectionId, String syllabus) {
-        super(message);
+    public SetSyllabusResponse(MessageStatus messageStatus, MessageType messageType, String message, String courseId, String sectionId, String syllabus) {
+        super(message,  messageStatus, messageType);
         this.courseId = courseId;
         this.sectionId = sectionId;
         this.syllabus = syllabus;

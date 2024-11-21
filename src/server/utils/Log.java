@@ -38,7 +38,7 @@ public class Log {
     	updateDateTime();
     	this.jtextArea.append("[" + this.formattedDateTime + "]     Status: " + msg.getStatus() + "\n");
     	updateDateTime();
-    	this.jtextArea.append("[" + this.formattedDateTime + "]     shared.models.User: " + msg.getContent() + "\n");
+    	this.jtextArea.append("[" + this.formattedDateTime + "]     shared.models.User: " + msg.toString() + "\n");
     }
     
 	public void receivedMessage(String clientIpAddrPort, Message msg) {

@@ -1,9 +1,11 @@
 package server;
 
-import server.handlers.MessageHandler;
+import server.handlers.RequestHandler;
 import server.utils.Log;
 import shared.enums.MessageType;
 import shared.models.Message;
+import shared.models.requests.BaseRequest;
+import shared.models.responses.BaseResponse;
 
 import java.io.*;
 import java.net.Socket;
@@ -44,11 +46,11 @@ class ClientHandler implements Runnable {
 
 			while (!quit) {
 				// Read message from client
-				Message message = (Message) objectInputStream.readObject();
-				log.receivedMessage(clientIpAddPort, message);
+				BaseRequest request = (BaseRequest) objectInputStream.readObject();
+				log.receivedMessage(clientIpAddPort, request);
 
 				// Delegate message handling to the appropriate handler
-				Message response = MessageHandler.handleMessage(message, log);
+				BaseResponse response = RequestHandler.handleRequest(request, log);
 
 				if (response != null) {
 					log.sendingMessage(clientIpAddPort, response);
@@ -56,7 +58,7 @@ class ClientHandler implements Runnable {
 				}
 
 				// Handle LOGOUT message specifically to terminate the connection
-				if (message.getType() == MessageType.LOGOUT) {
+				if (request.getType() == MessageType.LOGOUT) {
 					quit = true;
 				}
 			}

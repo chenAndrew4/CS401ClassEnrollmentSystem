@@ -1,11 +1,14 @@
 package shared.models.responses;
 
+import shared.enums.MessageStatus;
+import shared.enums.MessageType;
+
 public class AddCourseResponse extends BaseResponse {
     private String courseId;
     private String sectionId;
 
-    public AddCourseResponse(String message, String courseId, String sectionId) {
-        super(message);
+    public AddCourseResponse(MessageStatus messageStatus, MessageType messageType, String message, String courseId, String sectionId) {
+        super(message,  messageStatus, messageType);
         this.courseId = courseId;
         this.sectionId = sectionId;
     }

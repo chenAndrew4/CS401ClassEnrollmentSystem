@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
     private final MessageType type; // LOGIN, LOGOUT, GET, SET, DELETE, etc
     private MessageStatus status; // SUCCESS, ERROR, EXCEPTION,
-    private Object content;
+//    private Object content;
 
 //    // Classes to pass back and forth from the server and client
 //    protected User user;
@@ -21,15 +21,16 @@ public class Message implements Serializable {
     public Message(){
         this.type = null;
         this.status = null;
-        content = null;
+//        content = null;
 //        this.user = null;
 //        this.users = null;
     }
     
     // for login or pass info to server
-    public Message(MessageType type, Object content){
+    public Message(MessageType type){
     	this.type = type;
-        this.content = content;
+        this.status = null;
+//        this.content = content;
     }
     
 //    // For logging in, logging out, editing a user, adding a user, or removing a user. Anything user related.
@@ -39,10 +40,9 @@ public class Message implements Serializable {
 //    }
     
     // Used by the server to respond to the client's request
-    public Message(MessageType type, MessageStatus status, Object content){
+    public Message(MessageType type, MessageStatus status){
     	this.type = type;
     	this.status = status;
-    	this.content = content;
     }
     
 //    // We will need to add message constructors for specific classes, i.e. for receiving shared.models.Course objects from client
@@ -54,10 +54,6 @@ public class Message implements Serializable {
         this.status = status;
         return this;
     }
-
-    public void setContent(Object content) {
-        this.content = content;
-    }
     
     public MessageType getType() {
     	return this.type;
@@ -67,16 +63,11 @@ public class Message implements Serializable {
     	return this.status;
     }
 
-    public Object getContent() {
-        return content;
-    }
-
     @Override
     public String toString() {
         return "Message{" +
                 "type=" + type +
                 ", status=" + status +
-                ", content=" + content.toString() +
                 '}';
     }
     

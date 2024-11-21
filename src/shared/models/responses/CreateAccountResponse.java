@@ -1,10 +1,13 @@
 package shared.models.responses;
 
+import shared.enums.MessageStatus;
+import shared.enums.MessageType;
+
 public class CreateAccountResponse extends BaseResponse {
     private String userId;
 
-    public CreateAccountResponse(String message, String userId) {
-        super(message);
+    public CreateAccountResponse( MessageType messageType,MessageStatus messageStatus,  String message, String userId) {
+        super(message, messageStatus, messageType);
         this.userId = userId;
     }
 

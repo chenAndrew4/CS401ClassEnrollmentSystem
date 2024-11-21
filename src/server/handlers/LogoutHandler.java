@@ -5,16 +5,19 @@ import shared.enums.MessageStatus;
 import shared.enums.MessageType;
 import shared.models.Message;
 import shared.models.User;
+import shared.models.requests.BaseRequest;
+import shared.models.requests.LogoutRequest;
+import shared.models.responses.LogoutResponse;
 
 public class LogoutHandler {
-    public static Message handleLogout(Message request) {
+    public static LogoutResponse handleLogout(BaseRequest request) {
         SessionManager sessionManager = SessionManager.getInstance();
-        User user = (User) request.getContent();
-        if (user.isAuthenicated()) {
-            String sessionToken = user.getSessionToken();
+        LogoutRequest logoutRequest = (LogoutRequest) request;
+        String sessionToken = logoutRequest.getSessionToken();
+        if (logoutRequest.isAuthenicated()) {
             sessionManager.terminateSession(sessionToken);
-            return new Message(MessageType.LOGOUT, "Logout successful").setStatus(MessageStatus.SUCCESS);
+            return new LogoutResponse(true,  "Logout successful", MessageStatus.SUCCESS);
         }
-        return new Message(MessageType.LOGOUT, "Invalid credentials").setStatus(MessageStatus.FAILURE);
+        return new LogoutResponse(false, "Invalid credentials", MessageStatus.FAILURE);
     }
 }

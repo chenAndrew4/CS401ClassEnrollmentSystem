@@ -34,10 +34,10 @@ public class LogTest {
         log.error("An example error occurred");
         log.print("This is a log message without a new line.");
 
-        // Example message class usage (implementing your Message class)
-        Message exampleMessage = new Message(MessageType.LOGIN, MessageStatus.SUCCESS, "This is an example message.");
-        log.receivedMessage("127.0.0.1:8080", exampleMessage);
-        log.sendingMessage("192.168.1.100:9090", exampleMessage);
+//        // Example message class usage (implementing your Message class)
+//        Message exampleMessage = new Message(MessageType.LOGIN, MessageStatus.SUCCESS, "This is an example message.");
+//        log.receivedMessage("127.0.0.1:8080", exampleMessage);
+//        log.sendingMessage("192.168.1.100:9090", exampleMessage);
 
         // Show the JFrame
         frame.setVisible(true);

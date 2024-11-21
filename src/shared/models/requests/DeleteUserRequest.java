@@ -2,14 +2,16 @@ package shared.models.requests;
 
 import shared.enums.AccountType;
 import shared.enums.Institutions;
+import shared.enums.MessageStatus;
+import shared.enums.MessageType;
 import shared.models.User;
 
 public class DeleteUserRequest extends BaseRequest {
     private String usernameToDelete;  // Username of the user to delete
     private AccountType accountType; // The session token for authentication
 
-    public DeleteUserRequest(String usernameToDelete, Institutions institutionID, String sessionToken, User currentUser) {
-        super(institutionID, sessionToken); // Pass the current user (administrator)
+    public DeleteUserRequest(MessageType messageType, MessageStatus messageStatus, String usernameToDelete, Institutions institutionID, String sessionToken, User currentUser, boolean isAuthenicated) {
+        super(messageType, messageStatus,institutionID, sessionToken, isAuthenicated); // Pass the current user (administrator)
         this.usernameToDelete = usernameToDelete;
         this.accountType = currentUser.getAccountType();
     }

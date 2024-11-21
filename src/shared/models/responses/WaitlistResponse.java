@@ -1,11 +1,14 @@
 package shared.models.responses;
 
+import shared.enums.MessageStatus;
+import shared.enums.MessageType;
+
 public class WaitlistResponse extends BaseResponse {
     private String courseId;
     private int waitlistPosition;
 
-    public WaitlistResponse(String message, String courseId, int waitlistPosition) {
-        super(message);
+    public WaitlistResponse( MessageStatus messageStatus, MessageType messageType, String message, String courseId, int waitlistPosition) {
+        super(message, messageStatus, messageType);
         this.courseId = courseId;
         this.waitlistPosition = waitlistPosition;
     }

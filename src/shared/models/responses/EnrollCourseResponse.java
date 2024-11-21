@@ -1,5 +1,7 @@
 package shared.models.responses;
 
+import shared.enums.MessageStatus;
+import shared.enums.MessageType;
 import shared.models.Schedule;
 
 public class EnrollCourseResponse extends BaseResponse {
@@ -8,8 +10,8 @@ public class EnrollCourseResponse extends BaseResponse {
     private Schedule schedule; // Schedule of the enrolled course
     private int waitlistPosition; // Position in the waitlist (optional)
 
-    public EnrollCourseResponse(String message) {
-        super(message);
+    public EnrollCourseResponse(String message, MessageStatus messageStatus, MessageType messageType) {
+        super(message,  messageStatus, messageType);
     }
 
     public String getCourseId() {

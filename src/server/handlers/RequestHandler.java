@@ -1,16 +1,16 @@
 package server.handlers;
 
-import server.CourseManager;
-import server.SessionManager;
 import server.utils.Log;
+import shared.enums.MessageStatus;
 import shared.enums.MessageType;
 import shared.models.Message;
-import server.UserManager;
+import shared.models.requests.BaseRequest;
+import shared.models.responses.BaseResponse;
 
 import java.io.IOException;
 
-public class MessageHandler {
-    public static Message handleMessage(Message request, Log log) throws IOException {
+public class RequestHandler {
+    public static BaseResponse handleRequest(BaseRequest request, Log log) throws IOException {
         switch (request.getType()) {
             case CREATE_ACCOUNT:
                 return CreateAccountHandler.handleCreateAccount(request, log);
@@ -23,12 +23,12 @@ public class MessageHandler {
             case DROP_COURSE:
 //                return DropCourseHandler.handleDropCourse(request, courseManager, sessionManager);
             case DELETE:
-                return DeleteHandler.handleDelete(request);
+//                return DeleteHandler.handleDelete(request);
             case DEBUG:
                 return DebugHandler.handleDebug(request);
             default:
                 log.println("Unknown message type received: " + request.getType());
-                return new Message(MessageType.DEBUG, "Unknown message type");
+                return new BaseResponse("Unknown message type", MessageStatus.ERROR ,MessageType.DEFUALT);
         }
     }
 }

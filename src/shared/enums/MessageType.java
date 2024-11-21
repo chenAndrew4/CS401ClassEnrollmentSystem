@@ -20,5 +20,6 @@ public enum MessageType{
 	GET_SYLLABUS,
 	ADD,
 	DELETE,
-	DEBUG
+	DEBUG,
+	DEFUALT,
 }

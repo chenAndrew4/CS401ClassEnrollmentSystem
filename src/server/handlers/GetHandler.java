@@ -4,10 +4,12 @@ import shared.enums.MessageStatus;
 import shared.enums.MessageType;
 import shared.models.Course;
 import shared.models.Message;
+import shared.models.requests.BaseRequest;
+import shared.models.responses.BaseResponse;
 
 public class GetHandler {
     // handleGetCourse
-    public static Message handleGet(Message request) {
+    public static BaseResponse handleGet(BaseRequest request) {
 //        String classId = (String) request.getContent();
 //        Course course = CourseManager.getCourseById(classId);
 //

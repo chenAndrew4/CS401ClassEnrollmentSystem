@@ -1,13 +1,18 @@
 package shared.models.responses;
 
 import shared.enums.MessageStatus;
+import shared.enums.MessageType;
+import shared.models.Message;
 
-import java.io.Serializable;
-
-public class BaseResponse implements Serializable {
+public class BaseResponse extends Message {
     private String message; // Human-readable message for the client
 
-    public BaseResponse(String message) {
+    public BaseResponse() {
+        super();
+    }
+
+    public BaseResponse(String message, MessageStatus messageStatus, MessageType messageType) {
+        super(messageType, messageStatus);
         this.message = message;
     }
 
