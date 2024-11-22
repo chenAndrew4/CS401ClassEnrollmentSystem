@@ -23,7 +23,9 @@ public class ThreadClient {
 
     private static ThreadClient instance; // Singleton instance of ThreadClient
 
-    private User loggedInUser; // Store the authenticated user
+    private Student loggedInStudent;// Store the authenticated user
+    private Faculty loggedInfaculty;
+    private Administrator loggedInAdmin;
 
     private ThreadClient() {
         // Private constructor for Singleton
@@ -54,14 +56,14 @@ public class ThreadClient {
                 LoginResponse response = (LoginResponse) in.readObject();
                 if (MessageStatus.SUCCESS == response.getStatus()) {
                     if (AccountType.Student == response.getUser().getAccountType()) {
-                        loggedInUser = (Student) response.getUser();
-                        callback.onLoginSuccess(loggedInUser);
+                        loggedInStudent = (Student) response.getUser();
+                        callback.onLoginSuccess(loggedInStudent);
                     } else if (AccountType.Faculty == response.getUser().getAccountType()) {
-                        loggedInUser = (Faculty) response.getUser();
-                        callback.onLoginSuccess(loggedInUser);
+                        loggedInfaculty = (Faculty) response.getUser();
+                        callback.onLoginSuccess(loggedInfaculty);
                     } else if (AccountType.Administrator == response.getUser().getAccountType()) {
-                        loggedInUser = (Administrator) response.getUser();
-                        callback.onLoginSuccess(loggedInUser);
+                        loggedInAdmin = (Administrator) response.getUser();
+                        callback.onLoginSuccess(loggedInAdmin);
                     } else {
                         callback.onLoginFailure("Invalid username or password.");
                     }
