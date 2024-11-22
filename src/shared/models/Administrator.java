@@ -12,6 +12,10 @@ import java.util.List;
 public class Administrator extends User {
     private List<User> managedUsers; // All users managed by the administrator
 
+    public Administrator() {
+        this.managedUsers = new ArrayList<>();
+    }
+
     // Constructor
     public Administrator(String userID, String username,String firstName, String lastName, String password, Institutions institutionID, Department department) {
         super(userID, username, firstName, lastName, password, institutionID, department,AccountType.Administrator);

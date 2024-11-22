@@ -1,15 +1,24 @@
 package client.gui.CSUEB;
 
 import client.Callback;
+import client.Client;
+import client.ClientConfig;
 import client.ThreadClient;
 import client.gui.LoginSettingGUI;
 import client.gui.SignupGUI;
+import client.gui.StudentDashboardGUI;
+import server.UserService;
 import shared.enums.AccountType;
 import shared.enums.Institutions;
+import shared.models.Student;
 import shared.models.User;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class LoginGUI extends JFrame {
     private JTextField usernameField;
@@ -119,7 +128,7 @@ private void handleLogin() {
             public void onLoginSuccess(User user) {
                 SwingUtilities.invokeLater(() -> {
 //                    JOptionPane.showMessageDialog(LoginGUI.this, "Login successful!", "Login", JOptionPane.INFORMATION_MESSAGE);
-                    openDashboard(user.getAccountType());
+                    openDashboard(user);
                     dispose(); // Close LoginGUI
                 });
             }
@@ -134,10 +143,10 @@ private void handleLogin() {
     }
 }
 
-    private void openDashboard(AccountType type) {
-        switch (type) {
+    private void openDashboard(User user) {
+        switch (user.getAccountType()) {
             case Student:
-//                new StudentDashboardGUI(); // Replace with actual GUI initialization
+                new StudentDashboardGUI((Student)user); // Replace with actual GUI initialization
                 break;
             case Faculty:
 //                new FacultyDashboardGUI(); // Replace with actual GUI initialization
@@ -146,7 +155,7 @@ private void handleLogin() {
 //                new AdminDashboardGUI(); // Replace with actual GUI initialization
                 break;
             default:
-                JOptionPane.showMessageDialog(this, "Unknown Account type: " + type, "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Unknown Account type: " + user.getAccountType(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

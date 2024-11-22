@@ -2,9 +2,6 @@ package tests.server;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import server.FileDataManager;
-import server.ServerManager;
-import server.UserManager;
 import server.dataManagers.UserDataManager;
 import shared.enums.*;
 import shared.models.*;
@@ -25,7 +22,7 @@ public class FileDataManagerTest {
     public static void beforeTest() {
         userDataManager = UserDataManager.getInstance();
         testUsers = new ArrayList<>();
-        User u1 = new User();
+        Administrator u1 = new Administrator();
         u1.setUserId("e4eaaaf2-d142-11e1-b3e4-080027620cde");
         u1.setUsername("admin");
         u1.setPassword("password");
@@ -103,15 +100,15 @@ public class FileDataManagerTest {
     //
     @Test
     public void testSaveUser() {
-//        userDataManager.saveUsersByInstitution(Institutions.CSUEB, testUserMap);
+        userDataManager.commitDBByInstitution(Institutions.CSUEB, testUserMap);
     }
 
     @Test
     public void testLoadUser() throws IOException {
-//        userMap = userDataManager.loadUsersByInstitution(Institutions.CSUEB);
-//        for (User u : userMap.values()) {
-//            System.out.println(u.getUsername());
-//        }
+        userMap = userDataManager.getUsersByInstitution(Institutions.CSUEB);
+        for (User u : userMap.values()) {
+            System.out.println(u.getUsername());
+        }
     }
 
 //    @Test
