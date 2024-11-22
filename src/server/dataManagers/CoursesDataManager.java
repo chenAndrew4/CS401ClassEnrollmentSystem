@@ -23,6 +23,8 @@ public class CoursesDataManager {
 
     private CoursesDataManager() {
         institutionCourses = new HashMap<>();
+        // Register save task for centralized data saving
+        DataSaveManager.getInstance().registerSaveTask(this::saveAllCourses);
     }
 
     public static synchronized CoursesDataManager getInstance() {
@@ -33,7 +35,7 @@ public class CoursesDataManager {
     }
 
     // Add a course for a specific institution
-    public boolean addOrUpdateCourse(Institutions institution, Course course) {
+    public synchronized boolean addOrUpdateCourse(Institutions institution, Course course) {
         if (institution == null || course == null) {
             return false; // Invalid input
         }
@@ -47,7 +49,7 @@ public class CoursesDataManager {
     }
 
     // Remove a course by its ID for a specific institution
-    public boolean removeCourse(Institutions institution, String courseID) {
+    public synchronized boolean removeCourse(Institutions institution, String courseID) {
         if (institution == null || courseID == null || !institutionCourses.containsKey(institution)) {
             return false; // Invalid input or institution not found
         }
@@ -62,16 +64,16 @@ public class CoursesDataManager {
     }
 
     // Get a course by its ID for a specific institution
-    public Course getCourseByCourseID(Institutions institution, String courseID) {
+    public synchronized Course getCourseByCourseID(Institutions institution, String courseID) {
         if (institution == null || courseID == null || !institutionCourses.containsKey(institution)) {
             return null; // Invalid input or institution not found
         }
 
-        return institutionCourses.get(institution).get(courseID);
+        return new Course(institutionCourses.get(institution).get(courseID));
     }
 
     // Retrieve all courses for a specific institution
-    public Map<String, Course> getAllCourses(Institutions institution) {
+    public synchronized Map<String, Course> getAllCourses(Institutions institution) {
         if (institution == null || !institutionCourses.containsKey(institution)) {
             return Collections.emptyMap(); // Invalid input or institution not found
         }
@@ -80,7 +82,7 @@ public class CoursesDataManager {
     }
 
     // Get a section by its ID for a specific institution
-    public CourseSection getSectionById(Institutions institution, String sectionID) {
+    public synchronized CourseSection getSectionById(Institutions institution, String sectionID) {
         if (institution == null || sectionID == null || !institutionCourses.containsKey(institution)) {
             return null; // Invalid input or institution not found
         }
@@ -88,7 +90,7 @@ public class CoursesDataManager {
         for (Course course : institutionCourses.get(institution).values()) {
             for (CourseSection section : course.getSections()) {
                 if (section.getSectionID().equals(sectionID)) {
-                    return section;
+                    return new CourseSection(section);
                 }
             }
         }
@@ -97,15 +99,14 @@ public class CoursesDataManager {
     }
 
     // Get the course containing a specific section ID for a specific institution
-    public Course getCourseBySectionId(Institutions institution, String sectionID) {
+    public synchronized Course getCourseBySectionId(Institutions institution, String sectionID) {
         if (institution == null || sectionID == null || !institutionCourses.containsKey(institution)) {
             return null; // Invalid input or institution not found
         }
-
         for (Course course : institutionCourses.get(institution).values()) {
             for (CourseSection section : course.getSections()) {
                 if (section.getSectionID().equals(sectionID)) {
-                    return course;
+                    return new Course(course);
                 }
             }
         }
@@ -114,14 +115,14 @@ public class CoursesDataManager {
     }
 
     // Save all courses to files
-    public void saveAllCourses() {
+    public synchronized void saveAllCourses() {
         for (Map.Entry<Institutions, Map<String, Course>> entry : institutionCourses.entrySet()) {
             saveCoursesByInstitution(entry.getKey(), entry.getValue());
         }
     }
 
     // Save courses for a specific institution
-    public void saveCoursesByInstitution(Institutions institutionID, Map<String, Course> courses) {
+    public synchronized void saveCoursesByInstitution(Institutions institutionID, Map<String, Course> courses) {
         String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
@@ -134,7 +135,7 @@ public class CoursesDataManager {
     }
 
     // Load all courses from files
-    public void loadAllCourses(List<Institutions> institutionIDs) {
+    public synchronized void loadAllCourses(List<Institutions> institutionIDs) {
         for (Institutions institutionID : institutionIDs) {
             institutionCourses.put(institutionID, loadCoursesByInstitution(institutionID));
         }
@@ -142,7 +143,7 @@ public class CoursesDataManager {
 
     // Load courses for a specific institution
     @SuppressWarnings("unchecked")
-    public Map<String, Course> loadCoursesByInstitution(Institutions institutionID) {
+    public synchronized Map<String, Course> loadCoursesByInstitution(Institutions institutionID) {
         String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
         Map<String, Course> courses = null;
 

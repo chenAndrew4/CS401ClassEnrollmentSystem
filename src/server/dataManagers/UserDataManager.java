@@ -6,10 +6,7 @@ import shared.models.User;
 
 import java.io.*;
 import java.rmi.MarshalledObject;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
+import java.util.*;
 
 public class UserDataManager {
 
@@ -19,6 +16,8 @@ public class UserDataManager {
         userMap = new HashMap<>();
         imported = new HashMap<>();
         modified = new HashMap<>();
+        // Register save task for centralized data saving
+        DataSaveManager.getInstance().registerSaveTask(this::saveAllUsers);
     }
 
     public static synchronized UserDataManager getInstance() {
@@ -31,12 +30,12 @@ public class UserDataManager {
     private static final String FILE_PREFIX = ServerManager.DB_FILE_PATH_PREFIX;
     private static final String FILE_SUFFIX = ServerManager.USERS_DB_FILE_PATH_SUFFIX;
 
-    private Map<Institutions, Boolean> imported;
-    private Map<Institutions, Boolean> modified;
-    private Map<Institutions, Map<String, User>> userMap;
+    private final Map<Institutions, Boolean> imported;
+    private final Map<Institutions, Boolean> modified;
+    private final Map<Institutions, Map<String, User>> userMap;
 
     // Check if data for an institution is imported, and import if not
-    private void isImported(Institutions institutionID) {
+    private synchronized void isImported(Institutions institutionID) {
         if (!imported.getOrDefault(institutionID, false)) {
             Map<String, User> users = loadUsersByInstitution(institutionID);
             userMap.put(institutionID, users);
@@ -46,7 +45,7 @@ public class UserDataManager {
     }
 
     // Add a user for a specific institution
-    public boolean addUserByInstitution(Institutions institutionID, User user) {
+    public synchronized boolean addUserByInstitution(Institutions institutionID, User user) {
         isImported(institutionID);
         userMap.get(institutionID).put(user.getUsername(), user);
         modified.put(institutionID, true);
@@ -54,21 +53,21 @@ public class UserDataManager {
     }
 
     // Retrieve a user for a specific institution
-    public User getUserByInstitution(Institutions institutionID, String username) {
+    public synchronized User getUserByInstitution(Institutions institutionID, String username) {
         isImported(institutionID);
         return userMap.get(institutionID).get(username);
     }
 
-    // Retrieve all users for a specific institution
-//    public List<User> getUsersByInstitution(Institutions institutionID) {
-    public Map<String, User> getUsersByInstitution(Institutions institutionID) {
+    // Retrieve all users for a specific institution (Defensive Copy)
+    public synchronized Map<String, User> getUsersByInstitution(Institutions institutionID) {
         isImported(institutionID);
-        return userMap.get(institutionID);
-//        return new ArrayList<>(userMap.get(institutionID).values());
+        return userMap.containsKey(institutionID)
+                ? Collections.unmodifiableMap(new HashMap<>(userMap.get(institutionID)))
+                : Collections.emptyMap();
     }
 
     // Remove a user for a specific institution
-    public boolean removeUserByInstitution(Institutions institutionID, String username) {
+    public synchronized boolean removeUserByInstitution(Institutions institutionID, String username) {
         isImported(institutionID);
         if (userMap.containsKey(institutionID)) {
             Map<String, User> curMap = userMap.get(institutionID);
@@ -82,7 +81,7 @@ public class UserDataManager {
     }
 
     // Update a user's details for a specific institution
-    public void updateUserByInstitutions(Institutions institutionID, User user) {
+    public synchronized void updateUserByInstitutions(Institutions institutionID, User user) {
         isImported(institutionID);
         if (userMap.containsKey(institutionID)) {
             Map<String, User> curMap = userMap.get(institutionID);
@@ -94,21 +93,21 @@ public class UserDataManager {
     }
 
     // Save all users for all institutions to their respective files
-    private void saveAllUsers(Map<Institutions, Map<String, User>> institutionUsers) {
-        if (institutionUsers == null || institutionUsers.isEmpty()) {
+    public synchronized void saveAllUsers() {
+        if (userMap == null || userMap.isEmpty()) {
             System.out.println("No data to save. Skipping save operation.");
-            return; // Exit if the map is empty or null
+            return;
         }
-        for (Map.Entry<Institutions, Map<String, User>> entry : institutionUsers.entrySet()) {
+        for (Map.Entry<Institutions, Map<String, User>> entry : userMap.entrySet()) {
             saveUsersByInstitution(entry.getKey(), entry.getValue());
         }
     }
 
     // Save users for a specific institution
-    private void saveUsersByInstitution(Institutions institutionID, Map<String, User> users) {
+    private synchronized void saveUsersByInstitution(Institutions institutionID, Map<String, User> users) {
         if (users == null || users.isEmpty()) {
             System.out.println("No data to save. Skipping save operation.");
-            return; // Exit if the map is empty or null
+            return;
         }
         String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
@@ -121,7 +120,7 @@ public class UserDataManager {
     }
 
     // Load users for all institutions from their files
-    private Map<Institutions, Map<String, User>> loadAllUsers(List<Institutions> institutionIDs) {
+    private synchronized Map<Institutions, Map<String, User>> loadAllUsers(List<Institutions> institutionIDs) {
         Map<Institutions, Map<String, User>> institutionUsers = new HashMap<>();
         for (Institutions institutionID : institutionIDs) {
             institutionUsers.put(institutionID, loadUsersByInstitution(institutionID));
@@ -131,45 +130,48 @@ public class UserDataManager {
 
     // Load users for a specific institution
     @SuppressWarnings("unchecked")
-    private Map<String, User> loadUsersByInstitution(Institutions institutionID) {
+    private synchronized Map<String, User> loadUsersByInstitution(Institutions institutionID) {
         String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
         Map<String, User> users = null;
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            users = (Map<String, User>) ois.readObject();
-            System.out.println("Users loaded successfully for institution: " + institutionID);
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            // Check if the file is empty or contains only whitespace
+            if (fis.available() == 0) {
+                System.err.println("File is empty for institution: " + institutionID + ". Returning empty map.");
+                return new HashMap<>();
+            }
+
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)))) {
+                String content = reader.lines().reduce("", String::concat).trim();
+                if (content.isEmpty()) {
+                    System.err.println("File contains only whitespace for institution: " + institutionID + ". Returning empty map.");
+                    return new HashMap<>();
+                }
+            }
+
+            // Deserialize the object if the file is not empty or whitespace
+            try (ObjectInputStream ois = new ObjectInputStream(fis)) {
+                users = (Map<String, User>) ois.readObject();
+                System.out.println("Users loaded successfully for institution: " + institutionID);
+            }
         } catch (FileNotFoundException e) {
             System.err.println("File not found for institution: " + institutionID + ". Returning empty map.");
             users = new HashMap<>();
         } catch (Exception e) {
             System.err.println("Error loading users for institution: " + institutionID);
             e.printStackTrace();
+            users = new HashMap<>();
         }
-
         return users;
     }
 
-    // Import user data for a specific institution
-    public void importDBByInstitution(Institutions institutionID) {
-        isImported(institutionID);
-    }
-
     // Commit user data for a specific institution to file
-    public void commitDBByInstitution(Institutions institutionID) {
+    public synchronized void commitDBByInstitution(Institutions institutionID) {
         isImported(institutionID);
-        if (modified.containsKey(institutionID) && modified.get(institutionID)) {
+        if (modified.getOrDefault(institutionID, false)) {
             saveUsersByInstitution(institutionID, userMap.get(institutionID));
             modified.put(institutionID, false);
         }
-    }
-
-    public void commitDBByInstitution(Institutions institutionID, Map<String, User> map) {
-        saveUsersByInstitution(institutionID, map);
-    }
-
-    // Commit user data for a specific institution to file
-    public void commitDBAllUsers() {
-        saveAllUsers(userMap);
     }
 }
 //public class UserDataManager {

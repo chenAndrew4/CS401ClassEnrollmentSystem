@@ -2,6 +2,7 @@ package shared.models;
 
 import shared.enums.AccountType;
 import shared.enums.Department;
+import shared.enums.GenderIdentity;
 import shared.enums.Institutions;
 
 import java.io.Serializable;
@@ -11,20 +12,20 @@ import java.util.Random;
 import java.util.UUID;
 
 public class User implements Serializable{
-	private String userId; // Column 1 in users.db
-	private String username; // Column 2 in users.db
-	private String password; // Column 3 in users.db
-	private String firstName; // Column 4 in users.db
-	private String lastName; // Column 5 in users.db
-	private Institutions institutionID; // Column 6 in users.db
+	private String userId;
+	private String username;
+	private String password;
+	private String firstName;
+	private String lastName;
+	private Institutions institutionID;
 	private Department department;
-	private AccountType accountType; // Column 7 in users.db
+	private AccountType accountType;
 	private String sessionToken;
-	private boolean isAuthenicated;
-	private Date date;  // admission date
-	
+	private boolean isAuthenticated;
+	private Date date;  // Admission date
+	private GenderIdentity genderIdentity; // Gender identity
+
 	public User() {
-		Random random = new Random();
 		this.userId = UUID.randomUUID().toString();
 		this.username = null;
 		this.password = null;
@@ -34,11 +35,14 @@ public class User implements Serializable{
 		this.department = null;
 		this.accountType = null;
 		this.sessionToken = null;
-		this.isAuthenicated = false;
+		this.isAuthenticated = false;
 		this.date = new Date();
+		this.genderIdentity = GenderIdentity.NONE;
 	}
 
-	public User(String userID, String username, String firstName, String lastName, String password, Institutions institution, Department department,AccountType accountType) {
+	public User(String userID, String username, String firstName, String lastName, String password,
+				Institutions institution, Department department, AccountType accountType,
+				GenderIdentity genderIdentity) {
 		this.userId = userID;
 		this.username = username;
 		this.password = password;
@@ -48,12 +52,13 @@ public class User implements Serializable{
 		this.department = department;
 		this.accountType = accountType;
 		this.sessionToken = null;
-		this.isAuthenicated = false;
+		this.isAuthenticated = false;
 		this.date = new Date();
+		this.genderIdentity = genderIdentity;
 	}
 
-	public boolean isAuthenicated() {
-		return isAuthenicated;
+	public boolean isAuthenticated() {
+		return this.isAuthenticated;
 	}
 
 	public String getUserId() {
@@ -127,8 +132,8 @@ public class User implements Serializable{
 		this.sessionToken = sessionToken;
 	}
 
-	public void setAuthenicated(boolean authenicated) {
-		isAuthenicated = authenicated;
+	public void setAuthenticated(boolean authenticated) {
+		isAuthenticated = authenticated;
 	}
 
 	public Date getDate() {
@@ -139,11 +144,22 @@ public class User implements Serializable{
 		this.date = date;
 	}
 
+	public GenderIdentity getGenderIdentity() {
+		return genderIdentity;
+	}
+
+	public void setGenderIdentity(GenderIdentity genderIdentity) {
+		this.genderIdentity = genderIdentity;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		User user = (User) o;
-		return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(institutionID, user.institutionID) && department == user.department && accountType == user.accountType;
+		return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) &&
+				Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) &&
+				Objects.equals(lastName, user.lastName) && Objects.equals(institutionID, user.institutionID) &&
+				department == user.department && accountType == user.accountType;
 	}
 
 	@Override
@@ -159,7 +175,7 @@ public class User implements Serializable{
 				", institutionID=" + institutionID +
 				", department=" + department +
 				", accountType=" + accountType +
-				", date=" + date +
+				", genderIdentity=" + genderIdentity +
 				", username='" + username + '\'' +
 				", userId='" + userId + '\'' +
 				'}';

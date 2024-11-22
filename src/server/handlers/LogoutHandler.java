@@ -1,6 +1,6 @@
 package server.handlers;
 
-import server.SessionService;
+import server.service.SessionService;
 import shared.enums.MessageStatus;
 import shared.models.requests.BaseRequest;
 import shared.models.requests.LogoutRequest;

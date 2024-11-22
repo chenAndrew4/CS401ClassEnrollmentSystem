@@ -66,7 +66,7 @@ public class Client {
         return false;
 	}
 	public boolean enrollInCourse(String courseId, String sectionID) {
-        EnrollCourseRequest enrollRequest = new EnrollCourseRequest(MessageType.ENROLL_COURSE, null, currentUser.getInstitutionID(), currentUser.getSessionToken(), courseId, sectionID, currentUser.isAuthenicated());
+        EnrollCourseRequest enrollRequest = new EnrollCourseRequest(MessageType.ENROLL_COURSE, null, currentUser.getInstitutionID(), currentUser.getSessionToken(), courseId, sectionID, currentUser.isAuthenticated());
         EnrollCourseResponse response = (EnrollCourseResponse) serverHandler.sendRequest(enrollRequest);
         if (response.getStatus() == MessageStatus.SUCCESS) {
             System.out.println("Enrolled successfully.");

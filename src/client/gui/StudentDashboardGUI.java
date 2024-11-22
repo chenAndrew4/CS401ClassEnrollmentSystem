@@ -73,8 +73,8 @@ public class StudentDashboardGUI extends JFrame {
 
         // Course List
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (CourseSection course : enrolledCourses) {
-            listModel.addElement(course.getCourseID() + " - " + course.getCourseID());
+        for (CourseSection courseSection : enrolledCourses) {
+            listModel.addElement(courseSection.getSectionID() + " - " + courseSection.getSectionID());
         }
         JList<String> courseList = new JList<>(listModel);
         courseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

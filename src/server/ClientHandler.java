@@ -12,7 +12,7 @@ import java.net.Socket;
 
 class ClientHandler implements Runnable {
 		private final Socket clientSocket;
-		private final Connection connectionStatus;
+//		private final Connection connectionStatus;
 		private final Log log;
 		private String clientIpAddPort = null;
 //		private final SessionManager sessionManager;
@@ -21,7 +21,7 @@ class ClientHandler implements Runnable {
 		public ClientHandler(Socket socket, Log log)
 		{
 			this.clientSocket = socket;
-			this.connectionStatus = new Connection();
+//			this.connectionStatus = new Connection();
 			this.log = log;
 			this.clientIpAddPort = this.clientSocket.getInetAddress().getHostAddress().replace("/", "") + ":" + this.clientSocket.getPort();
 //			this.sessionManager = sessionManager;

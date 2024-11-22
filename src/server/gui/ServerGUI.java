@@ -8,12 +8,12 @@ import java.awt.*;
 
 public class ServerGUI {
     private JFrame frame;
-    private JTextArea logTextArea;
+    public static JTextArea logTextArea;
     private Log log;
 
     public ServerGUI() {
         initializeGUI();
-        log = new Log(logTextArea);
+        log = Log.getInstance(logTextArea);
     }
 
     private void initializeGUI() {

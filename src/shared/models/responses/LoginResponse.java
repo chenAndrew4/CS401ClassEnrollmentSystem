@@ -18,7 +18,7 @@ public class LoginResponse extends BaseResponse {
         super(message, messageStatus, messageType);
         this.user = user;
         user.setSessionToken(sessionToken);
-        user.setAuthenicated(authen);
+        user.setAuthenticated(authen);
     }
     public User getUser() {
         return user;

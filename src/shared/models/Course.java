@@ -4,6 +4,7 @@ import shared.enums.*;
 import shared.utils.IDGenerator;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course implements Serializable {
@@ -31,6 +32,28 @@ public class Course implements Serializable {
 		this.academicProgram = academicProgram;
 		this.units = units;
 		this.department = department;
+	}
+
+	// Copy constructor
+	public Course(Course other) {
+		this.courseID = other.courseID;
+		this.name = other.name;
+		this.description = other.description;
+		this.institutionID = other.institutionID;
+		this.notes = other.notes;
+		this.level = other.level;
+		this.academicProgram = other.academicProgram;
+		this.units = other.units;
+		this.department = other.department;
+
+		// Deep copy of prerequisites
+		this.prerequisites = new ArrayList<>(other.prerequisites);
+
+		// Deep copy of sections
+		this.sections = new ArrayList<>();
+		for (CourseSection section : other.sections) {
+			this.sections.add(new CourseSection(section)); // Assuming CourseSection has a copy constructor
+		}
 	}
 
 	public String getCourseID() {

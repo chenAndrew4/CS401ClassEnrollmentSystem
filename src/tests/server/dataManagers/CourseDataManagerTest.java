@@ -18,9 +18,17 @@ public class CourseDataManagerTest {
         // Create a Schedule instance
         Schedule schedule = new Schedule("SCH001");
         schedule.setDays(new Days[]{Days.MONDAY, Days.WEDNESDAY, Days.FRIDAY});
-        Date sD = new Date(2024, Calendar.JANUARY, 15);
+        // Create a Calendar instance
+        Calendar calendar = Calendar.getInstance();
+        // Set the date to November 22, 2024
+        calendar.set(2024, Calendar.JANUARY, 15);
+        // Retrieve the Date object
+        Date sD = calendar.getTime();
         schedule.setStartDate(sD); // Example: Jan 15, 2024
-        Date eD = new Date(2024, Calendar.MAY, 10);
+
+        calendar.set(2024, Calendar.MAY, 10);
+        // Retrieve the Date object
+        Date eD = calendar.getTime();
         schedule.setEndDate(eD);       // Example: May 10, 2024
         schedule.setStartTime(Time.TIME_900);                        // 9:00 AM
         schedule.setEndTime(Time.TIME_1030);

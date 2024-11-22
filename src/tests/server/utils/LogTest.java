@@ -27,7 +27,7 @@ public class LogTest {
         frame.add(scrollPane, BorderLayout.CENTER);
 
         // Create an instance of the Log class
-        Log log = new Log(textArea);
+        Log log = Log.getInstance(textArea);
 
         // Use the log instance to log messages
         log.println("Application started");

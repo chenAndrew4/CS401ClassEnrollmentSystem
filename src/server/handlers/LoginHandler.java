@@ -1,11 +1,12 @@
 package server.handlers;
 
-import server.SessionService;
-import server.UserService;
-import server.dataManagers.UserDataManager;
+import server.service.SessionService;
+import server.service.UserService;
 import server.utils.Log;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
+import shared.models.Administrator;
+import shared.models.Faculty;
 import shared.models.User;
 import shared.models.requests.BaseRequest;
 import shared.models.requests.LoginRequest;
@@ -22,9 +23,12 @@ public class LoginHandler {
         boolean isAuthenticated = authenticateUser(user, userService);
 
         if (isAuthenticated) {
-            String sessionToken = sessionService.createSession(user.getUserId());
             // set user's token as sessionToken
+            String sessionToken = sessionService.createSession(user.getUserId());
             user = userService.getUserByInstitution(user.getInstitutionID(), user.getUsername());
+            user.setSessionToken(sessionToken);
+            user.setAuthenticated(true);
+            user = user instanceof Administrator ? ((Administrator) user) : null;
             return new LoginResponse(MessageType.LOGIN, MessageStatus.SUCCESS,"Log in success", sessionToken, true, user);
         } else {
             return new LoginResponse(MessageType.LOGIN, MessageStatus.FAILURE,"Invalid credentials");

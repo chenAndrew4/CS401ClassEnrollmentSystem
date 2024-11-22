@@ -10,7 +10,14 @@ import java.util.*;
 public class ScheduleDataManager {
     private static ScheduleDataManager instance;
 
-    private ScheduleDataManager() {}
+    // Internal map to store schedules grouped by institution
+    private final Map<Institutions, Map<String, Schedule>> institutionSchedules;
+
+    private ScheduleDataManager() {
+        institutionSchedules = new HashMap<>();
+        // Register save task for centralized data saving
+        DataSaveManager.getInstance().registerSaveTask(this::saveAllSchedules);
+    }
 
     public static synchronized ScheduleDataManager getInstance() {
         if (instance == null) {
@@ -22,15 +29,15 @@ public class ScheduleDataManager {
     private static final String FILE_PREFIX = ServerManager.DB_FILE_PATH_PREFIX;
     private static final String FILE_SUFFIX = ServerManager.SCHEDULES_DB_FILE_PATH_SUFFIX;
 
-    // Save all schedules grouped by institution
-    public void saveAllSchedules(Map<Institutions, Map<String, Schedule>> institutionSchedules) {
+    // Save all schedules to disk
+    public synchronized void saveAllSchedules() {
         for (Map.Entry<Institutions, Map<String, Schedule>> entry : institutionSchedules.entrySet()) {
             saveSchedulesByInstitution(entry.getKey(), entry.getValue());
         }
     }
 
     // Save schedules for a specific institution
-    public void saveSchedulesByInstitution(Institutions institutionID, Map<String, Schedule> schedules) {
+    public synchronized void saveSchedulesByInstitution(Institutions institutionID, Map<String, Schedule> schedules) {
         String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
@@ -42,18 +49,17 @@ public class ScheduleDataManager {
         }
     }
 
-    // Load all schedules grouped by institution
-    public Map<Institutions, Map<String, Schedule>> loadAllSchedules(List<Institutions> institutionIDs) {
-        Map<Institutions, Map<String, Schedule>> institutionSchedules = new HashMap<>();
+    // Load all schedules from disk
+    public synchronized void loadAllSchedules(List<Institutions> institutionIDs) {
         for (Institutions institutionID : institutionIDs) {
-            institutionSchedules.put(institutionID, loadSchedulesByInstitution(institutionID));
+            Map<String, Schedule> schedules = loadSchedulesByInstitution(institutionID);
+            institutionSchedules.put(institutionID, schedules);
         }
-        return institutionSchedules;
     }
 
     // Load schedules for a specific institution
     @SuppressWarnings("unchecked")
-    public Map<String, Schedule> loadSchedulesByInstitution(Institutions institutionID) {
+    public synchronized Map<String, Schedule> loadSchedulesByInstitution(Institutions institutionID) {
         String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
         Map<String, Schedule> schedules = null;
 
@@ -69,6 +75,68 @@ public class ScheduleDataManager {
         }
 
         return schedules;
+    }
+
+    // CRUD Operations
+
+    // Create or Update a Schedule
+    public synchronized boolean saveSchedule(Institutions institutionID, String scheduleID, Schedule schedule) {
+        institutionSchedules.putIfAbsent(institutionID, new HashMap<>());
+        Map<String, Schedule> schedules = institutionSchedules.get(institutionID);
+
+        schedules.put(scheduleID, schedule);
+        saveSchedulesByInstitution(institutionID, schedules);
+        return true;
+    }
+
+    // Read a Schedule (Defensive Copy)
+    public synchronized Schedule getSchedule(Institutions institutionID, String scheduleID) {
+        if (!institutionSchedules.containsKey(institutionID)) {
+            return null; // Institution not found
+        }
+        Schedule schedule = institutionSchedules.get(institutionID).get(scheduleID);
+        return schedule != null ? new Schedule(schedule) : null; // Copy constructor required in Schedule
+    }
+
+    // Read all schedules for an institution (Unmodifiable Map)
+    public synchronized Map<String, Schedule> getAllSchedules(Institutions institutionID) {
+        if (!institutionSchedules.containsKey(institutionID)) {
+            return Collections.emptyMap(); // Return empty map if no schedules
+        }
+        Map<String, Schedule> original = institutionSchedules.get(institutionID);
+        Map<String, Schedule> copiedMap = new HashMap<>();
+        for (Map.Entry<String, Schedule> entry : original.entrySet()) {
+            copiedMap.put(entry.getKey(), new Schedule(entry.getValue())); // Copy each Schedule
+        }
+        return Collections.unmodifiableMap(copiedMap);
+    }
+
+    // Delete a Schedule
+    public synchronized boolean deleteSchedule(Institutions institutionID, String scheduleID) {
+        if (!institutionSchedules.containsKey(institutionID)) {
+            return false; // Institution not found
+        }
+
+        Map<String, Schedule> schedules = institutionSchedules.get(institutionID);
+        if (schedules.remove(scheduleID) != null) {
+            saveSchedulesByInstitution(institutionID, schedules); // Save changes to disk
+            return true;
+        }
+        return false; // Schedule not found
+    }
+
+    // Delete all schedules for an institution
+    public synchronized boolean deleteAllSchedules(Institutions institutionID) {
+        if (institutionSchedules.remove(institutionID) != null) {
+            // Also delete the file on disk
+            String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
+            File file = new File(filePath);
+            if (file.exists() && file.delete()) {
+                System.out.println("All schedules deleted for institution: " + institutionID);
+            }
+            return true;
+        }
+        return false; // Institution not found
     }
 }
 

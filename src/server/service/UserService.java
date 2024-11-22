@@ -1,8 +1,7 @@
-package server;
+package server.service;
 
 import server.dataManagers.UserDataManager;
 import server.utils.Log;
-import shared.enums.Department;
 import shared.enums.Institutions;
 import shared.models.User;
 
@@ -12,7 +11,7 @@ import java.util.*;
 
 public class UserService implements Serializable{
 	private static UserService instance;
-	private Map<Institutions, Map<String, User>> userMap;
+//	private Map<Institutions, Map<String, User>> userMap;
 	private Log log;
 	private UserDataManager userDataManager;
 //	private Map<Institutions, Boolean> imported;
@@ -49,10 +48,10 @@ public class UserService implements Serializable{
 //	}
 
 	private UserService(Log log, Institutions institutionID) {
-		this.userMap = new HashMap<>();
+//		this.userMap = new HashMap<>();
 		this.log = log;
 		userDataManager = UserDataManager.getInstance();
-		userMap.put(institutionID,userDataManager.getUsersByInstitution(institutionID));
+//		userMap.put(institutionID,userDataManager.getUsersByInstitution(institutionID));
 //		imported = new HashMap<>();
 //		modified = new HashMap<>();
 //		isImported(institutionID);
@@ -274,7 +273,7 @@ public class UserService implements Serializable{
 	}
 
 	public void commitDBALl() {
-		userDataManager.commitDBAllUsers();
+		userDataManager.saveAllUsers();
 	}
 	
 }

@@ -1,12 +1,12 @@
 package server.handlers;
 
-import server.CourseManager;
-import server.SessionService;
+import server.service.CourseService;
+import server.service.SessionService;
 import shared.models.requests.BaseRequest;
 import shared.models.responses.DropCourseResponse;
 
 public class DropCourseHandler {
-    public static DropCourseResponse handleDropCourse(BaseRequest request, CourseManager courseManager, SessionService sessionService) {
+    public static DropCourseResponse handleDropCourse(BaseRequest request, CourseService courseService, SessionService sessionService) {
         return null;
     }
 }

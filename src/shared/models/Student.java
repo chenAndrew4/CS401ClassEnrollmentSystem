@@ -3,91 +3,81 @@ package shared.models;
 import server.dataManagers.CoursesDataManager;
 import shared.enums.AccountType;
 import shared.enums.Department;
+import shared.enums.GenderIdentity;
 import shared.enums.Institutions;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends User implements Serializable {
-    private List<CourseSection> enrolledCourses;  // List of section IDs for enrolled courses
-    private List<CourseSection> waitlistedCourses;  // List of section IDs for waitlisted courses
+public class Student extends User {
+    private List<CourseSection> enrolledCourses;
+    private List<CourseSection> waitlistedCourses;
+    private List<CourseSection> finishedCourses; // List of finished courses
 
-    public Student(){
+    public Student() {
         super();
         this.enrolledCourses = new ArrayList<>();
         this.waitlistedCourses = new ArrayList<>();
+        this.finishedCourses = new ArrayList<>();
     }
 
-    public Student(String userID, String username, String firstName, String lastName, String password, Institutions institution, AccountType accountType, Department department) {
-        super(userID, username, firstName, lastName, password, institution, department,accountType);
+    public Student(String userID, String username, String firstName, String lastName, String password,
+                   Institutions institution, AccountType accountType, Department department,
+                   GenderIdentity genderIdentity) {
+        super(userID, username, firstName, lastName, password, institution, department, accountType, genderIdentity);
         this.enrolledCourses = new ArrayList<>();
         this.waitlistedCourses = new ArrayList<>();
+        this.finishedCourses = new ArrayList<>();
     }
-
     // Enroll in a course
     public boolean enrollInCourse(String sectionID) {
-        // Check if already enrolled or waitlisted
         if (enrolledCourses.contains(sectionID) || waitlistedCourses.contains(sectionID)) {
             return false; // Already enrolled or waitlisted
         }
 
-        // Fetch the course section (example implementation using a CourseManager)
-        CourseSection section = CoursesDataManager.getInstance().getSectionById(getInstitutionID(),sectionID);
+        CourseSection section = CoursesDataManager.getInstance().getSectionById(getInstitutionID(), sectionID);
 
-        if (section == null) {
-            return false; // Invalid sectionID
+        if (section == null || finishedCourses.contains(section)) {
+            return false; // Invalid sectionID or course already completed
         }
 
         if (section.isFullyEnrolled()) {
-            // Add to waitlist if full
             boolean addedToWaitlist = section.getWaitlist().addToWaitlist(this);
             if (addedToWaitlist) {
                 waitlistedCourses.add(section);
                 return true; // Added to waitlist
-            } else {
-                return false; // Waitlist full
             }
         } else {
-            // Enroll directly
             boolean enrolled = section.getClassRoster().addStudent(this);
             if (enrolled) {
                 enrolledCourses.add(section);
                 return true; // Successfully enrolled
-            } else {
-                return false; // Enrollment failed
             }
         }
+        return false;
     }
 
     // Drop a course
-    public void dropCourse(CourseSection section) {
+    public void dropCourse(CourseSection section, boolean completed) {
         if (enrolledCourses.remove(section)) {
-            // Remove from enrolled courses
-            CourseSection remvSection = CoursesDataManager.getInstance().getSectionById(getInstitutionID(),section.getSectionID());
-            if (remvSection != null) {
-                section.getClassRoster().removeStudent(this);
+            section.getClassRoster().removeStudent(this);
+            if (completed) {
+                finishedCourses.add(section); // Add to finished courses if completed
             }
         } else if (waitlistedCourses.remove(section)) {
-            // Remove from waitlisted courses
-            CourseSection remvSection = CoursesDataManager.getInstance().getSectionById(getInstitutionID(),section.getCourseID());
-            if (remvSection != null) {
-                section.getWaitlist().removeFromWaitlist(this);
-            }
+            section.getWaitlist().removeFromWaitlist(this);
         }
     }
 
-    // View schedule
-    public List<Schedule> viewSchedule() {
-//        List<Schedule> scheduleList = new ArrayList<>();
-//        for (CourseSection section : enrolledCourses) {
-//            Schedule schedule = section.getSchedule();
-//            if (schedule != null) {
-//                scheduleList.add(schedule);
-//            }
-//        }
-//        return scheduleList;
-        return null;
+    // Getters for finishedCourses
+    public List<CourseSection> getFinishedCourses() {
+        return finishedCourses;
+    }
+
+    public void addFinishedCourse(CourseSection section) {
+        if (!finishedCourses.contains(section)) {
+            finishedCourses.add(section);
+        }
     }
 
     // Get position on waitlist

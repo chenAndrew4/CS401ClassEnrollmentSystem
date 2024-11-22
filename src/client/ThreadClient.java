@@ -38,6 +38,7 @@ public class ThreadClient {
         }
         return instance;
     }
+
     public void login(String username, String password, Institutions institutionID, Callback callback) {
         new Thread(() -> {
             try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {

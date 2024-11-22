@@ -53,6 +53,22 @@ public class Schedule implements Serializable {
 //        this.startTime = startTime;
 //        this.endTime = endTime;
 //    }
+    // Copy constructor
+    public Schedule(Schedule other) {
+        this.scheduleID = other.scheduleID; // Copy immutable field
+        this.courseID = other.courseID;
+        this.sectionID = other.sectionID;
+        this.term = other.term;
+        this.days = other.days != null ? other.days.clone() : null; // Deep copy for array
+        this.endDate = other.endDate != null ? new Date(other.endDate.getTime()) : null; // Deep copy for Date
+        this.startDate = other.startDate != null ? new Date(other.startDate.getTime()) : null;
+        this.startTime = other.startTime; // Deep copy for Time
+        this.endTime = other.endTime;
+        this.location = other.location;
+        this.campus = other.campus;
+        this.room = other.room;
+        this.facultyID = other.facultyID;
+    }
 
     public Schedule(String sch) {
         scheduleID = sch;

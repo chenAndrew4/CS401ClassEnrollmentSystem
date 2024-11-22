@@ -1,24 +1,16 @@
 package client.gui.CSUEB;
 
 import client.Callback;
-import client.Client;
-import client.ClientConfig;
 import client.ThreadClient;
 import client.gui.LoginSettingGUI;
 import client.gui.SignupGUI;
 import client.gui.StudentDashboardGUI;
-import server.UserService;
-import shared.enums.AccountType;
 import shared.enums.Institutions;
 import shared.models.Student;
 import shared.models.User;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class LoginGUI extends JFrame {
     private JTextField usernameField;

@@ -1,5 +1,6 @@
 package server;
 
+import server.dataManagers.DataSaveManager;
 import server.gui.ServerGUI;
 import server.utils.Log;
 
@@ -16,7 +17,6 @@ public class Server {
 	private Log log;
 	private ServerGUI gui;
 	private ServerSocket serverSocket;
-	private SessionService sessionService;
 
 	public static void main(String[] args) throws IOException {
 		ServerGUI gui = new ServerGUI();
@@ -28,18 +28,16 @@ public class Server {
 		this.gui = gui;
 		this.serverManager = new ServerManager();
 		this.pool = Executors.newCachedThreadPool();
-		this.log = gui.getLog();
-		this.sessionService = SessionService.getInstance();
-//		this.userManager.importDB();
-//		this.courseManager = CourseManager.getInstance();
+		this.log = Log.getInstance(ServerGUI.logTextArea);
 	}
-
-//	public SessionManager getSessionManager() {
-//		return sessionManager;
-//	}
 
 	public void start() {
 		try {
+			// Register shutdown hook
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				System.out.println("Server is shutting down. Saving all data...");
+				DataSaveManager.getInstance().saveAll();
+			}));
 			log.println("Server is bound to: " + serverManager.getIpAddress().toString().replace("/", "") + ":" + serverManager.getPort());
 		} catch (UnknownHostException e) {
 			log.println("Error retrieving IP Address: " + e.getMessage());

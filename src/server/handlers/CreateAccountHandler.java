@@ -4,7 +4,7 @@ import server.utils.Log;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
 import shared.models.User;
-import server.UserService;
+import server.service.UserService;
 import shared.models.requests.BaseRequest;
 import shared.models.requests.CreateAccountRequest;
 import shared.models.responses.CreateAccountResponse;

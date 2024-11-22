@@ -21,6 +21,15 @@ public class WaitList implements Serializable {
         this.waitingStudents = new LinkedList<>();
     }
 
+    // Copy constructor
+    public WaitList(WaitList other) {
+        this.sectionID = other.sectionID; // Copy sectionID
+        this.maxCapacity = other.maxCapacity; // Copy maxCapacity
+
+        // Deep copy the queue
+        this.waitingStudents = new LinkedList<>(other.waitingStudents);
+    }
+
     public String getSectionID() {
         return sectionID;
     }
@@ -69,6 +78,10 @@ public class WaitList implements Serializable {
         return waitingStudents.size() >= maxCapacity;
     }
 
+    public boolean isEmpty() {
+        return getCurrentSize() == 0;
+    }
+
     // Get all students on the waitlist
     public Queue<Student> getWaitingStudents() {
         return new LinkedList<>(waitingStudents); // Return a copy to preserve encapsulation
@@ -85,4 +98,7 @@ public class WaitList implements Serializable {
         return -1;
     }
 
+    public Student pollNextStudent() {
+        return waitingStudents.poll();
+    }
 }

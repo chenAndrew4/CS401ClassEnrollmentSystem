@@ -6,13 +6,28 @@ import java.io.Serializable;
 
 public class CourseSection implements Serializable {
     private String sectionID;     // Unique identifier for each section
-    private String courseID;
+//    private String courseID;
     private int enrollmentLimit;  // Max students for this section
     private WaitList waitlist;    // Section's waitlist
     private ClassRoster classRoster;  // Students enrolled in the section
     private GradingType grading;
     private InstructionModeType instructionMode;
     private String scheduleID;    // Schedule for this section
+
+    public CourseSection() {
+
+    }
+
+    // Copy constructor
+    public CourseSection(CourseSection other) {
+        this.sectionID = other.sectionID;
+        this.enrollmentLimit = other.enrollmentLimit;
+        this.waitlist = other.waitlist != null ? new WaitList(other.waitlist) : null; // Assuming WaitList has a copy constructor
+        this.classRoster = other.classRoster != null ? new ClassRoster(other.classRoster) : null;
+        this.grading = other.grading;
+        this.instructionMode = other.instructionMode;
+        this.scheduleID = other.scheduleID;
+    }
 
     public String getScheduleID() {
         return scheduleID;
@@ -48,13 +63,13 @@ public class CourseSection implements Serializable {
         return false;
     }
 
-    public String getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
-    }
+//    public String getCourseID() {
+//        return courseID;
+//    }
+//
+//    public void setCourseID(String courseID) {
+//        this.courseID = courseID;
+//    }
 
     public String getSectionID() {
         return sectionID;

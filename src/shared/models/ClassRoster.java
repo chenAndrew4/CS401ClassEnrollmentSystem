@@ -11,6 +11,12 @@ public class ClassRoster implements Serializable {
     public ClassRoster() {
     }
 
+    // Copy constructor
+    public ClassRoster(ClassRoster other) {
+        this.sectionID = other.sectionID;
+        this.enrolledStudents = new ArrayList<>(other.enrolledStudents); // Deep copy of the list
+    }
+
     public ClassRoster(String sectionID) {
         this.sectionID = sectionID;
         enrolledStudents = new ArrayList<>();

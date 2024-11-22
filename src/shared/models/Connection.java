@@ -1,4 +1,4 @@
-package server;
+package shared.models;
 
 import shared.enums.ConnectionStatus;
 

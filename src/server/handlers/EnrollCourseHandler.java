@@ -1,6 +1,6 @@
 package server.handlers;
 
-import server.SessionService;
+import server.service.SessionService;
 import server.dataManagers.CoursesDataManager;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
