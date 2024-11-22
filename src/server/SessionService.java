@@ -1,23 +1,21 @@
 package server;
 
-import shared.models.User;
-
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class SessionManager {
-    private static SessionManager instance;
+public class SessionService {
+    private static SessionService instance;
     private final Map<String, Session> activeSessions;
 
-    private SessionManager() {
+    private SessionService() {
         this.activeSessions = new HashMap<>();
     }
 
-    public static synchronized SessionManager getInstance() {
+    public static synchronized SessionService getInstance() {
         if (instance == null) {
-            instance = new SessionManager();
+            instance = new SessionService();
         }
         return instance;
     }

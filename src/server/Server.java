@@ -16,7 +16,7 @@ public class Server {
 	private Log log;
 	private ServerGUI gui;
 	private ServerSocket serverSocket;
-	private SessionManager sessionManager;
+	private SessionService sessionService;
 
 	public static void main(String[] args) throws IOException {
 		ServerGUI gui = new ServerGUI();
@@ -29,7 +29,7 @@ public class Server {
 		this.serverManager = new ServerManager();
 		this.pool = Executors.newCachedThreadPool();
 		this.log = gui.getLog();
-		this.sessionManager = SessionManager.getInstance();
+		this.sessionService = SessionService.getInstance();
 //		this.userManager.importDB();
 //		this.courseManager = CourseManager.getInstance();
 	}

@@ -36,10 +36,10 @@ public class UserManager implements Serializable{
 //	}
 
 	public void isImported(Institutions institutionID) {
-		if (!imported.containsKey(institutionID)) {
-			userMap.put(institutionID,userDataManager.loadUsersByInstitution(institutionID));
-			imported.put(institutionID, true);
-		}
+//		if (!imported.containsKey(institutionID)) {
+//			userMap.put(institutionID,userDataManager.getUsersByInstitution(institutionID));
+//			imported.put(institutionID, true);
+//		}
 //		imported.get(institutionID);
 	}
 
@@ -246,10 +246,10 @@ public class UserManager implements Serializable{
 	}
 	
 	public void commitDBByInstitution(Institutions institutionID) {
-		isImported(institutionID);
-		if (modified.containsKey(institutionID) && modified.get(institutionID)) {
-			userDataManager.saveUsersByInstitution(institutionID, userMap.get(institutionID));
-		}
+//		isImported(institutionID);
+//		if (modified.containsKey(institutionID) && modified.get(institutionID)) {
+//			userDataManager.saveUsersByInstitution(institutionID, userMap.get(institutionID));
+//		}
 //		try {
 //			PrintWriter writer = new PrintWriter();
 ////			ListIterator<User> listOfUsers = this.users.listIterator();

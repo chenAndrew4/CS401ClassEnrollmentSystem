@@ -12,18 +12,14 @@ public class CourseSection implements Serializable {
     private ClassRoster classRoster;  // Students enrolled in the section
     private GradingType grading;
     private InstructionModeType instructionMode;
-    private String instructor;
-    private Location location;
-    private Campus campus;
-    private Room room;
-    private Schedule schedule;    // Schedule for this section
+    private String scheduleID;    // Schedule for this section
 
-    public Schedule getSchedule() {
-        return schedule;
+    public String getScheduleID() {
+        return scheduleID;
     }
 
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
+    public void setScheduleID(String scheduleID) {
+        this.scheduleID = scheduleID;
     }
 
     public WaitList getWaitlist() {
@@ -104,37 +100,37 @@ public class CourseSection implements Serializable {
         this.instructionMode = instructionMode;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Campus getCampus() {
-        return campus;
-    }
-
-    public void setCampus(Campus campus) {
-        this.campus = campus;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
-    }
+//    public Location getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(Location location) {
+//        this.location = location;
+//    }
+//
+//    public Campus getCampus() {
+//        return campus;
+//    }
+//
+//    public void setCampus(Campus campus) {
+//        this.campus = campus;
+//    }
+//
+//    public Room getRoom() {
+//        return room;
+//    }
+//
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
+//
+//    public String getInstructor() {
+//        return instructor;
+//    }
+//
+//    public void setInstructor(String instructor) {
+//        this.instructor = instructor;
+//    }
 
 
     public boolean isFullyEnrolled() {

@@ -1,6 +1,7 @@
 package shared.models;
 
 import shared.enums.AccountType;
+import shared.enums.Department;
 import shared.enums.Institutions;
 
 import java.io.Serializable;
@@ -10,23 +11,13 @@ import java.util.List;
 //design ScheduleManager and WaitListManager suitable for multiple institutes
 public class Faculty extends User {
     private List<Course> assignedCourses; // Courses assigned to the faculty
-    private String department;            // Faculty's department
     private List<Schedule> teachingSchedule;  // Faculty's schedule
 
     // Constructor
-    public Faculty(String userID, String username, String firstName, String lastName, String password, Institutions institutionID, String department) {
-        super(userID, username,firstName, lastName, password, institutionID, AccountType.Faculty);
+    public Faculty(String userID, String username, String firstName, String lastName, String password, Institutions institutionID, Department department) {
+        super(userID, username,firstName, lastName, password, institutionID, department, AccountType.Faculty);
         this.assignedCourses = new ArrayList<>();
-        this.department = department;
         this.teachingSchedule = new ArrayList<>();
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
     }
 
     // Getter for assigned courses

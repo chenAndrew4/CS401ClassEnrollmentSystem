@@ -3,30 +3,56 @@ package shared.models;
 import shared.enums.*;
 
 import java.io.Serializable;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.Date;
 
 public class Schedule implements Serializable {
-    private final String scheduleID;  // Unique identifier for the schedule
-    private Days[] days;        // Days the course meets
-    private Date endDate;       // End date of the schedule
-    private Date startDate;     // Start date of the schedule
-    private Time startTime;     // Start time of the course
-    private Time endTime;       // End time of the course
+    private final String scheduleID;// Unique identifier for the schedule
+    private String courseID;
+    private String sectionID;
+    private Term term;  // course semester or quarter
+    private Days[] days;   // Days the course meets
+    private Date endDate;     // End date of the schedule
+    private Date startDate;    // Start date of the schedule
+    private Time startTime;    // Start time of the course
+    private Time endTime;     // End time of the course
+    private Location location;
+    private Campus campus;
+    private Room room;
+    private String facultyID;
 
     public Schedule() {
         scheduleID = null;
     }
 
-    // Constructor
-    public Schedule(String scheduleID, Days[] days, Date startDate, Date endDate, Time startTime, Time endTime) {
+    public Schedule(String scheduleID, String courseID, String sectionID, Term term, Days[] days, Date endDate, Date startDate, Time startTime, Time endTime, Location location, Campus campus, Room room, String facultyID) {
         this.scheduleID = scheduleID;
+        this.courseID = courseID;
+        this.sectionID = sectionID;
+        this.term = term;
         this.days = days;
-        this.startDate = startDate;
         this.endDate = endDate;
+        this.startDate = startDate;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.location = location;
+        this.campus = campus;
+        this.room = room;
+        this.facultyID = facultyID;
     }
+
+    //    // Constructor
+//    public Schedule(String scheduleID, String sectionID,Days[] days, Year year, Term term, Date startDate, Date endDate, Time startTime, Time endTime) {
+//        this.scheduleID = scheduleID;
+//        this.sectionID = sectionID;
+//        this.term = term;
+//        this.days = days;
+//        this.startDate = startDate;
+//        this.endDate = endDate;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
+//    }
 
     public Schedule(String sch) {
         scheduleID = sch;
@@ -57,7 +83,23 @@ public class Schedule implements Serializable {
         return endTime;
     }
 
+    public Term getTerm() {
+        return term;
+    }
+
+    public String getSectionID() {
+        return sectionID;
+    }
+
     // Setters
+    public void setSectionID(String sectionID) {
+        this.sectionID = sectionID;
+    }
+
+    public void setTerm(Term term) {
+        this.term = term;
+    }
+
     public boolean setDays(Days[] days) {
         this.days = days;
         return true;
@@ -87,6 +129,46 @@ public class Schedule implements Serializable {
     public boolean setEndTime(Time endTime) {
         this.endTime = endTime;
         return true;
+    }
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public String getFacultyID() {
+        return facultyID;
+    }
+
+    public void setFacultyID(String facultyID) {
+        this.facultyID = facultyID;
     }
 
     // Method to check if this schedule conflicts with another schedule

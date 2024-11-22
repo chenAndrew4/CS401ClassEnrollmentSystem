@@ -32,6 +32,7 @@ public class FileDataManagerTest {
         u1.setFirstName("Connor");
         u1.setLastName("McMillan");
         u1.setInstitutionID(Institutions.CSUEB);
+        u1.setDepartment(Department.CS);
         u1.setAccountType(AccountType.Administrator);
         Student u2 = new Student();
         u2.setUserId("e4eaaaf2-d142-11e1-b3e4-080027620cdd");
@@ -40,6 +41,7 @@ public class FileDataManagerTest {
         u2.setFirstName("Connor");
         u2.setLastName("McMillan");
         u2.setInstitutionID(Institutions.CSUEB);
+        u2.setDepartment(Department.CS);
         u2.setAccountType(AccountType.Student);
         testUsers.add(u1);
         testUsers.add(u2);
@@ -65,11 +67,11 @@ public class FileDataManagerTest {
         section.setEnrollmentLimit(30);
         section.setGrading(GradingType.Letter);
         section.setInstructionMode(InstructionModeType.InPerson);
-        section.setInstructor("Dr. Jane Doe");
-        section.setLocation(Location.LIBRARY);
-        section.setCampus(Campus.HAYWARD);
-        section.setRoom(Room.ROOM1);
-        section.setSchedule(schedule);
+//        section.setInstructor("Dr. Jane Doe");
+//        section.setLocation(Location.LIBRARY);
+//        section.setCampus(Campus.HAYWARD);
+//        section.setRoom(Room.ROOM1);
+//        section.setSchedule(schedule);
         section.setWaitlist(new WaitList());
         section.setClassRoster(new ClassRoster());
 
@@ -101,15 +103,15 @@ public class FileDataManagerTest {
     //
     @Test
     public void testSaveUser() {
-        userDataManager.saveUsersByInstitution(Institutions.CSUEB, testUserMap);
+//        userDataManager.saveUsersByInstitution(Institutions.CSUEB, testUserMap);
     }
 
     @Test
     public void testLoadUser() throws IOException {
-        userMap = userDataManager.loadUsersByInstitution(Institutions.CSUEB);
-        for (User u : userMap.values()) {
-            System.out.println(u.getUsername());
-        }
+//        userMap = userDataManager.loadUsersByInstitution(Institutions.CSUEB);
+//        for (User u : userMap.values()) {
+//            System.out.println(u.getUsername());
+//        }
     }
 
 //    @Test

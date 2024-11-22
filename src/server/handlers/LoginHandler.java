@@ -1,10 +1,9 @@
 package server.handlers;
 
-import server.SessionManager;
+import server.SessionService;
 import server.utils.Log;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
-import shared.models.Message;
 import shared.models.User;
 import server.UserManager;
 import shared.models.requests.BaseRequest;
@@ -18,11 +17,11 @@ public class LoginHandler {
         LoginRequest loginRequest = (LoginRequest) request;
         User user = loginRequest.getUser();
         UserManager userManager = UserManager.getInstance(log, loginRequest.getInstitutionID());
-        SessionManager sessionManager = SessionManager.getInstance();
+        SessionService sessionService = SessionService.getInstance();
         boolean isAuthenticated = authenticateUser(user, userManager);
 
         if (isAuthenticated) {
-            String sessionToken = sessionManager.createSession(user.getUserId());
+            String sessionToken = sessionService.createSession(user.getUserId());
             // set user's token as sessionToken
             user = userManager.getUserByInstitution(user.getInstitutionID(), user.getUsername());
             return new LoginResponse(MessageType.LOGIN, MessageStatus.SUCCESS,"Log in success", sessionToken, true, user);

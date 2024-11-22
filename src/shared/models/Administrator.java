@@ -1,7 +1,9 @@
 package shared.models;
 
 import server.CourseManager;
+import server.dataManagers.CoursesDataManager;
 import shared.enums.*;
+import tests.server.dataManagers.CourseDataManagerTest;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,13 +11,11 @@ import java.util.List;
 
 public class Administrator extends User {
     private List<User> managedUsers; // All users managed by the administrator
-    private String department;       // Administrator's department
 
     // Constructor
-    public Administrator(String userID, String username,String firstName, String lastName, String password, Institutions institutionID, String department) {
-        super(userID, username, firstName, lastName, password, institutionID, AccountType.Administrator);
+    public Administrator(String userID, String username,String firstName, String lastName, String password, Institutions institutionID, Department department) {
+        super(userID, username, firstName, lastName, password, institutionID, department,AccountType.Administrator);
         this.managedUsers = new ArrayList<>();
-        this.department = department;
     }
 
     // Add a student
@@ -38,11 +38,11 @@ public class Administrator extends User {
 
     // Assign a faculty to a course
     public boolean assignCourseToFaculty(String courseID, String sectionID, String facultyID) {
-        Course course = CourseManager.getInstance().getCourseByCourseID(getInstitutionID(), courseID);
+        Course course = CoursesDataManager.getInstance().getCourseByCourseID(getInstitutionID(), courseID);
         if (course != null) {
             for (CourseSection s : course.getSections()) {
                 if (s.getSectionID().equals(sectionID)) {
-                    s.setInstructor(facultyID);
+//                    s.setInstructor(facultyID);
                     return true;
                 }
             }
@@ -58,7 +58,7 @@ public class Administrator extends User {
         Course newCourse = new Course(courseID, name, description,institutionID, notes, level, academicProgramType, units, department);
 
         // Add the course to the institution's course manager
-        boolean success = CourseManager.getInstance().addCourse(institutionID, newCourse);
+        boolean success = CoursesDataManager.getInstance().addOrUpdateCourse(institutionID, newCourse);
         if (success) {
             System.out.println("Course created successfully for institution: " + institutionID);
             return newCourse;
@@ -73,7 +73,7 @@ public class Administrator extends User {
         Institutions institutionID = this.getInstitutionID(); // Retrieve the administrator's institution
 
         // Attempt to remove the course from the institution's course manager
-        boolean success = CourseManager.getInstance().removeCourse(institutionID, courseID);
+        boolean success = CoursesDataManager.getInstance().removeCourse(institutionID, courseID);
         if (success) {
             System.out.println("Course deleted successfully for institution: " + institutionID);
         } else {
@@ -85,11 +85,11 @@ public class Administrator extends User {
 
     // Update an existing schedule
     public boolean updateSchedule(String courseID, Schedule updatedSchedule) {
-        Course course = CourseManager.getInstance().getCourseByCourseID(getInstitutionID(), courseID);
+        Course course = CoursesDataManager.getInstance().getCourseByCourseID(getInstitutionID(), courseID);
         if (course != null) {
             course.getSections().forEach(section -> {
-                if (section.getSchedule().getScheduleID().equals(updatedSchedule.getScheduleID())) {
-                    section.setSchedule(updatedSchedule);
+                if (section.getScheduleID().equals(updatedSchedule.getScheduleID())) {
+//                    section.setScheduleID(updatedSchedule);
                 }
             });
             return true;
@@ -99,11 +99,11 @@ public class Administrator extends User {
 
     // Delete a schedule from a course
     public boolean deleteSchedule(String courseID, String scheduleID) {
-        Course course = CourseManager.getInstance().getCourseByCourseID(getInstitutionID(), courseID);
+        Course course = CoursesDataManager.getInstance().getCourseByCourseID(getInstitutionID(), courseID);
         if (course != null) {
             course.getSections().forEach(section -> {
-                if (section.getSchedule().getScheduleID().equals(scheduleID)) {
-                    section.setSchedule(null); // Remove the schedule
+                if (section.getScheduleID().equals(scheduleID)) {
+//                    section.setSchedule(null); // Remove the schedule
                 }
             });
             return true;

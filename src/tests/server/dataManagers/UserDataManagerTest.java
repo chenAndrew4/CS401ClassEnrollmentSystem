@@ -54,7 +54,8 @@ public class UserDataManagerTest {
             Date eD = new Date(2024, Calendar.MAY, 10);
             schedule.setEndDate(eD);       // Example: May 10, 2024
             schedule.setStartTime(Time.TIME_900);                        // 9:00 AM
-            schedule.setEndTime(Time.TIME_1030);                         // 10:30 AM
+            schedule.setEndTime(Time.TIME_1030);
+            schedule.setTerm(Term.SPRING_SEMESTER);// 10:30 AM
 
             // Create a CourseSection instance
             CourseSection section = new CourseSection();
@@ -62,11 +63,11 @@ public class UserDataManagerTest {
             section.setEnrollmentLimit(30);
             section.setGrading(GradingType.Letter);
             section.setInstructionMode(InstructionModeType.InPerson);
-            section.setInstructor("Dr. Jane Doe");
-            section.setLocation(Location.LIBRARY);
-            section.setCampus(Campus.HAYWARD);
-            section.setRoom(Room.ROOM1);
-            section.setSchedule(schedule);
+//            section.setInstructor("Dr. Jane Doe");
+//            section.setLocation(Location.LIBRARY);
+//            section.setCampus(Campus.HAYWARD);
+//            section.setRoom(Room.ROOM1);
+//            section.setSchedule(schedule);
             section.setWaitlist(new WaitList());
             section.setClassRoster(new ClassRoster());
 
@@ -98,13 +99,12 @@ public class UserDataManagerTest {
         //
         @Test
         public void testSaveUser() {
-            userDataManager.saveUsersByInstitution(Institutions.SJSU, testUserMap);
+            userDataManager.commitDBByInstitution(Institutions.SJSU, testUserMap);
         }
 
         @Test
         public void testLoadUser() throws IOException {
-            userMap = userDataManager.loadUsersByInstitution(Institutions.SJSU);
-            userMap = userDataManager.loadUsersByInstitution(Institutions.SJSU);
+            userMap = userDataManager.getUsersByInstitution(Institutions.SJSU);
             for (User u : userMap.values()) {
                 System.out.println(u.getUsername());
             }
