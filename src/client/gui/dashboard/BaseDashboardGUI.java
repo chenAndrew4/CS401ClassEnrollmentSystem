@@ -1,5 +1,6 @@
 package client.gui.dashboard;
 
+import client.ClientConfig;
 import shared.models.User;
 
 import javax.swing.*;
@@ -18,61 +19,65 @@ public class BaseDashboardGUI extends JFrame implements Runnable {
 
     public BaseDashboardGUI(String title, User user) {
         super(title);
-        this.user = user;
+        SwingUtilities.invokeLater(() -> {
+            this.user = user;
 
-        // Set up the main frame
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+            // Set up the main frame
+            setSize(800, 600);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setLayout(new BorderLayout());
 
-        // Top panel with a background image
-        JPanel topPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                if (universityImageLabel.getIcon() != null) {
-                    Image image = ((ImageIcon) universityImageLabel.getIcon()).getImage();
-                    g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            // Top panel with a background image
+            JPanel topPanel = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    if (universityImageLabel.getIcon() != null) {
+                        Image image = ((ImageIcon) universityImageLabel.getIcon()).getImage();
+                        g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+                    }
                 }
-            }
-        };
-        topPanel.setLayout(null); // Use absolute layout to overlay personal image and info
-        topPanel.setPreferredSize(new Dimension(800, 200));
-        add(topPanel, BorderLayout.NORTH);
+            };
+            topPanel.setLayout(null); // Use absolute layout to overlay personal image and info
+            topPanel.setPreferredSize(new Dimension(800, 200));
+            add(topPanel, BorderLayout.NORTH);
 
-        // University image label (placeholder for painting background)
-        universityImageLabel = new JLabel();
-        universityImageLabel.setBounds(0, 0, 800, 200);
-        topPanel.add(universityImageLabel);
+            // University image label (placeholder for painting background)
+            universityImageLabel = new JLabel();
+            universityImageLabel.setBounds(0, 0, 800, 200);
+            topPanel.add(universityImageLabel);
 
-        // Personal image
-        personalImageLabel = new JLabel();
-        personalImageLabel.setBounds(20, 20, PERSONAL_IMAGE_SIZE, PERSONAL_IMAGE_SIZE); // Position and size
-        personalImageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        topPanel.add(personalImageLabel);
+            // Personal image
+            personalImageLabel = new JLabel();
+            personalImageLabel.setBounds(20, 20, PERSONAL_IMAGE_SIZE, PERSONAL_IMAGE_SIZE); // Position and size
+            personalImageLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            topPanel.add(personalImageLabel);
 
-        // Info area
-        infoArea = new JTextArea();
-        infoArea.setEditable(false);
-        infoArea.setLineWrap(true);
-        infoArea.setWrapStyleWord(true);
-        infoArea.setBackground(new Color(255, 255, 255, 150)); // Semi-transparent background
-        infoArea.setBounds(100, 20, 650, 100); // Position and size
-        topPanel.add(infoArea);
+            // Info area
+            infoArea = new JTextArea();
+            infoArea.setEditable(false);
+            infoArea.setLineWrap(true);
+            infoArea.setWrapStyleWord(true);
+            infoArea.setBackground(new Color(255, 255, 255, 150)); // Semi-transparent background
+            infoArea.setBounds(100, 20, 650, 100); // Position and size
+            topPanel.add(infoArea);
 
-        // Options panel with grid layout
-        optionsPanel = new JPanel(new GridLayout(1, 5, 10, 10)); // Example: 5 cells
-        add(optionsPanel, BorderLayout.CENTER);
+            // Options panel with grid layout
+            optionsPanel = new JPanel(new GridLayout(1, 5, 10, 10)); // Example: 5 cells
+            add(optionsPanel, BorderLayout.CENTER);
 
-        // Initialize user details
-        initializeUserDetails();
+            // Initialize user details
+            initializeUserDetails();
+
+            setVisible(true);
+        });
     }
 
     // Initialize user-specific details (personal image and info)
     private void initializeUserDetails() {
         if (user != null) {
             // Set personal image if available
-            String filepath = "src/client/assets.icons/login_32.png";
+            String filepath = ClientConfig.MANAGE_USERS_ICON;
 //            if (user.getPersonalImagePath() != null) {
 //                setPersonalImage(new ImageIcon(user.getPersonalImagePath()));
 //            }
@@ -93,7 +98,7 @@ public class BaseDashboardGUI extends JFrame implements Runnable {
     // Add the university image (background for the top panel)
     public void setUniversityImage(ImageIcon universityImage) {
         universityImageLabel.setIcon(universityImage);
-        repaint(); // Repaint the top panel with the new image
+        // Repaint the top panel with the new image
     }
 
     // Add the personal image (scaled)
@@ -129,6 +134,7 @@ public class BaseDashboardGUI extends JFrame implements Runnable {
         });
 
         optionsPanel.add(optionCell);
+
     }
 
     // Resize an ImageIcon to the desired width and height

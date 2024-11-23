@@ -33,7 +33,7 @@ public class ClientConfig {
     public static final String MANAGE_USERS_ICON = ICON_FILE_PATH_PREFIX + "user.png";
     public static final String MANAGE_COURSES_ICON = ICON_FILE_PATH_PREFIX + "course.png";
     public static final String REPORTS_ICON = ICON_FILE_PATH_PREFIX + "reports.png";
-    public static final String SETTINGS_ICON = ICON_FILE_PATH_PREFIX + "settings.png";
+    public static final String SETTING_ICON = ICON_FILE_PATH_PREFIX + "setting.png";
     public static final String MANAGE_CLASSES_ICON = ICON_FILE_PATH_PREFIX + "manage_classes.png";
     public static final String GRADE_SUBMISSIONS_ICON = ICON_FILE_PATH_PREFIX + "grade_submissions.png";
     public static final String COMMUNICATION_ICON = ICON_FILE_PATH_PREFIX + "communication.png";

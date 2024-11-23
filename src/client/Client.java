@@ -1,20 +1,16 @@
 package client;
 
-import client.gui.SJSU.LoginGUI;
 import client.handlers.EnrollCourseResponseHandler;
 import client.handlers.LoginResponseHandler;
-import shared.models.requests.BaseRequest;
 import shared.models.requests.EnrollCourseRequest;
 import shared.models.requests.LoginRequest;
 import shared.enums.*;
 
 import javax.swing.*;
 
-import shared.models.Message;
 import shared.models.User;
 import shared.enums.MessageType;
 import shared.enums.MessageStatus;
-import shared.models.responses.BaseResponse;
 import shared.models.responses.EnrollCourseResponse;
 import shared.models.responses.LoginResponse;
 

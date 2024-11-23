@@ -1,13 +1,14 @@
 package client.gui.dashboard;
 
 import client.ClientConfig;
+import shared.models.Faculty;
 import shared.models.User;
 
 import javax.swing.*;
 
 public class FacultyDashboardGUI extends BaseDashboardGUI {
 
-    public FacultyDashboardGUI(User user) {
+    public FacultyDashboardGUI(Faculty user) {
         super("Faculty Dashboard", user);
 
         // Set university image as the top panel background

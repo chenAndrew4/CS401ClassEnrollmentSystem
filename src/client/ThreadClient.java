@@ -1,37 +1,23 @@
 package client;
 
-import client.gui.CSUEB.LoginGUI;
-import shared.enums.AccountType;
-import shared.enums.Institutions;
 import shared.enums.MessageStatus;
-import shared.enums.MessageType;
-import shared.models.*;
 import shared.models.requests.BaseRequest;
-import shared.models.requests.LoginRequest;
-import shared.models.responses.LoginResponse;
+import shared.models.responses.BaseResponse;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.rmi.StubNotFoundException;
 
 public class ThreadClient {
-    private final String SERVER_ADDRESS = "localhost";
-    private final int SERVER_PORT = 25800;
+    private String SERVER_ADDRESS = "localhost";
+    private int SERVER_PORT = 25800;
 
-    private static ThreadClient instance; // Singleton instance of ThreadClient
+    private static ThreadClient instance;
 
-    private Student loggedInStudent;// Store the authenticated user
-    private Faculty loggedInfaculty;
-    private Administrator loggedInAdmin;
+    private ThreadClient() {}
 
-    private ThreadClient() {
-        // Private constructor for Singleton
-    }
-
-    // Get the singleton instance of ThreadClient
     public static synchronized ThreadClient getInstance() {
         if (instance == null) {
             instance = new ThreadClient();
@@ -39,39 +25,107 @@ public class ThreadClient {
         return instance;
     }
 
-    public void login(String username, String password, Institutions institutionID, Callback callback) {
+    // Generic method to send a request
+    public <T extends BaseResponse, R> void sendRequest(BaseRequest request, ResponseCallback<T, R> callback) {
         new Thread(() -> {
-            try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
-                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                User curUser = new User();
-                curUser.setUsername(username);
-                curUser.setPassword(password);
-                curUser.setInstitutionID(institutionID);
+            try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-                // Create and send a login request
-                LoginRequest loginRequest = new LoginRequest(MessageType.LOGIN, null, institutionID, curUser);
-                out.writeObject(loginRequest);
+                // Send the request
+                out.writeObject(request);
 
-                // Wait for and process the response
-                LoginResponse response = (LoginResponse) in.readObject();
-                if (MessageStatus.SUCCESS == response.getStatus()) {
-                    if (AccountType.Student == response.getUser().getAccountType()) {
-                        loggedInStudent = (Student) response.getUser();
-                        callback.onLoginSuccess(loggedInStudent);
-                    } else if (AccountType.Faculty == response.getUser().getAccountType()) {
-                        loggedInfaculty = (Faculty) response.getUser();
-                        callback.onLoginSuccess(loggedInfaculty);
-                    } else if (AccountType.Administrator == response.getUser().getAccountType()) {
-                        loggedInAdmin = (Administrator) response.getUser();
-                        callback.onLoginSuccess(loggedInAdmin);
+                // Process the response
+                Object response = in.readObject();
+
+                if (response instanceof BaseResponse) {
+                    if (((BaseResponse) response).getStatus() == MessageStatus.SUCCESS) {
+                        @SuppressWarnings("unchecked")
+                        T typedResponse = (T) response;
+                        R returnValue = callback.onSuccess(typedResponse);
                     } else {
-                        callback.onLoginFailure("Invalid username or password.");
+                        callback.onFailure(((BaseResponse) response).getMessage());
                     }
+                } else {
+                    callback.onFailure("Unexpected response type.");
                 }
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                callback.onFailure("Error: " + e.getMessage());
             }
         }).start();
     }
+
+    public int getSERVER_PORT() {
+        return SERVER_PORT;
+    }
+
+    public String getSERVER_ADDRESS() {
+        return SERVER_ADDRESS;
+    }
+
+    public void setSERVER_ADDRESS(String SERVER_ADDRESS) {
+        this.SERVER_ADDRESS = SERVER_ADDRESS;
+    }
+
+    public void setSERVER_PORT(int SERVER_PORT) {
+        this.SERVER_PORT = SERVER_PORT;
+    }
 }
+//public class ThreadClient {
+//    private final String SERVER_ADDRESS = "localhost";
+//    private final int SERVER_PORT = 25800;
+//
+//    private static ThreadClient instance; // Singleton instance of ThreadClient
+//
+//    private Student loggedInStudent;// Store the authenticated user
+//    private Faculty loggedInfaculty;
+//    private Administrator loggedInAdmin;
+//
+//    private ThreadClient() {
+//        // Private constructor for Singleton
+//    }
+//
+//    // Get the singleton instance of ThreadClient
+//    public static synchronized ThreadClient getInstance() {
+//        if (instance == null) {
+//            instance = new ThreadClient();
+//        }
+//        return instance;
+//    }
+//
+//    public void login(String username, String password, Institutions institutionID, Callback callback) {
+//        new Thread(() -> {
+//            try (Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT)) {
+//                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+//                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+//                User curUser = new User();
+//                curUser.setUsername(username);
+//                curUser.setPassword(password);
+//                curUser.setInstitutionID(institutionID);
+//
+//                // Create and send a login request
+//                LoginRequest loginRequest = new LoginRequest(MessageType.LOGIN, null, institutionID, curUser);
+//                out.writeObject(loginRequest);
+//
+//                // Wait for and process the response
+//                LoginResponse response = (LoginResponse) in.readObject();
+//                if (MessageStatus.SUCCESS == response.getStatus()) {
+//                    if (AccountType.Student == response.getUser().getAccountType()) {
+//                        loggedInStudent = (Student) response.getUser();
+//                        callback.onLoginSuccess(loggedInStudent);
+//                    } else if (AccountType.Faculty == response.getUser().getAccountType()) {
+//                        loggedInfaculty = (Faculty) response.getUser();
+//                        callback.onLoginSuccess(loggedInfaculty);
+//                    } else if (AccountType.Administrator == response.getUser().getAccountType()) {
+//                        loggedInAdmin = (Administrator) response.getUser();
+//                        callback.onLoginSuccess(loggedInAdmin);
+//                    } else {
+//                        callback.onLoginFailure("Invalid username or password.");
+//                    }
+//                }
+//            } catch (IOException | ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
+//    }
+//}

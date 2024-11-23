@@ -96,12 +96,19 @@ class ServerHandler {
 		return !this.hostname.equals(hostname) || !this.port.equals(port);
 	}
 	
-	public String getHostname() {
+	public String getHost() {
 		return this.hostname;
 	}
 	
 	public String getPort() {
 		return this.port;
+	}
+	public void  setHost(String hostname) {
+		this.hostname = hostname;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
 	}
 	
 	public BaseResponse sendRequest(BaseRequest request) {

@@ -1,13 +1,14 @@
 package client.gui.dashboard;
 
 import client.ClientConfig;
+import shared.models.Administrator;
 import shared.models.User;
 
 import javax.swing.*;
 
 public class AdminDashboardGUI extends BaseDashboardGUI {
 
-    public AdminDashboardGUI(User user) {
+    public AdminDashboardGUI(Administrator user) {
         super("Administrator Dashboard", user);
 
         // Set university image as the top panel background
@@ -30,7 +31,7 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
         addOption("Manage Users", new ImageIcon(ClientConfig.MANAGE_USERS_ICON), this::handleManageUsers);
         addOption("Manage Courses", new ImageIcon(ClientConfig.MANAGE_COURSES_ICON), this::handleManageCourses);
         addOption("Reports", new ImageIcon(ClientConfig.REPORTS_ICON), this::handleViewReports);
-        addOption("System Settings", new ImageIcon(ClientConfig.SETTINGS_ICON), this::handleSystemSettings);
+        addOption("System Settings", new ImageIcon(ClientConfig.SETTING_ICON), this::handleSystemSettings);
         addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
         addOption("Manage Waitlist", new ImageIcon(ClientConfig.MANAGE_WAITLIST_ICON), this::handleManageWaitlists);
         addOption("Manage Schedule", new ImageIcon(ClientConfig.MANAGE_SCHEDULE_ICON), this::handleManageSchedules);

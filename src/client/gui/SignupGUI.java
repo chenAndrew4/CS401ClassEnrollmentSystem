@@ -53,7 +53,7 @@ public class SignupGUI extends JFrame {
             }});
 
         setVisible(true);
-        }
+    }
 
     private boolean handleSignup() {
         String username = usernameField.getText();
