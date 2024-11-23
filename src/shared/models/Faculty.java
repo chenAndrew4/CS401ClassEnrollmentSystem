@@ -14,6 +14,9 @@ public class Faculty extends User {
     private List<Course> assignedCourses; // Courses assigned to the faculty
     private List<Schedule> teachingSchedule;  // Faculty's schedule
 
+
+    public Faculty(){}
+
     // Constructor
     public Faculty(String userID, String username, String firstName, String lastName, String password, Institutions institutionID, Department department, GenderIdentity genderIdentity) {
         super(userID, username,firstName, lastName, password, institutionID, department, AccountType.Faculty, genderIdentity);
