@@ -1,6 +1,5 @@
-package client.gui.CSUEB;
+package client.gui.login;
 
-import client.gui.BaseLoginGUI;
 import client.ClientConfig;
 import shared.enums.Institutions;
 

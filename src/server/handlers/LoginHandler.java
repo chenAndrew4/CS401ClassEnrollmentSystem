@@ -1,14 +1,10 @@
 package server.handlers;
 
-import client.gui.BaseLoginGUI;
 import server.service.SessionService;
 import server.service.UserService;
 import server.utils.Log;
-import shared.enums.Institutions;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
-import shared.models.Administrator;
-import shared.models.Faculty;
 import shared.models.User;
 import shared.models.requests.BaseRequest;
 import shared.models.requests.LoginRequest;

@@ -1,7 +1,7 @@
 package client.handlers;
 
 import client.Client;
-import client.gui.BaseLoginGUI;
+import client.gui.login.BaseLoginGUI;
 import client.gui.dashboard.AdminDashboardGUI;
 import client.gui.dashboard.FacultyDashboardGUI;
 import client.gui.dashboard.StudentDashboardGUI;

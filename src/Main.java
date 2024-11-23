@@ -1,5 +1,7 @@
-import client.gui.BaseLoginGUI;
-import client.gui.CSUEB.CSUEBLoginGUI;
+import client.gui.login.BaseLoginGUI;
+import client.gui.login.CSUEBLoginGUI;
+import client.gui.login.CSUFLoginGUI;
+import client.gui.login.SJSULoginGUI;
 import server.Server;
 
 import javax.swing.*;
@@ -19,6 +21,14 @@ public class Main {
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
             BaseLoginGUI loginGUI = new CSUEBLoginGUI();
+            loginGUI.setVisible(true);
+        });
+        SwingUtilities.invokeLater(() -> {
+            BaseLoginGUI loginGUI = new SJSULoginGUI();
+            loginGUI.setVisible(true);
+        });
+        SwingUtilities.invokeLater(() -> {
+            BaseLoginGUI loginGUI = new CSUFLoginGUI();
             loginGUI.setVisible(true);
         });
     }
