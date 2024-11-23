@@ -28,7 +28,6 @@ public class LoginHandler {
             user = userService.getUserByInstitution(user.getInstitutionID(), user.getUsername());
             user.setSessionToken(sessionToken);
             user.setAuthenticated(true);
-            user = user instanceof Administrator ? ((Administrator) user) : null;
             return new LoginResponse(MessageType.LOGIN, MessageStatus.SUCCESS,"Log in success", sessionToken, true, user);
         } else {
             return new LoginResponse(MessageType.LOGIN, MessageStatus.FAILURE,"Invalid credentials");

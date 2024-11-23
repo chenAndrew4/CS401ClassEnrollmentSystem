@@ -4,8 +4,12 @@ import client.Callback;
 import client.ThreadClient;
 import client.gui.LoginSettingGUI;
 import client.gui.SignupGUI;
-import client.gui.StudentDashboardGUI;
+import client.gui.dashboard.AdminDashboardGUI;
+import client.gui.dashboard.FacultyDashboardGUI;
+import client.gui.dashboard.StudentDashboardGUI;
 import shared.enums.Institutions;
+import shared.models.Administrator;
+import shared.models.Faculty;
 import shared.models.Student;
 import shared.models.User;
 
@@ -138,13 +142,13 @@ private void handleLogin() {
     private void openDashboard(User user) {
         switch (user.getAccountType()) {
             case Student:
-                new StudentDashboardGUI((Student)user); // Replace with actual GUI initialization
+                new Thread(new StudentDashboardGUI((Student)user)).start();
                 break;
             case Faculty:
-//                new FacultyDashboardGUI(); // Replace with actual GUI initialization
+                new Thread(new FacultyDashboardGUI((Faculty)user)).start();
                 break;
             case Administrator:
-//                new AdminDashboardGUI(); // Replace with actual GUI initialization
+                new Thread(new AdminDashboardGUI((Administrator)user)).start();
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Unknown Account type: " + user.getAccountType(), "Error", JOptionPane.ERROR_MESSAGE);
