@@ -1,8 +1,6 @@
-package client;
+package client.deleted;
 
-import client.handlers.ResponseHandler;
 import shared.enums.MessageType;
-import shared.models.Message;
 import shared.models.requests.BaseRequest;
 import shared.models.responses.BaseResponse;
 

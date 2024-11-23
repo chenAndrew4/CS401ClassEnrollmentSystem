@@ -12,20 +12,22 @@ public class FacultyDashboardGUI extends BaseDashboardGUI {
         super("Faculty Dashboard", user);
 
         // Set university image as the top panel background
-        switch(user.getInstitutionID()) {
-            case SJSU:
-                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
-                break;
-            case CSUEB:
-                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
-                break;
-            case CSUF:
-                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
-                break;
-            default:
-                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
-                break;
-        }
+//        switch(user.getInstitutionID()) {
+//            case SJSU:
+//                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            case CSUEB:
+//                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            case CSUF:
+//                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            default:
+//                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
+//                break;
+//        }
+        // Set personal image and info
+        setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_FACULTY_ICON));
 
         // Add options with images and labels
 //        addOption("Manage Classes", new ImageIcon(ClientConfig.MANAGE_CLASSES_ICON), this::handleManageClasses);
@@ -35,6 +37,10 @@ public class FacultyDashboardGUI extends BaseDashboardGUI {
         addOption("View Schedules", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedules);
         addOption("Communication", new ImageIcon(ClientConfig.COMMUNICATION_ICON), this::handleCommunication);
         addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
+
+        setVisible(true);
+        revalidate();
+        repaint();
     }
 
     private void handleViewWaitlist() {

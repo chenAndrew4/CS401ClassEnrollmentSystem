@@ -1,7 +1,6 @@
-import client.BaseLoginGUI;
+import client.gui.BaseLoginGUI;
 import client.gui.CSUEB.CSUEBLoginGUI;
 import server.Server;
-import server.gui.ServerGUI;
 
 import javax.swing.*;
 import java.io.IOException;

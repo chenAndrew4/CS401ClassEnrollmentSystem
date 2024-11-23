@@ -11,39 +11,37 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
     public StudentDashboardGUI(Student user) {
         super("Student Dashboard", user);
 
-        SwingUtilities.invokeLater(() -> {
+//        SwingUtilities.invokeLater(() -> {
             // Set university image as the top panel background
-            switch(user.getInstitutionID()) {
-                case SJSU:
-                    setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
-                    break;
-                case CSUEB:
-                    setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
-                    break;
-                case CSUF:
-                    setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
-                    break;
-                default:
-                    setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
-                    break;
-            }
-            // Set personal image and info
-            setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_STUDENT_ICON));
-            setInfo("Name: " + user.getLastName() + " " + user.getFirstName() + "\nMajor: " + user.getDepartment() + "\nAdmin Date: " + user.getDate());
+//        switch(user.getInstitutionID()) {
+//            case SJSU:
+//                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            case CSUEB:
+//                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            case CSUF:
+//                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            default:
+//                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
+//                break;
+//        }
+        // Set personal image and info
+        setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_STUDENT_ICON));
+//        setInfo("Name: " + user.getLastName() + " " + user.getFirstName() + "\nMajor: " + user.getDepartment() + "\nAdmin Date: " + user.getDate());
 
-            // Add options with images and labels
-            addOption("Enroll", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
-            addOption("Drop", new ImageIcon(ClientConfig.DROP_ICON), this::handleDrop);
-            addOption("Waitlist", new ImageIcon(ClientConfig.WAITLIST_ICON), this::handleWaitlist);
-            addOption("Grades", new ImageIcon(ClientConfig.GRADES_ICON), this::handleViewGrades);
-            addOption("Schedule", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedule);
-            addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
+        // Add options with images and labels
+        addOption("Enroll", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
+        addOption("Drop", new ImageIcon(ClientConfig.DROP_ICON), this::handleDrop);
+        addOption("Waitlist", new ImageIcon(ClientConfig.WAITLIST_ICON), this::handleWaitlist);
+        addOption("Grades", new ImageIcon(ClientConfig.GRADES_ICON), this::handleViewGrades);
+        addOption("Schedule", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedule);
+        addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
 
-            // Ensure proper repaint
-            revalidate();
-            repaint();
-        });
-
+        setVisible(true);
+        revalidate();
+        repaint();
     }
 
     private void handleWaitlist() {

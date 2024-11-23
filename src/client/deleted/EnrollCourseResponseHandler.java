@@ -1,8 +1,9 @@
-package client.handlers;
+package client.deleted;
 
 import shared.models.responses.BaseResponse;
 
-public class EnrollCourseResponseHandler implements ResponseHandler{
+// after remove client class, no more usage
+public class EnrollCourseResponseHandler implements ResponseHandler {
     @Override
     public Object handleResponse(BaseResponse response) {
         return null;

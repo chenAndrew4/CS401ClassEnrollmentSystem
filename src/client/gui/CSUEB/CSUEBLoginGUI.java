@@ -1,10 +1,8 @@
 package client.gui.CSUEB;
 
-import client.BaseLoginGUI;
+import client.gui.BaseLoginGUI;
 import client.ClientConfig;
 import shared.enums.Institutions;
-
-import javax.swing.*;
 
 public class CSUEBLoginGUI extends BaseLoginGUI {
     public CSUEBLoginGUI() {

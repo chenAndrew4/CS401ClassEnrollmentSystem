@@ -1,6 +1,8 @@
 package client;
 
 public class ClientConfig {
+    public static String SERVER_ADDRESS = "localhost";
+    public static int SERVER_PORT = 25800;
     public static final String ICON_FILE_PATH_PREFIX = "src/client/assets/icons/";
 
     // SJSU Paths

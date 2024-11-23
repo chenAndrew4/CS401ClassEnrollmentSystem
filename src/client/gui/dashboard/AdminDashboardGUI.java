@@ -12,20 +12,22 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
         super("Administrator Dashboard", user);
 
         // Set university image as the top panel background
-        switch(user.getInstitutionID()) {
-            case SJSU:
-                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
-                break;
-            case CSUEB:
-                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
-                break;
-            case CSUF:
-                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
-                break;
-            default:
-                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
-                break;
-        }
+//        switch(user.getInstitutionID()) {
+//            case SJSU:
+//                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            case CSUEB:
+//                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            case CSUF:
+//                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
+//                break;
+//            default:
+//                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
+//                break;
+//        }
+        // Set personal image and info
+        setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_ADMIN_ICON));
 
         // Add options with images and labels
         addOption("Manage Users", new ImageIcon(ClientConfig.MANAGE_USERS_ICON), this::handleManageUsers);
@@ -35,6 +37,10 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
         addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
         addOption("Manage Waitlist", new ImageIcon(ClientConfig.MANAGE_WAITLIST_ICON), this::handleManageWaitlists);
         addOption("Manage Schedule", new ImageIcon(ClientConfig.MANAGE_SCHEDULE_ICON), this::handleManageSchedules);
+
+        setVisible(true);
+        revalidate();
+        repaint();
     }
 
     private void handleManageSchedules() {

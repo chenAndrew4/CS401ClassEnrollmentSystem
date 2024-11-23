@@ -1,10 +1,12 @@
-package client.handlers;
+package client.deleted;
 
 import shared.enums.MessageStatus;
 import shared.models.User;
 import shared.models.responses.BaseResponse;
 import shared.models.responses.LoginResponse;
 
+
+// after remove client class, no more usage
 public class LoginResponseHandler implements ResponseHandler<User>{
     @Override
     public User handleResponse(BaseResponse response) {
