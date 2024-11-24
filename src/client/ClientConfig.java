@@ -1,23 +1,26 @@
 package client;
 
+import java.io.File;
+
 public class ClientConfig {
     public static String SERVER_ADDRESS = "localhost";
     public static int SERVER_PORT = 25800;
 
-    // file path
-    public static final String ICON_FILE_PATH_PREFIX = "src/client/assets/icons/";
+    // File path
+    public static final String ICON_FILE_PATH_PREFIX = "src" + File.separator + "client" + File.separator + "assets" + File.separator + "icons" + File.separator;
+
     // SJSU Paths
-    public static final String SJSU_FILE_PATH_PREFIX = ICON_FILE_PATH_PREFIX + "SJSU/";
+    public static final String SJSU_FILE_PATH_PREFIX = ICON_FILE_PATH_PREFIX + "SJSU" + File.separator;
     public static final String SJSU_LOGO_FILE_PATH = SJSU_FILE_PATH_PREFIX + "logo.png";
     public static final String SJSU_DASH_BACKGROUND_FILE_PATH = SJSU_FILE_PATH_PREFIX + "dashboard_background.png";
 
     // CSUEB Paths
-    public static final String CSUEB_FILE_PATH_PREFIX = ICON_FILE_PATH_PREFIX + "CSUEB/";
+    public static final String CSUEB_FILE_PATH_PREFIX = ICON_FILE_PATH_PREFIX + "CSUEB" + File.separator;
     public static final String CSUEB_LOGO_FILE_PATH = CSUEB_FILE_PATH_PREFIX + "logo.png";
     public static final String CSUEB_DASH_BACKGROUND_FILE_PATH = CSUEB_FILE_PATH_PREFIX + "dashboard_background.png";
 
     // CSUF Paths
-    public static final String CSUF_FILE_PATH_PREFIX = ICON_FILE_PATH_PREFIX + "CSUF/";
+    public static final String CSUF_FILE_PATH_PREFIX = ICON_FILE_PATH_PREFIX + "CSUF" + File.separator;
     public static final String CSUF_LOGO_FILE_PATH = CSUF_FILE_PATH_PREFIX + "logo.png";
     public static final String CSUF_DASH_BACKGROUND_FILE_PATH = CSUF_FILE_PATH_PREFIX + "dashboard_background.png";
 

@@ -1,6 +1,7 @@
 package shared.models;
 
 import shared.enums.*;
+import shared.utils.IDGenerator;
 
 import java.io.Serializable;
 import java.time.Year;
@@ -22,12 +23,12 @@ public class Schedule implements Serializable {
     private Room room;
     private String facultyID;
 
-    public Schedule() {
-        scheduleID = null;
+    public Schedule(Institutions institutionID) {
+        scheduleID = IDGenerator.getInstance().generateUniqueScheduleID(institutionID);
     }
 
-    public Schedule(String scheduleID, String courseID, String sectionID, Term term, Days[] days, Date endDate, Date startDate, Time startTime, Time endTime, Location location, Campus campus, Room room, String facultyID) {
-        this.scheduleID = scheduleID;
+    public Schedule(Institutions institutionID, String courseID, String sectionID, Term term, Days[] days, Date endDate, Date startDate, Time startTime, Time endTime, Location location, Campus campus, Room room, String facultyID) {
+        this.scheduleID = IDGenerator.getInstance().generateUniqueScheduleID(institutionID);
         this.courseID = courseID;
         this.sectionID = sectionID;
         this.term = term;

@@ -6,10 +6,7 @@ import shared.models.Course;
 import shared.models.CourseSection;
 
 import java.io.*;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CoursesDataManager {
 
@@ -18,11 +15,12 @@ public class CoursesDataManager {
     private static final String FILE_PREFIX = ServerManager.DB_FILE_PATH_PREFIX;
     private static final String FILE_SUFFIX = ServerManager.COURSES_DB_FILE_PATH_SUFFIX;
 
-    // In-memory storage for courses by institution
-    private Map<Institutions, Map<String, Course>> institutionCourses;
+    private final Map<Institutions, Map<String, Course>> institutionCourses;
+    private final Map<Institutions, Boolean> modified; // Track modified institutions
 
     private CoursesDataManager() {
         institutionCourses = new HashMap<>();
+        modified = new HashMap<>();
         // Register save task for centralized data saving
         DataSaveManager.getInstance().registerSaveTask(this::saveAllCourses);
     }
@@ -34,96 +32,134 @@ public class CoursesDataManager {
         return instance;
     }
 
-    // Add a course for a specific institution
+    private synchronized void ensureCoursesLoaded(Institutions institution) {
+        if (!institutionCourses.containsKey(institution)) {
+            institutionCourses.put(institution, loadCoursesByInstitution(institution));
+            modified.putIfAbsent(institution, false);
+        }
+    }
+
     public synchronized boolean addOrUpdateCourse(Institutions institution, Course course) {
         if (institution == null || course == null) {
-            return false; // Invalid input
+            return false;
         }
+        ensureCoursesLoaded(institution);
 
         institutionCourses.putIfAbsent(institution, new HashMap<>());
-
-        Map<String, Course> courses = institutionCourses.get(institution);
-
-        courses.put(course.getCourseID(), course);
+        institutionCourses.get(institution).put(course.getCourseID(), course);
+        modified.put(institution, true); // Mark as modified
         return true;
     }
 
-    // Remove a course by its ID for a specific institution
     public synchronized boolean removeCourse(Institutions institution, String courseID) {
-        if (institution == null || courseID == null || !institutionCourses.containsKey(institution)) {
-            return false; // Invalid input or institution not found
+        if (institution == null || courseID == null) {
+            return false;
         }
+        ensureCoursesLoaded(institution);
 
         Map<String, Course> courses = institutionCourses.get(institution);
-        if (!courses.containsKey(courseID)) {
-            return false; // Course does not exist
+        if (courses == null || !courses.containsKey(courseID)) {
+            return false;
         }
 
         courses.remove(courseID);
+        modified.put(institution, true); // Mark as modified
         return true;
     }
 
-    // Get a course by its ID for a specific institution
     public synchronized Course getCourseByCourseID(Institutions institution, String courseID) {
-        if (institution == null || courseID == null || !institutionCourses.containsKey(institution)) {
-            return null; // Invalid input or institution not found
+        if (institution == null || courseID == null) {
+            return null;
         }
+        ensureCoursesLoaded(institution);
 
-        return new Course(institutionCourses.get(institution).get(courseID));
+        Course course = institutionCourses.getOrDefault(institution, Collections.emptyMap()).get(courseID);
+        return course != null ? new Course(course) : null;
     }
 
-    // Retrieve all courses for a specific institution
     public synchronized Map<String, Course> getAllCourses(Institutions institution) {
-        if (institution == null || !institutionCourses.containsKey(institution)) {
-            return Collections.emptyMap(); // Invalid input or institution not found
+        if (institution == null) {
+            return Collections.emptyMap();
         }
+        ensureCoursesLoaded(institution);
 
-        return new HashMap<>(institutionCourses.get(institution)); // Return a copy
+        return Collections.unmodifiableMap(new HashMap<>(institutionCourses.getOrDefault(institution, Collections.emptyMap())));
     }
 
-    // Get a section by its ID for a specific institution
-    public synchronized CourseSection getSectionById(Institutions institution, String sectionID) {
-        if (institution == null || sectionID == null || !institutionCourses.containsKey(institution)) {
-            return null; // Invalid input or institution not found
+    public synchronized Set<String> getCourseIDsByInstitution(Institutions institution) {
+        if (institution == null) {
+            return Collections.emptySet();
+        }
+        ensureCoursesLoaded(institution);
+
+        return Collections.unmodifiableSet(new HashSet<>(institutionCourses.getOrDefault(institution, Collections.emptyMap()).keySet()));
+    }
+
+    public synchronized Set<String> getSectionIDsByInstitution(Institutions institution) {
+        if (institution == null) {
+            return Collections.emptySet();
+        }
+        ensureCoursesLoaded(institution);
+
+        Set<String> sectionIDs = new HashSet<>();
+        for (Course course : institutionCourses.getOrDefault(institution, Collections.emptyMap()).values()) {
+            for (CourseSection section : course.getSections()) {
+                sectionIDs.add(section.getSectionID());
+            }
         }
 
-        for (Course course : institutionCourses.get(institution).values()) {
+        return Collections.unmodifiableSet(sectionIDs);
+    }
+
+    public synchronized CourseSection getSectionById(Institutions institution, String sectionID) {
+        if (institution == null || sectionID == null) {
+            return null;
+        }
+        ensureCoursesLoaded(institution);
+
+        for (Course course : institutionCourses.getOrDefault(institution, Collections.emptyMap()).values()) {
             for (CourseSection section : course.getSections()) {
                 if (section.getSectionID().equals(sectionID)) {
                     return new CourseSection(section);
                 }
             }
         }
-
-        return null; // Section not found
+        return null;
     }
 
-    // Get the course containing a specific section ID for a specific institution
     public synchronized Course getCourseBySectionId(Institutions institution, String sectionID) {
-        if (institution == null || sectionID == null || !institutionCourses.containsKey(institution)) {
-            return null; // Invalid input or institution not found
+        if (institution == null || sectionID == null) {
+            return null;
         }
-        for (Course course : institutionCourses.get(institution).values()) {
+        ensureCoursesLoaded(institution);
+
+        for (Course course : institutionCourses.getOrDefault(institution, Collections.emptyMap()).values()) {
             for (CourseSection section : course.getSections()) {
                 if (section.getSectionID().equals(sectionID)) {
                     return new Course(course);
                 }
             }
         }
-
-        return null; // Course not found
+        return null;
     }
 
-    // Save all courses to files
     public synchronized void saveAllCourses() {
+        if (institutionCourses.isEmpty()) {
+            return;
+        }
         for (Map.Entry<Institutions, Map<String, Course>> entry : institutionCourses.entrySet()) {
-            saveCoursesByInstitution(entry.getKey(), entry.getValue());
+            if (Boolean.TRUE.equals(modified.get(entry.getKey()))) {
+                saveCoursesByInstitution(entry.getKey(), entry.getValue());
+                modified.put(entry.getKey(), false); // Reset modification flag
+            }
         }
     }
 
-    // Save courses for a specific institution
     public synchronized void saveCoursesByInstitution(Institutions institutionID, Map<String, Course> courses) {
-        String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
+        if (courses == null || courses.isEmpty()) {
+            return;
+        }
+        String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(courses);
@@ -134,30 +170,26 @@ public class CoursesDataManager {
         }
     }
 
-    // Load all courses from files
-    public synchronized void loadAllCourses(List<Institutions> institutionIDs) {
-        for (Institutions institutionID : institutionIDs) {
-            institutionCourses.put(institutionID, loadCoursesByInstitution(institutionID));
+    public synchronized void loadAllCourses() {
+        for (Institutions institution : Institutions.values()) {
+            ensureCoursesLoaded(institution);
         }
     }
 
-    // Load courses for a specific institution
     @SuppressWarnings("unchecked")
     public synchronized Map<String, Course> loadCoursesByInstitution(Institutions institutionID) {
-        String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
-        Map<String, Course> courses = null;
+        String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
+        Map<String, Course> courses = new HashMap<>();
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             courses = (Map<String, Course>) ois.readObject();
             System.out.println("Courses loaded successfully for institution: " + institutionID);
         } catch (FileNotFoundException e) {
             System.err.println("File not found for institution: " + institutionID + ". Returning empty map.");
-            courses = new HashMap<>();
         } catch (Exception e) {
             System.err.println("Error loading courses for institution: " + institutionID);
             e.printStackTrace();
         }
-
         return courses;
     }
 }
@@ -187,7 +219,7 @@ public class CoursesDataManager {
 //
 //    // Save courses for a specific institution
 //    public void saveCoursesByInstitution(Institutions institutionID, Map<String, Course> courses) {
-//        String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
+//        String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
 //
 //        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
 //            oos.writeObject(courses);
@@ -210,7 +242,7 @@ public class CoursesDataManager {
 //    // Load courses for a specific institution
 //    @SuppressWarnings("unchecked")
 //    public Map<String, Course> loadCoursesByInstitution(Institutions institutionID) {
-//        String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
+//        String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
 //        Map<String, Course> courses = null;
 //
 //        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {

@@ -3,6 +3,7 @@ package server.dataManagers;
 import java.util.ArrayList;
 import java.util.List;
 
+// for centralize data saving before the server shut down
 public class DataSaveManager {
     private static DataSaveManager instance;
     private final List<Runnable> saveTasks;

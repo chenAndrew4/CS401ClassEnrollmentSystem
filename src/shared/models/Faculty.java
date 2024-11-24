@@ -15,11 +15,20 @@ public class Faculty extends User {
     private List<Schedule> teachingSchedule;  // Faculty's schedule
 
 
-    public Faculty(){}
+    public Faculty(Institutions institutionID){
+        super(institutionID);
+        assignedCourses = new ArrayList<>();
+        teachingSchedule = new ArrayList<>();
+    }
+    public Faculty(Faculty other){
+        super(other);
+        assignedCourses = other.assignedCourses;
+        teachingSchedule = other.teachingSchedule;
+    }
 
     // Constructor
-    public Faculty(String userID, String username, String firstName, String lastName, String password, Institutions institutionID, Department department, GenderIdentity genderIdentity) {
-        super(userID, username,firstName, lastName, password, institutionID, department, AccountType.Faculty, genderIdentity);
+    public Faculty(String username, String firstName, String lastName, String password, Institutions institutionID, Department department, GenderIdentity genderIdentity) {
+        super(username,firstName, lastName, password, institutionID, department, AccountType.Faculty, genderIdentity);
         this.assignedCourses = new ArrayList<>();
         this.teachingSchedule = new ArrayList<>();
     }

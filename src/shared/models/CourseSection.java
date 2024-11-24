@@ -1,6 +1,7 @@
 package shared.models;
 
 import shared.enums.*;
+import shared.utils.IDGenerator;
 
 import java.io.Serializable;
 
@@ -14,8 +15,8 @@ public class CourseSection implements Serializable {
     private InstructionModeType instructionMode;
     private String scheduleID;    // Schedule for this section
 
-    public CourseSection() {
-
+    public CourseSection(Institutions institutionID, String courseID) {
+        this.sectionID = IDGenerator.getInstance().generateUniqueSectionID(institutionID,courseID);
     }
 
     // Copy constructor

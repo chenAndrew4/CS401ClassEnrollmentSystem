@@ -22,8 +22,8 @@ public class LogService {
     }
 
     // Save a log entry
-    public synchronized void saveLog(Institutions institutionID, MessageType type, String logEntry) {
-        logDataManager.addLog(institutionID, type, logEntry);
+    public synchronized void saveLog(Institutions institutionID, Class<?> logClass, String logEntry) {
+        logDataManager.addLog(institutionID, logClass, logEntry);
     }
 
     // Retrieve all logs
@@ -42,8 +42,8 @@ public class LogService {
     }
 
     // Retrieve logs by type
-    public List<String> getLogsByType(Institutions institutionID, MessageType type) {
-        return logDataManager.getLogsByType(institutionID, type);
+    public List<String> getLogsByType(Institutions institutionID, Class<?> logClass) {
+        return logDataManager.getLogsByType(institutionID, logClass);
     }
 
     // Retrieve logs by content

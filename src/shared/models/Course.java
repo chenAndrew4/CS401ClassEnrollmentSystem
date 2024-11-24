@@ -20,10 +20,12 @@ public class Course implements Serializable {
 	private List<String> prerequisites;
 	private List<CourseSection> sections;
 
-	public Course() {}
+	public Course(Institutions institutionID, String department) {
+		this.courseID = IDGenerator.getInstance().generateUniqueCourseID(institutionID, department);
+	}
 
 	public Course(String courseID, String name, String description, Institutions institutionID, String notes, LevelType level, AcademicProgramType academicProgram, Float units, Department department) {
-		this.courseID = courseID;
+		this.courseID = IDGenerator.getInstance().generateUniqueCourseID(institutionID, department.name());
 		this.name = name;
 		this.description = description;
 		this.institutionID = institutionID;

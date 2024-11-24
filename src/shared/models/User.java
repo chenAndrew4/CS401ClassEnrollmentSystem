@@ -4,6 +4,7 @@ import shared.enums.AccountType;
 import shared.enums.Department;
 import shared.enums.GenderIdentity;
 import shared.enums.Institutions;
+import shared.utils.IDGenerator;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,13 +26,13 @@ public class User implements Serializable{
 	private Date date;  // Admission date
 	private GenderIdentity genderIdentity; // Gender identity
 
-	public User() {
-		this.userId = UUID.randomUUID().toString();
+	public User(Institutions institutionID) {
+		this.userId = IDGenerator.getInstance().generateUniqueUserID(institutionID);
 		this.username = null;
 		this.password = null;
 		this.firstName = null;
 		this.lastName = null;
-		this.institutionID = null;
+		this.institutionID = institutionID;
 		this.department = null;
 		this.accountType = null;
 		this.sessionToken = null;
@@ -40,10 +41,26 @@ public class User implements Serializable{
 		this.genderIdentity = GenderIdentity.NONE;
 	}
 
-	public User(String userID, String username, String firstName, String lastName, String password,
+	// Copy Constructor
+	public User(User source) {
+		this.userId = source.userId;
+		this.username = source.username;
+		this.password = source.password; // Consider encrypting or masking passwords for safety.
+		this.firstName = source.firstName;
+		this.lastName = source.lastName;
+		this.institutionID = source.institutionID; // Assuming Institutions is immutable or handles its own deep copy.
+		this.department = source.department; // Assuming Department is immutable or handles its own deep copy.
+		this.accountType = source.accountType; // Assuming AccountType is immutable.
+		this.sessionToken = source.sessionToken;
+		this.isAuthenticated = source.isAuthenticated;
+		this.date = source.date != null ? new Date(source.date.getTime()) : null; // Defensive copy for mutable Date.
+		this.genderIdentity = source.genderIdentity; // Assuming GenderIdentity is immutable.
+	}
+
+	public User(String username, String firstName, String lastName, String password,
 				Institutions institution, Department department, AccountType accountType,
 				GenderIdentity genderIdentity) {
-		this.userId = userID;
+		this.userId = IDGenerator.getInstance().generateUniqueUserID(institutionID);
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;

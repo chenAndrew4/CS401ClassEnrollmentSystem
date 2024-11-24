@@ -122,7 +122,7 @@ public class CourseService {
             return;
         }
 
-        coursesDataManager.loadAllCourses(institutionIDs);
+        coursesDataManager.loadAllCourses();
         System.out.println("Courses loaded for institutions: " + institutionIDs);
     }
 }

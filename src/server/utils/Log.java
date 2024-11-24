@@ -1,5 +1,7 @@
 package server.utils;
 
+import server.dataManagers.ServerLogDataManager;
+import shared.enums.Institutions;
 import shared.models.Message;
 import shared.models.User;
 
@@ -78,8 +80,11 @@ public class Log {
 	}
 
 	// Log an error
-	public void error(String str) {
-		println("ERROR: " + str);
+	public void error(String str, Institutions institutionID,Class<?> logClass) {
+		updateDateTime();
+		String text = "ERROR: " + str;
+		println(text);
+		ServerLogDataManager.getInstance().addLog(institutionID, logClass, "[" + this.formattedDateTime + "] " + text);
 	}
 
 	// Optional: Reset the JTextArea if needed

@@ -18,8 +18,8 @@ public final class ServerManager{
 	private String serverConfigIni;
 
 	// Paths to various data files
-	public static final String SERVER_CONFIG_FILE_PATH = "resources/config.ini";
-	public static final String DB_FILE_PATH_PREFIX = "resources/database/";
+	public static final String SERVER_CONFIG_FILE_PATH = "resources"+File.separator+"config.ini";
+	public static final String DB_FILE_PATH_PREFIX = "resources"+File.separator+"database" + File.separator;
 	public static final String USERS_DB_FILE_PATH_SUFFIX = "users.db";
 //	public static final String USERS_DB_FILE_PATH = "resources/database/users.db";
 	public static final String COURSES_DB_FILE_PATH_SUFFIX = "courses.db";
@@ -30,9 +30,9 @@ public final class ServerManager{
 //	public static final String LOGS_FILE_PATH_SUFFIX = "server.log";
 //	public static final String SCHEDULES_DB_FILE_PATH = "resources/database/schedules.db";
 //	public static final String WAITLISTS_DB_FILE_PATH = "resources/database/waitlists.db";
-	public static final String SESSION_FILE_PATH = "resources/database/sessions.db";
-	public static final String LOGS_FILE_PATH = "resources/database/server.log";
-	public static final String SERVER_ICON_FILE_PATH = "src/assets/icons/server_32.png";
+	public static final String SESSION_FILE_PATH = "resources"+File.separator+"database"+File.separator+"sessions.db";
+	public static final String LOGS_FILE_PATH_SUFFIX = "serverLog.log";
+	public static final String SERVER_ICON_FILE_PATH = "src"+File.separator+"assets"+File.separator+"icons"+File.separator+"server_32.png";
 
 
 	public ServerManager() {

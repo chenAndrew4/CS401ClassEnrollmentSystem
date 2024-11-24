@@ -1,5 +1,6 @@
 package server.dataManagers;
 
+import server.Server;
 import server.ServerManager;
 import shared.enums.Institutions;
 import shared.enums.MessageType;
@@ -13,8 +14,16 @@ import java.util.stream.Collectors;
 public class ServerLogDataManager {
     private static ServerLogDataManager instance;
 
+    // Internal storage for logs by institution and class type
+    private final Map<Institutions, Map<Class<?>, List<String>>> institutionLogs;
+    private final Map<Institutions, Map<Class<?>, Boolean>> modified; // Tracks modifications
+
+    private static final String LOG_FILE_PATH_SUFFIX = ServerManager.LOGS_FILE_PATH_SUFFIX;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SS");
+
     private ServerLogDataManager() {
         institutionLogs = new HashMap<>();
+        modified = new HashMap<>();
         // Register save task for centralized data saving
         DataSaveManager.getInstance().registerSaveTask(this::saveAllLogs);
     }
@@ -26,18 +35,19 @@ public class ServerLogDataManager {
         return instance;
     }
 
-    private static final String LOG_FILE_PATH = ServerManager.LOGS_FILE_PATH;
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SS");
-
-    // Map to store logs by Institutions and Type
-    private final Map<Institutions, Map<MessageType, List<String>>> institutionLogs;
-
     // Add a log entry to the map
-    public synchronized void addLog(Institutions institution, MessageType type, String logEntry) {
+    public synchronized void addLog(Institutions institution, Class<?> logClass, String logEntry) {
         institutionLogs.putIfAbsent(institution, new HashMap<>());
-        Map<MessageType, List<String>> typeLogs = institutionLogs.get(institution);
-        typeLogs.putIfAbsent(type, new ArrayList<>());
-        typeLogs.get(type).add(logEntry);
+        modified.putIfAbsent(institution, new HashMap<>());
+
+        Map<Class<?>, List<String>> classLogs = institutionLogs.get(institution);
+        Map<Class<?>, Boolean> classModified = modified.get(institution);
+
+        classLogs.putIfAbsent(logClass, new ArrayList<>());
+        classModified.putIfAbsent(logClass, false);
+
+        classLogs.get(logClass).add(logClass.getName() + logEntry);
+        classModified.put(logClass, true); // Mark as modified
     }
 
     // Retrieve all logs for an institution
@@ -50,12 +60,12 @@ public class ServerLogDataManager {
                 .collect(Collectors.toList());
     }
 
-    // Retrieve logs by type for an institution
-    public synchronized List<String> getLogsByType(Institutions institution, MessageType type) {
-        if (!institutionLogs.containsKey(institution) || !institutionLogs.get(institution).containsKey(type)) {
+    // Retrieve logs by class type for an institution
+    public synchronized List<String> getLogsByType(Institutions institution, Class<?> logClass) {
+        if (!institutionLogs.containsKey(institution) || !institutionLogs.get(institution).containsKey(logClass)) {
             return Collections.emptyList();
         }
-        return new ArrayList<>(institutionLogs.get(institution).get(type));
+        return new ArrayList<>(institutionLogs.get(institution).get(logClass));
     }
 
     // Retrieve logs by content for an institution
@@ -78,12 +88,12 @@ public class ServerLogDataManager {
                 .collect(Collectors.toList());
     }
 
-    // Retrieve logs by institutionID and date
-    public synchronized List<String> getLogsByInstitutionIDAndDate(Institutions institutionID, String date) {
-        return institutionLogs.values().stream()
-                .flatMap(map -> map.values().stream())
+    // Retrieve logs by institution and date
+    public synchronized List<String> getLogsByInstitutionIDAndDate(Institutions institution, String date) {
+        return institutionLogs.getOrDefault(institution, Collections.emptyMap())
+                .values().stream()
                 .flatMap(Collection::stream)
-                .filter(log -> log.contains(institutionID.name()) && log.startsWith("[" + date))
+                .filter(log -> log.startsWith("[" + date))
                 .collect(Collectors.toList());
     }
 
@@ -112,38 +122,45 @@ public class ServerLogDataManager {
 
     // Save all logs to files
     public synchronized void saveAllLogs() {
-        institutionLogs.forEach((institution, typeLogs) -> {
-            typeLogs.forEach((type, logs) -> {
-                saveLogsByInstitutionAndType(institution, type, logs);
+        institutionLogs.forEach((institution, classLogs) -> {
+            classLogs.forEach((logClass, logs) -> {
+                if (Boolean.TRUE.equals(modified.getOrDefault(institution, Collections.emptyMap()).get(logClass))) {
+                    saveLogsByInstitutionAndType(institution, logClass, logs);
+                    modified.get(institution).put(logClass, false); // Reset modification flag
+                }
             });
         });
     }
 
-    // Save logs for a specific institution and type
-    private void saveLogsByInstitutionAndType(Institutions institution, MessageType type, List<String> logs) {
-        String filePath = LOG_FILE_PATH + institution + "_" + type + ".log";
+    // Save logs for a specific institution and class type
+    private synchronized void saveLogsByInstitutionAndType(Institutions institution, Class<?> logClass, List<String> logs) {
+        String filePath = ServerManager.DB_FILE_PATH_PREFIX + institution + File.separator + LOG_FILE_PATH_SUFFIX;
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             for (String log : logs) {
                 writer.write(log + System.lineSeparator());
             }
-            System.out.println("Logs saved for Institution: " + institution + ", Type: " + type);
+            System.out.println("Logs saved for Institution: " + institution + ", Class: " + logClass.getSimpleName());
         } catch (IOException e) {
-            System.err.println("Error saving logs for Institution: " + institution + ", Type: " + type);
+            System.err.println("Error saving logs for Institution: " + institution + ", Class: " + logClass.getSimpleName());
             e.printStackTrace();
         }
     }
 
     // Load all logs from files
     public synchronized void loadAllLogs() {
-        File logDirectory = new File(LOG_FILE_PATH);
-        if (!logDirectory.exists() || !logDirectory.isDirectory()) {
-            System.err.println("Log directory not found. Skipping load operation.");
-            return;
+        File log = null;
+        List<File> logFiles = new ArrayList<>();
+        for (Institutions i : Institutions.values()) {
+            log = new File(ServerManager.DB_FILE_PATH_PREFIX + i.name() + File.separator + LOG_FILE_PATH_SUFFIX);
+            if (!log.exists() || !log.isDirectory()) {
+                System.err.println("Log directory not found. Skipping load operation.");
+                return;
+            }
+            logFiles.add(log);
         }
 
-        File[] logFiles = logDirectory.listFiles((dir, name) -> name.endsWith(".log"));
-        if (logFiles == null || logFiles.length == 0) {
+        if (logFiles.isEmpty()) {
             System.err.println("No log files found. Skipping load operation.");
             return;
         }
@@ -155,19 +172,21 @@ public class ServerLogDataManager {
                 continue; // Skip invalid files
             }
             Institutions institution = Institutions.valueOf(parts[0]);
-            MessageType type = MessageType.valueOf(parts[1]);
-
-            try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    addLog(institution, type, line);
+            try {
+                Class<?> logClass = Class.forName(parts[1]);
+                try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        addLog(institution, logClass, line);
+                    }
                 }
-            } catch (IOException e) {
+            } catch (ClassNotFoundException | IOException e) {
                 System.err.println("Error loading logs from file: " + logFile.getName());
                 e.printStackTrace();
             }
         }
     }
 }
+
 
 

@@ -1,18 +1,23 @@
 package tests.server.dataManagers;
 
+import client.gui.dashboard.AdminDashboardGUI;
+import client.gui.dashboard.FacultyDashboardGUI;
+import client.gui.dashboard.StudentDashboardGUI;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import server.dataManagers.UserDataManager;
 import shared.enums.*;
 import shared.models.*;
 
+import javax.swing.*;
+import javax.swing.plaf.PanelUI;
 import java.io.IOException;
+import java.security.PublicKey;
 import java.util.*;
 
 public class UserDataManagerTest {
     static UserDataManager userDataManager;
 
-    @BeforeAll
     public static void beforeTest() {
         userDataManager = UserDataManager.getInstance();
 
@@ -40,26 +45,23 @@ public class UserDataManagerTest {
             String commonPassword) {
 
         // Administrator
-        Administrator admin = new Administrator();
-        admin.setUserId(generateUUID());
+        Administrator admin = new Administrator(institution);
         admin.setUsername(adminUsername);
         admin.setPassword(commonPassword);
         admin.setFirstName("Admin");
         admin.setLastName(institution + " User");
-        admin.setInstitutionID(institution);
         admin.setAccountType(AccountType.Administrator);
         admin.setDate(new Date()); // Current date
+        admin.setDepartment(Department.CS);
         admin.setGenderIdentity(GenderIdentity.MALE);
         userDataManager.addUserByInstitution(institution, admin);
 
         // Faculty
-        Faculty faculty = new Faculty();
-        faculty.setUserId(generateUUID());
+        Faculty faculty = new Faculty(institution);
         faculty.setUsername(facultyUsername);
         faculty.setPassword(commonPassword);
         faculty.setFirstName("Faculty");
         faculty.setLastName(institution + " User");
-        faculty.setInstitutionID(institution);
         faculty.setAccountType(AccountType.Faculty);
         faculty.setDepartment(Department.CS); // Example department
         faculty.setDate(new Date());
@@ -67,25 +69,27 @@ public class UserDataManagerTest {
         userDataManager.addUserByInstitution(institution, faculty);
 
         // Student
-        Student student = new Student();
-        student.setUserId(generateUUID());
+        Student student = new Student(institution);
         student.setUsername(studentUsername);
         student.setPassword(commonPassword);
         student.setFirstName("Student");
         student.setLastName(institution + " User");
         student.setInstitutionID(institution);
         student.setAccountType(AccountType.Student);
+        student.setDepartment(Department.CS);
         student.setDate(new Date());
         student.setGenderIdentity(GenderIdentity.FEMALE);
         userDataManager.addUserByInstitution(institution, student);
     }
 
-    private static String generateUUID() {
-        return java.util.UUID.randomUUID().toString();
+    @Test
+    public void testDeleteDB() throws IOException {
+        UserDataManager.getInstance().deleteDB();
     }
 
     @Test
     public void testSaveUser() {
+        beforeTest();
         userDataManager.commitDBByInstitution(Institutions.SJSU);
         userDataManager.commitDBByInstitution(Institutions.CSUEB);
         userDataManager.commitDBByInstitution(Institutions.CSUF);
@@ -93,10 +97,17 @@ public class UserDataManagerTest {
 
     @Test
     public void testLoadUserSJSU() {
-        Map<String, User> userMap = userDataManager.getUsersByInstitution(Institutions.SJSU);
+        Map<String, User> userMap = UserDataManager.getInstance().getUsersByInstitution(Institutions.SJSU);
         System.out.println("SJSU Users:");
         for (User u : userMap.values()) {
-            System.out.println(getUserDetails(u));
+            if (u instanceof Student) {
+                System.out.println("S " + getUserDetails(u));
+            } else if (u instanceof Faculty) {
+                System.out.println("F " + getUserDetails(u));
+            } else if (u instanceof Administrator) {
+                System.out.println("A " + getUserDetails(u));
+            }
+
         }
     }
 

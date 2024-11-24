@@ -73,7 +73,7 @@ public class UserService implements Serializable{
 //		}
 //		return false;
 //		isImported(institutionID);
-		return userDataManager.getUserByInstitution(institutionID, username).getUsername().equals(username);
+		return userDataManager.getUserByInstitutionAndUserName(institutionID, username).getUsername().equals(username);
 	}
 
 	public boolean doesUsernameAndPasswordEqualByInstitution(Institutions institutionID, String username, String password) {
@@ -87,7 +87,12 @@ public class UserService implements Serializable{
 //		}
 //		isImported(institutionID);
 		Map<String, User> curMap = userDataManager.getUsersByInstitution(institutionID);
-		return curMap.containsKey(username)&&curMap.get(username).getPassword().equals(password);
+		for (User u : curMap.values()) {
+			if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 //	public boolean doesUserIdExist(String id) {
@@ -100,7 +105,7 @@ public class UserService implements Serializable{
 //		return users.containsKey(username)&&users.get(username).getPassword().equals(password);
 //	}
 	
-	public User getUserByInstitution(Institutions institutionID, String username) {
+	public User getUserByInstitutionAndUsername(Institutions institutionID, String username) {
 //		ListIterator<User> listOfUsers = this.users.listIterator();
 //
 //		while(listOfUsers.hasNext()) {
@@ -111,7 +116,7 @@ public class UserService implements Serializable{
 //
 //		return new User();
 //		isImported(institutionID);
-		return userDataManager.getUserByInstitution(institutionID, username);
+		return userDataManager.getUserByInstitutionAndUserName(institutionID, username);
 	}
 	
 	public List<User> getUsersByInstitution(Institutions institutionID){

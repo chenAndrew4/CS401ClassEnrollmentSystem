@@ -23,7 +23,7 @@ public class LoginHandler {
             return;
         }
 
-        User currentUser = new User();
+        User currentUser = new User(institution);
         currentUser.setUsername(username);
         currentUser.setPassword(password);
         currentUser.setInstitutionID(institution);
@@ -52,9 +52,21 @@ public class LoginHandler {
     private void openDashboard(User user) {
         SwingUtilities.invokeLater(() -> {
             switch (user.getAccountType()) {
-                case Student -> new StudentDashboardGUI((Student) user);
-                case Faculty -> new FacultyDashboardGUI((Faculty) user);
-                case Administrator -> new AdminDashboardGUI((Administrator) user);
+                case Student -> {
+                    if (user instanceof Student) {
+                        new StudentDashboardGUI((Student) user);
+                    }
+                }
+                case Faculty -> {
+                    if (user instanceof Administrator) {
+                        new FacultyDashboardGUI((Faculty) user);
+                    }
+                }
+                case Administrator -> {
+                    if (user instanceof Faculty) {
+                        new AdminDashboardGUI((Administrator) user);
+                    }
+                }
                 default -> JOptionPane.showMessageDialog(null, "Unknown Account type: " + user.getAccountType(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });

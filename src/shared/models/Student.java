@@ -14,17 +14,24 @@ public class Student extends User {
     private List<CourseSection> waitlistedCourses;
     private List<CourseSection> finishedCourses; // List of finished courses
 
-    public Student() {
-        super();
+    public Student(Institutions institutionID) {
+        super(institutionID);
         this.enrolledCourses = new ArrayList<>();
         this.waitlistedCourses = new ArrayList<>();
         this.finishedCourses = new ArrayList<>();
     }
 
-    public Student(String userID, String username, String firstName, String lastName, String password,
+    public Student(Student other) {
+        super(other);
+        this.enrolledCourses = other.enrolledCourses;
+        this.waitlistedCourses = other.waitlistedCourses;
+        this.finishedCourses = other.finishedCourses;
+    }
+
+    public Student(String username, String firstName, String lastName, String password,
                    Institutions institution, AccountType accountType, Department department,
                    GenderIdentity genderIdentity) {
-        super(userID, username, firstName, lastName, password, institution, department, accountType, genderIdentity);
+        super(username, firstName, lastName, password, institution, department, accountType, genderIdentity);
         this.enrolledCourses = new ArrayList<>();
         this.waitlistedCourses = new ArrayList<>();
         this.finishedCourses = new ArrayList<>();

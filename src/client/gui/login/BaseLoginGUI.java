@@ -68,19 +68,11 @@ public abstract class BaseLoginGUI extends JFrame {
         mainPanel.add(Box.createVerticalStrut(10));
 
         // Password field (visible placeholder, converts to masked input on focus)
-        passwordField = new JPasswordField("Password", 15) {
-            @Override
-            public void setEchoChar(char c) {
-                if (getText().equals("Password")) {
-                    super.setEchoChar((char) 0); // Show placeholder
-                } else {
-                    super.setEchoChar(c); // Mask input
-                }
-            }
-        };
+        passwordField = new JPasswordField(15);
+        passwordField.setText("Password"); // Set initial placeholder text
         passwordField.setForeground(Color.GRAY);
-        passwordField.addFocusListener(new PlaceholderListener("Password", passwordField));
         passwordField.setEchoChar((char) 0); // Placeholder visible initially
+        passwordField.addFocusListener(new PlaceholderListener("Password", passwordField));
         passwordField.setMaximumSize(passwordField.getPreferredSize());
         mainPanel.add(passwordField);
 
@@ -105,18 +97,12 @@ public abstract class BaseLoginGUI extends JFrame {
         // Add spacing
         mainPanel.add(Box.createVerticalStrut(10));
 
-        // Sign-Up button
-        JButton signUpButton = new JButton("Sign Up");
-        signUpButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        signUpButton.addActionListener(e -> new SignupGUI());
-        mainPanel.add(signUpButton);
-
-        // Feedback message below Sign-Up button
+        // Feedback message below Login button
         statusLabel = new JLabel("", SwingConstants.CENTER);
         statusLabel.setForeground(Color.RED);
         statusLabel.setFont(new Font("Arial", Font.ITALIC, 12));
         statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center alignment
-        mainPanel.add(Box.createVerticalStrut(10)); // Space between Sign-Up and Status
+        mainPanel.add(Box.createVerticalStrut(10)); // Space between Login and Status
         mainPanel.add(statusLabel);
     }
 
@@ -216,6 +202,7 @@ public abstract class BaseLoginGUI extends JFrame {
         this.institution = institution;
     }
 }
+
 
 
 

@@ -23,7 +23,7 @@ public class LoginHandler {
         if (isAuthenticated) {
             // set user's token as sessionToken
             String sessionToken = sessionService.createSession(user.getUserId());
-            user = userService.getUserByInstitution(user.getInstitutionID(), user.getUsername());
+            user = userService.getUserByInstitutionAndUsername(user.getInstitutionID(), user.getUsername());
             user.setSessionToken(sessionToken);
             user.setAuthenticated(true);
             return new LoginResponse(MessageType.LOGIN, MessageStatus.SUCCESS,"Log in success", sessionToken, true, user);

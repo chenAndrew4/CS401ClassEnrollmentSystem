@@ -10,99 +10,90 @@ import java.io.IOException;
 import java.util.*;
 
 public class CourseDataManagerTest {
-    static Map<String, Course> coursesMap;
-    static Map<String, Course> testCoursesMap;
+    static CoursesDataManager coursesDataManager;
 
     @BeforeAll
     public static void beforeTest() {
-        // Create a Schedule instance
-        Schedule schedule = new Schedule("SCH001");
-        schedule.setDays(new Days[]{Days.MONDAY, Days.WEDNESDAY, Days.FRIDAY});
-        // Create a Calendar instance
-        Calendar calendar = Calendar.getInstance();
-        // Set the date to November 22, 2024
-        calendar.set(2024, Calendar.JANUARY, 15);
-        // Retrieve the Date object
-        Date sD = calendar.getTime();
-        schedule.setStartDate(sD); // Example: Jan 15, 2024
+        coursesDataManager = CoursesDataManager.getInstance();
 
-        calendar.set(2024, Calendar.MAY, 10);
-        // Retrieve the Date object
-        Date eD = calendar.getTime();
-        schedule.setEndDate(eD);       // Example: May 10, 2024
-        schedule.setStartTime(Time.TIME_900);                        // 9:00 AM
-        schedule.setEndTime(Time.TIME_1030);
-        schedule.setTerm(Term.SPRING_SEMESTER);// 10:30 AM
+        // Generate 15 courses across different institutions and departments
+        createCoursesForInstitution(Institutions.CSUEB);
+        createCoursesForInstitution(Institutions.SJSU);
+        createCoursesForInstitution(Institutions.CSUF);
+    }
 
-        // Create a CourseSection instance
-        CourseSection section = new CourseSection();
-        section.setSectionID("CS101-01");
-        section.setEnrollmentLimit(30);
-        section.setGrading(GradingType.Letter);
-        section.setInstructionMode(InstructionModeType.InPerson);
-//        section.setInstructor("Dr. Jane Doe");
-//        section.setLocation(Location.LIBRARY);
-//        section.setCampus(Campus.HAYWARD);
-//        section.setRoom(Room.ROOM1);
-//        section.setSchedule(schedule);
-        section.setWaitlist(new WaitList());
-        section.setClassRoster(new ClassRoster());
+    private static void createCoursesForInstitution(Institutions institution) {
+        String[] departments = {"CS", "MATH", "PHYS", "BIO", "CHEM"};
+        for (int i = 0; i < 5; i++) { // 5 departments per institution
+            String department = departments[i % departments.length];
 
-        // Create a CourseSection instance
-        CourseSection section2 = new CourseSection();
-        section2.setSectionID("CS101-02");
-        section2.setEnrollmentLimit(30);
-        section2.setGrading(GradingType.Letter);
-        section2.setInstructionMode(InstructionModeType.InPerson);
-//        section2.setInstructor("Dr. Jane Doe");
-//        section2.setLocation(Location.LIBRARY);
-//        section2.setCampus(Campus.HAYWARD);
-//        section2.setRoom(Room.ROOM1);
-//        section2.setSchedule(schedule);
-        section2.setWaitlist(new WaitList());
-        section2.setClassRoster(new ClassRoster());
-        List<CourseSection> sections = new ArrayList<>();
-        sections.add(section);
-        sections.add(section2);
+            // Create 1 course per department
+            Course course = new Course(institution, department);
+            course.setName("Course " + department + " - " + institution);
+            course.setDescription("Description for " + department + " course at " + institution);
+            course.setNotes("No prerequisites for this course.");
+            course.setLevel(LevelType.Lower);
+            course.setAcademicProgram(AcademicProgramType.UGM);
+            course.setUnits(3.0f + i);
+            course.setPrerequisites(Arrays.asList("PREREQ" + i));
 
-        // Create a Course instance
-        Course course = new Course();
-        course.setCourseID("CS101");
-        course.setName("Introduction to Computer Science");
-        course.setDescription("Basic principles of computer science.");
-        course.setInstitutionID(Institutions.SJSU);
-        course.setNotes("No prior experience required.");
-        course.setLevel(LevelType.Lower);
-        course.setAcademicProgram(AcademicProgramType.UGM);
-        course.setUnits(4.0f);
-        course.setDepartment(Department.CS);
-        course.setPrerequisites(Arrays.asList("MATH101"));
-        course.setSections(sections);
+            // Create 2 sections per course
+            List<CourseSection> sections = new ArrayList<>();
+            for (int j = 1; j <= 2; j++) {
+                CourseSection section = new CourseSection(institution, course.getCourseID());
+                section.setEnrollmentLimit(30 + j * 5);
+                section.setGrading(GradingType.Letter);
+                section.setInstructionMode(InstructionModeType.InPerson);
 
-        // Output course details for verification
-        System.out.println("Course: " + course.getName());
-        for (CourseSection s : sections) {
-            System.out.println("Schedule ID: " + s.getSectionID());
+                // Create a schedule for the section
+                Schedule schedule = new Schedule(institution);
+                schedule.setCourseID(course.getCourseID());
+                schedule.setSectionID(section.getSectionID());
+                schedule.setTerm(Term.SPRING_SEMESTER);
+                schedule.setDays(new Days[]{Days.TUESDAY, Days.THURSDAY});
+                Calendar calendar = Calendar.getInstance();
+                // Set the start date
+                calendar.set(2024, Calendar.JANUARY, 15); // Jan 15, 2024
+                schedule.setStartDate(calendar.getTime());
+
+// Set the end date
+                calendar.set(2024, Calendar.MAY, 22); // May 22, 2024
+                schedule.setEndDate(calendar.getTime());
+                schedule.setStartTime(Time.TIME_1100);              // 11:00 AM
+                schedule.setEndTime(Time.TIME_1230);               // 12:30 PM
+
+                section.setScheduleID(schedule.getScheduleID());
+                sections.add(section);
+            }
+            course.setSections(sections);
+
+            // Add course to CoursesDataManager
+            coursesDataManager.addOrUpdateCourse(institution, course);
         }
-
-        testCoursesMap = new HashMap<>();
-        testCoursesMap.put(course.getCourseID(), course);
-        coursesMap = new HashMap<>();
-    }
-    @Test
-    public void testSaveCourse() {
-        CoursesDataManager.getInstance().saveCoursesByInstitution(Institutions.SJSU, testCoursesMap);
     }
 
     @Test
-    public void testLoadUser() throws IOException {
-        coursesMap = CoursesDataManager.getInstance().loadCoursesByInstitution(Institutions.SJSU);
-//        coursesMap = CourseDataManager.loadUsersByInstitution(Institutions.SJSU);
-        for (Course c : coursesMap.values()) {
-            System.out.println(c.getName());
-            for (CourseSection s : c.getSections()) {
-                System.out.println("Schedule ID: " + s.getSectionID());
+    public void testSaveCourses() {
+        coursesDataManager.saveAllCourses();
+    }
+
+    @Test
+    public void testLoadCourses() throws IOException {
+        loadAndPrintCourses(Institutions.CSUEB);
+        loadAndPrintCourses(Institutions.SJSU);
+        loadAndPrintCourses(Institutions.CSUF);
+    }
+
+    private void loadAndPrintCourses(Institutions institution) {
+        Map<String, Course> loadedCourses = coursesDataManager.getAllCourses(institution);
+        System.out.println("Courses for Institution: " + institution);
+        for (Course course : loadedCourses.values()) {
+            System.out.println("Course: " + course.getName() + " | CourseID: " + course.getCourseID());
+            for (CourseSection section : course.getSections()) {
+                System.out.println("  Section ID: " + section.getSectionID());
+                System.out.println("  Schedule ID: " + section.getScheduleID());
             }
         }
     }
 }
+

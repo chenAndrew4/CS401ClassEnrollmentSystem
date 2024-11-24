@@ -1,19 +1,18 @@
 package shared.utils;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import server.dataManagers.CoursesDataManager;
+import server.dataManagers.ScheduleDataManager;
+import server.dataManagers.UserDataManager;
+import shared.enums.Institutions;
+
+import java.util.*;
 
 public class IDGenerator {
     private static IDGenerator instance;
-    private final Set<String> courseIDs = new HashSet<>();
-    private final Set<String> sectionIDs = new HashSet<>();
-    private final Set<String> scheduleIDs = new HashSet<>();
 
-    // Private constructor to prevent instantiation
+    // Singleton Pattern
     private IDGenerator() {}
 
-    // Synchronized method to get the single instance
     public static synchronized IDGenerator getInstance() {
         if (instance == null) {
             instance = new IDGenerator();
@@ -21,40 +20,54 @@ public class IDGenerator {
         return instance;
     }
 
-    public String generateUniqueCourseID(String prefix) {
+    // Methods to generate unique IDs
+    public String generateUniqueCourseID(Institutions institution, String prefix) {
         String id;
+        Set<String> courseIDs = CoursesDataManager.getInstance().getCourseIDsByInstitution(institution);
+
         do {
-            id = prefix + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-        } while (!courseIDs.add(id));
+            id = prefix + generateNumericUUID(3); // Example: Generate a 3-digit numeric ID
+        } while (courseIDs.contains(id));
+
         return id;
     }
 
-    public String generateUniqueSectionID(String courseID) {
+    public String generateUniqueSectionID(Institutions institution, String courseID) {
         String id;
+        Set<String> sectionIDs = CoursesDataManager.getInstance().getSectionIDsByInstitution(institution);
+
         do {
-            id = courseID + "-SEC-" + UUID.randomUUID().toString().substring(0, 4).toUpperCase();
-        } while (!sectionIDs.add(id));
+            id = courseID + "-SEC" + generateNumericUUID(3); // Example: Generate a 3-digit numeric ID
+        } while (sectionIDs.contains(id));
+
         return id;
     }
 
-    public String generateUniqueScheduleID(String sectionID) {
+    public String generateUniqueScheduleID(Institutions institution) {
         String id;
+        Set<String> scheduleIDs = ScheduleDataManager.getInstance().getScheduleIDsByInstitution(institution);
         do {
-            id = sectionID + "-SCH-" + UUID.randomUUID().toString().substring(0, 4).toUpperCase();
-        } while (!scheduleIDs.add(id));
+            id = "SCH" + generateNumericUUID(4); // Example: Generate a 4-digit numeric ID
+        } while (scheduleIDs.contains(id));
+
         return id;
     }
 
-    public void reset() {
-        courseIDs.clear();
-        sectionIDs.clear();
-        scheduleIDs.clear();
+    public String generateUniqueUserID(Institutions institution) {
+        String id;
+        Set<String> userIDs = UserDataManager.getInstance().getUserIDsByInstitution(institution);
+
+        do {
+            id = institution + "-USER-" + generateNumericUUID(5); // Example: Generate an 5-digit numeric ID
+        } while (userIDs.contains(id));
+
+        return id;
     }
 
-    // Load IDs from existing data
-    public synchronized void loadIDsFromData(Set<String> courseIds, Set<String> sectionIds, Set<String> scheduleIds) {
-        courseIDs.addAll(courseIds);
-        sectionIDs.addAll(sectionIds);
-        scheduleIDs.addAll(scheduleIds);
+    // Helper method to generate numeric UUIDs
+    private String generateNumericUUID(int length) {
+        String numericUUID = UUID.randomUUID().toString().replaceAll("\\D", ""); // Remove all non-numeric characters
+        return numericUUID.substring(0, Math.min(length, numericUUID.length())); // Ensure the length matches
     }
 }
+
