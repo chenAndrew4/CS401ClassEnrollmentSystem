@@ -1,15 +1,20 @@
 package shared.models;
 
+import shared.enums.Institutions;
+import shared.utils.IDGenerator;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class WaitList implements Serializable {
-    private String sectionID;  // The course section associated with this waitlist
+    private String sectionID;// The course section associated with this waitlist
+    private String waitlistID;
     private int maxCapacity;        // Maximum number of students on the waitlist
     private Queue<Student> waitingStudents;  // The queue of students on the waitlist
 
-    public WaitList() {
+    public WaitList(Institutions institutionID) {
+        waitlistID = IDGenerator.getInstance().generateUniqueWaitlistID(institutionID);
         sectionID = null;
         maxCapacity = 0;
         waitingStudents = null;

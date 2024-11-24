@@ -118,6 +118,18 @@ public class WaitlistDataManager {
         return Collections.unmodifiableSet(new HashSet<>(institutionWaitlists.get(institutionID).keySet()));
     }
 
+    // Get a waitlist by waitlist ID across all institutions
+    public synchronized WaitList getWaitlistByWaitlistID(String waitlistID) {
+        for (Map.Entry<Institutions, Map<String, WaitList>> institutionEntry : institutionWaitlists.entrySet()) {
+            Map<String, WaitList> waitlists = institutionEntry.getValue();
+            if (waitlists.containsKey(waitlistID)) {
+                return new WaitList(waitlists.get(waitlistID));
+            }
+        }
+        System.err.println("Waitlist not found for ID: " + waitlistID);
+        return null;
+    }
+
     // Remove a specific waitlist
     public synchronized boolean removeWaitlist(Institutions institutionID, String sectionID) {
         if (!institutionWaitlists.containsKey(institutionID)) {

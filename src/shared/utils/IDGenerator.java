@@ -3,6 +3,7 @@ package shared.utils;
 import server.dataManagers.CoursesDataManager;
 import server.dataManagers.ScheduleDataManager;
 import server.dataManagers.UserDataManager;
+import server.dataManagers.WaitlistDataManager;
 import shared.enums.Institutions;
 
 import java.util.*;
@@ -49,7 +50,17 @@ public class IDGenerator {
         do {
             id = "SCH" + generateNumericUUID(4); // Example: Generate a 4-digit numeric ID
         } while (scheduleIDs.contains(id));
+        return id;
+    }
 
+    // Generate a unique Waitlist ID
+    public String generateUniqueWaitlistID(Institutions institution) {
+        String id;
+        Set<String> waitlistIDs = WaitlistDataManager.getInstance().getWaitlistIDsByInstitution(institution);
+
+        do {
+            id = "WAIT-" + generateNumericUUID(5); // Example: Generate a 5-digit numeric ID
+        } while (waitlistIDs.contains(id));
         return id;
     }
 
@@ -63,6 +74,8 @@ public class IDGenerator {
 
         return id;
     }
+
+
 
     // Helper method to generate numeric UUIDs
     private String generateNumericUUID(int length) {
