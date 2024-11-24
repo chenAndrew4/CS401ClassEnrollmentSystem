@@ -2,7 +2,7 @@ package shared.enums;
 
 import java.util.List;
 
-public enum Location {
+public enum Building {
     MEIKLEJOHN_HALL(List.of(Room.values())),
     LIBRARY(List.of(Room.ROOM1, Room.ROOM2, Room.ROOM3)),  // Example subset
     SCIENCE_BUILDING(List.of(Room.values())), // All rooms available
@@ -15,7 +15,7 @@ public enum Location {
 
     private final List<Room> rooms;
 
-    Location(List<Room> rooms) {
+    Building(List<Room> rooms) {
         this.rooms = rooms;
     }
 

@@ -1,7 +1,6 @@
 package shared.enums;
 
 public enum MessageType{
-	CREATE_ACCOUNT,
 	LOGIN,
 	LOGOUT,
 	ENROLL_COURSE,
@@ -15,7 +14,6 @@ public enum MessageType{
 	ADD_SCHEDULE,
 	DELETE_SCHEDULE,
 	GET_CLASS_ROSTER,
-	SET_CLASS_ROSTER,
 	SET_SYLLABUS,
 	GET_SYLLABUS,
 	ADD,

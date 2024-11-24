@@ -1,7 +1,9 @@
 package client.gui.dashboard;
 
 import client.ClientConfig;
+//import client.gui.StudentScheduleViewGUI;
 import shared.models.Student;
+import shared.models.User;
 
 import javax.swing.*;
 
@@ -11,22 +13,6 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
     public StudentDashboardGUI(Student user) {
         super("Student Dashboard", user);
 
-//        SwingUtilities.invokeLater(() -> {
-            // Set university image as the top panel background
-//        switch(user.getInstitutionID()) {
-//            case SJSU:
-//                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            case CSUEB:
-//                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            case CSUF:
-//                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            default:
-//                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
-//                break;
-//        }
         // Set personal image and info
         setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_STUDENT_ICON));
 //        setInfo("Name: " + user.getLastName() + " " + user.getFirstName() + "\nMajor: " + user.getDepartment() + "\nAdmin Date: " + user.getDate());
@@ -40,8 +26,7 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
         addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
 
         setVisible(true);
-        revalidate();
-        repaint();
+
     }
 
     private void handleWaitlist() {
@@ -61,7 +46,8 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
     }
 
     private void handleViewSchedule() {
-        JOptionPane.showMessageDialog(this, "View Schedule clicked!");
+//        new StudentScheduleViewGUI((Student) getUser());
+//        JOptionPane.showMessageDialog(this, "View Schedule clicked!");
     }
 
     private void handleLogout() {

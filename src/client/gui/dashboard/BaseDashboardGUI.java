@@ -158,6 +158,14 @@ public abstract class BaseDashboardGUI extends JFrame implements Runnable {
         add(optionsPanel, BorderLayout.CENTER);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public JPanel getOptionsPanel() {
+        return optionsPanel;
+    }
+
     private void initializeUserDetails() {
         if (user != null) {
             // Set the university image based on the institution
@@ -187,6 +195,10 @@ public abstract class BaseDashboardGUI extends JFrame implements Runnable {
             infoArea2.setText(""); // Empty for now; populate if needed
         }
         adjustComponents();
+    }
+
+    public JPanel getTopPanel() {
+        return topPanel;
     }
 
     public void setUniversityImage(ImageIcon universityImage) {

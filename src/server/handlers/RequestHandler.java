@@ -12,8 +12,6 @@ import java.io.IOException;
 public class RequestHandler {
     public static BaseResponse handleRequest(BaseRequest request, Log log) throws IOException {
         switch (request.getType()) {
-            case CREATE_ACCOUNT:
-                return CreateAccountHandler.handleCreateAccount(request, log);
             case LOGIN:
                 return LoginHandler.handleLogin(request, log);
             case LOGOUT:

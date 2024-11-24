@@ -4,7 +4,6 @@ import shared.enums.*;
 import shared.utils.IDGenerator;
 
 import java.io.Serializable;
-import java.time.Year;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -18,7 +17,7 @@ public class Schedule implements Serializable {
     private Date startDate;    // Start date of the schedule
     private Time startTime;    // Start time of the course
     private Time endTime;     // End time of the course
-    private Location location;
+    private Building building;
     private Campus campus;
     private Room room;
     private String facultyID;
@@ -27,7 +26,7 @@ public class Schedule implements Serializable {
         scheduleID = IDGenerator.getInstance().generateUniqueScheduleID(institutionID);
     }
 
-    public Schedule(Institutions institutionID, String courseID, String sectionID, Term term, Days[] days, Date endDate, Date startDate, Time startTime, Time endTime, Location location, Campus campus, Room room, String facultyID) {
+    public Schedule(Institutions institutionID, String courseID, String sectionID, Term term, Days[] days, Date endDate, Date startDate, Time startTime, Time endTime, Building building, Campus campus, Room room, String facultyID) {
         this.scheduleID = IDGenerator.getInstance().generateUniqueScheduleID(institutionID);
         this.courseID = courseID;
         this.sectionID = sectionID;
@@ -37,7 +36,7 @@ public class Schedule implements Serializable {
         this.startDate = startDate;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.location = location;
+        this.building = building;
         this.campus = campus;
         this.room = room;
         this.facultyID = facultyID;
@@ -65,7 +64,7 @@ public class Schedule implements Serializable {
         this.startDate = other.startDate != null ? new Date(other.startDate.getTime()) : null;
         this.startTime = other.startTime; // Deep copy for Time
         this.endTime = other.endTime;
-        this.location = other.location;
+        this.building = other.building;
         this.campus = other.campus;
         this.room = other.room;
         this.facultyID = other.facultyID;
@@ -156,12 +155,12 @@ public class Schedule implements Serializable {
         this.courseID = courseID;
     }
 
-    public Location getLocation() {
-        return location;
+    public Building getLocation() {
+        return building;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocation(Building building) {
+        this.building = building;
     }
 
     public Campus getCampus() {
