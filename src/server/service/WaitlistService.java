@@ -23,22 +23,31 @@ public class WaitlistService {
         return instance;
     }
 
+//    // Add or Update a waitlist
+//    public boolean addOrUpdateWaitlist(Institutions institutionID, String courseID, WaitList waitlist) {
+//        if (institutionID == null || courseID == null || waitlist == null) {
+//            System.err.println("Invalid input for adding or updating waitlist.");
+//            return false;
+//        }
+//        return waitlistDataManager.addOrUpdateWaitlist(institutionID, courseID, waitlist);
+//    }
+
     // Add or Update a waitlist
-    public boolean addOrUpdateWaitlist(Institutions institutionID, String courseID, WaitList waitlist) {
-        if (institutionID == null || courseID == null || waitlist == null) {
+    public boolean addOrUpdateWaitlist(Institutions institutionID, String sectionID, WaitList waitlist) {
+        if (institutionID == null || sectionID == null || waitlist == null) {
             System.err.println("Invalid input for adding or updating waitlist.");
             return false;
         }
-        return waitlistDataManager.addOrUpdateWaitlist(institutionID, courseID, waitlist);
+        return waitlistDataManager.addOrUpdateWaitlist(institutionID, sectionID, waitlist);
     }
 
     // Get a specific waitlist
-    public WaitList getWaitlist(Institutions institutionID, String courseID) {
-        if (institutionID == null || courseID == null) {
+    public WaitList getWaitlist(Institutions institutionID, String sectionID) {
+        if (institutionID == null || sectionID == null) {
             System.err.println("Invalid input for retrieving waitlist.");
             return null;
         }
-        return waitlistDataManager.getWaitlist(institutionID, courseID);
+        return waitlistDataManager.getWaitlist(institutionID, sectionID);
     }
 
     // Notify the next student on the waitlist
@@ -71,5 +80,11 @@ public class WaitlistService {
             return false;
         }
         return waitlistDataManager.removeWaitlist(institutionID, courseID);
+    }
+
+    public boolean addToWaitlist(Institutions institutionID, Student student, String sectionID) {
+       WaitList cur = waitlistDataManager.getWaitlist(institutionID, sectionID);
+       cur.addToWaitlist(student);
+       return waitlistDataManager.addOrUpdateWaitlist(institutionID, sectionID, cur);
     }
 }

@@ -1,6 +1,7 @@
 package shared.models;
 
 import server.dataManagers.CoursesDataManager;
+import server.service.WaitlistService;
 import shared.enums.AccountType;
 import shared.enums.Department;
 import shared.enums.GenderIdentity;
@@ -49,7 +50,7 @@ public class Student extends User {
         }
 
         if (section.isFullyEnrolled()) {
-            boolean addedToWaitlist = section.getWaitlist().addToWaitlist(this);
+            boolean addedToWaitlist = WaitlistService.getInstance().addToWaitlist(getInstitutionID(), this,sectionID);
             if (addedToWaitlist) {
                 waitlistedCourses.add(section);
                 return true; // Added to waitlist
@@ -72,7 +73,7 @@ public class Student extends User {
                 finishedCourses.add(section); // Add to finished courses if completed
             }
         } else if (waitlistedCourses.remove(section)) {
-            section.getWaitlist().removeFromWaitlist(this);
+            WaitlistService.getInstance().getWaitlist(getInstitutionID(), section.getSectionID()).removeFromWaitlist(this);
         }
     }
 
@@ -91,7 +92,7 @@ public class Student extends User {
     public int getWaitlistPositions(String sectionID) {
         CourseSection section = CoursesDataManager.getInstance().getSectionById(getInstitutionID(),sectionID);
         if (section != null) {
-            return section.getWaitlist().getPosition(this);
+            return WaitlistService.getInstance().getWaitlist(getInstitutionID(), section.getSectionID()).getPosition(this);
         }
         return -1; // Not on waitlist
     }

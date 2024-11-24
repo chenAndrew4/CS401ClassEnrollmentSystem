@@ -4,6 +4,7 @@ import server.dataManagers.CoursesDataManager;
 import shared.enums.Institutions;
 import shared.models.Course;
 import shared.models.CourseSection;
+import shared.models.Student;
 
 import java.util.List;
 import java.util.Map;
@@ -108,6 +109,52 @@ public class CourseService {
         }
         return course;
     }
+
+    // Enroll a student in a course section
+    public boolean enrollInCourse(Student student, String sectionID) {
+        if (student == null || sectionID == null) {
+            System.err.println("Invalid student or section ID.");
+            return false;
+        }
+
+        Institutions institution = student.getInstitutionID();
+        CourseSection section = coursesDataManager.getSectionById(institution, sectionID);
+
+        if (section == null) {
+            System.err.println("Section not found: " + sectionID);
+            return false;
+        }
+
+        boolean enrolled = student.enrollInCourse(sectionID);
+        if (enrolled) {
+            System.out.println("Student " + student.getUsername() + " enrolled in section: " + sectionID);
+        } else {
+            System.err.println("Failed to enroll student " + student.getUsername() + " in section: " + sectionID);
+        }
+
+        return enrolled;
+    }
+
+    // Drop a student from a course section
+    public boolean dropCourse(Student student, String sectionID, boolean completed) {
+        if (student == null || sectionID == null) {
+            System.err.println("Invalid student or section ID.");
+            return false;
+        }
+
+        Institutions institution = student.getInstitutionID();
+        CourseSection section = coursesDataManager.getSectionById(institution, sectionID);
+
+        if (section == null) {
+            System.err.println("Section not found: " + sectionID);
+            return false;
+        }
+
+        student.dropCourse(section, completed);
+        System.out.println("Student " + student.getUsername() + " dropped section: " + sectionID);
+        return true;
+    }
+
 
     // Save all courses
     public void saveAllCourses() {

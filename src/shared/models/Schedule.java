@@ -41,18 +41,6 @@ public class Schedule implements Serializable {
         this.room = room;
         this.facultyID = facultyID;
     }
-
-    //    // Constructor
-//    public Schedule(String scheduleID, String sectionID,Days[] days, Year year, Term term, Date startDate, Date endDate, Time startTime, Time endTime) {
-//        this.scheduleID = scheduleID;
-//        this.sectionID = sectionID;
-//        this.term = term;
-//        this.days = days;
-//        this.startDate = startDate;
-//        this.endDate = endDate;
-//        this.startTime = startTime;
-//        this.endTime = endTime;
-//    }
     // Copy constructor
     public Schedule(Schedule other) {
         this.scheduleID = other.scheduleID; // Copy immutable field

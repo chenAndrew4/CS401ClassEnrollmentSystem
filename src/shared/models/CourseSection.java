@@ -1,5 +1,6 @@
 package shared.models;
 
+import server.service.WaitlistService;
 import shared.enums.*;
 import shared.utils.IDGenerator;
 
@@ -9,7 +10,7 @@ public class CourseSection implements Serializable {
     private String sectionID;     // Unique identifier for each section
 //    private String courseID;
     private int enrollmentLimit;  // Max students for this section
-    private WaitList waitlist;    // Section's waitlist
+    private String waitlistID;    // Section's waitlist
     private ClassRoster classRoster;  // Students enrolled in the section
     private GradingType grading;
     private InstructionModeType instructionMode;
@@ -23,7 +24,7 @@ public class CourseSection implements Serializable {
     public CourseSection(CourseSection other) {
         this.sectionID = other.sectionID;
         this.enrollmentLimit = other.enrollmentLimit;
-        this.waitlist = other.waitlist != null ? new WaitList(other.waitlist) : null; // Assuming WaitList has a copy constructor
+        this.waitlistID = other.waitlistID; // Assuming WaitList has a copy constructor
         this.classRoster = other.classRoster != null ? new ClassRoster(other.classRoster) : null;
         this.grading = other.grading;
         this.instructionMode = other.instructionMode;
@@ -38,24 +39,27 @@ public class CourseSection implements Serializable {
         this.scheduleID = scheduleID;
     }
 
-    public WaitList getWaitlist() {
-        return waitlist;
+    public String getwaitlistID() {
+        return waitlistID;
     }
 
-    public boolean addStudent(Student student) {
+    public boolean addStudent(Institutions institutionID, Student student) {
         if (classRoster.getEnrollmentCount() < enrollmentLimit) {
             classRoster.addStudent(student);
             return true;
         } else {
-            return waitlist.addToWaitlist(student);
+            WaitList cur = WaitlistService.getInstance().getWaitlist(institutionID, sectionID);
+            cur.addToWaitlist(student);
+            return WaitlistService.getInstance().addOrUpdateWaitlist(institutionID, sectionID, cur);
         }
     }
 
     // Drop a student from the section
-    public boolean dropStudent(Student student) {
+    public boolean dropStudent(Institutions institutionID, Student student) {
         if (classRoster.removeStudent(student)) {
             // Notify next student on waitlist, if applicable
-            Student nextStudent = waitlist.getNextStudent();
+            WaitList cur = WaitlistService.getInstance().getWaitlist(institutionID, sectionID);
+            Student nextStudent = cur.getNextStudent();
             if (nextStudent != null) {
                 classRoster.addStudent(nextStudent);
             }
@@ -88,8 +92,8 @@ public class CourseSection implements Serializable {
         this.enrollmentLimit = enrollmentLimit;
     }
 
-    public void setWaitlist(WaitList waitlist) {
-        this.waitlist = waitlist;
+    public void setWaitlistID(String waitlistID) {
+        this.waitlistID = waitlistID;
     }
 
     public ClassRoster getClassRoster() {
