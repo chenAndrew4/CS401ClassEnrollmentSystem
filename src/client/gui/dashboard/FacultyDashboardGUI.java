@@ -10,22 +10,6 @@ public class FacultyDashboardGUI extends BaseDashboardGUI {
 
     public FacultyDashboardGUI(Faculty user) {
         super("Faculty Dashboard", user);
-
-        // Set university image as the top panel background
-//        switch(user.getInstitutionID()) {
-//            case SJSU:
-//                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            case CSUEB:
-//                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            case CSUF:
-//                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            default:
-//                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
-//                break;
-//        }
         // Set personal image and info
         setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_FACULTY_ICON));
 
@@ -33,9 +17,9 @@ public class FacultyDashboardGUI extends BaseDashboardGUI {
 //        addOption("Manage Classes", new ImageIcon(ClientConfig.MANAGE_CLASSES_ICON), this::handleManageClasses);
         addOption("View Assigned Courses", new ImageIcon(ClientConfig.COURSE_ICON), this::handleViewAssignedCourses);
         addOption("View Waitlist", new ImageIcon(ClientConfig.WAITLIST_ICON), this::handleViewWaitlist);
-        addOption("Grade Submissions", new ImageIcon(ClientConfig.GRADE_SUBMISSIONS_ICON), this::handleGradeSubmissions);
+        addOption("Grade Students", new ImageIcon(ClientConfig.GRADE_SUBMISSIONS_ICON), this::handleGradeSubmissions);
         addOption("View Schedules", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedules);
-        addOption("Communication", new ImageIcon(ClientConfig.COMMUNICATION_ICON), this::handleCommunication);
+        addOption("Notifications", new ImageIcon(ClientConfig.COMMUNICATION_ICON), this::handleCommunication);
         addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
 
         setVisible(true);

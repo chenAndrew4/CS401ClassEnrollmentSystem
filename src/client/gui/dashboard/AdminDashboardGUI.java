@@ -11,21 +11,6 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
     public AdminDashboardGUI(Administrator user) {
         super("Administrator Dashboard", user);
 
-        // Set university image as the top panel background
-//        switch(user.getInstitutionID()) {
-//            case SJSU:
-//                setUniversityImage(new ImageIcon(ClientConfig.SJSU_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            case CSUEB:
-//                setUniversityImage(new ImageIcon(ClientConfig.CSUEB_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            case CSUF:
-//                setUniversityImage(new ImageIcon(ClientConfig.CSUF_DASH_BACKGROUND_FILE_PATH));
-//                break;
-//            default:
-//                setUniversityImage(new ImageIcon(ClientConfig.DEFAULT_DASH_BACKGROUND_PATH));
-//                break;
-//        }
         // Set personal image and info
         setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_ADMIN_ICON));
 
@@ -33,14 +18,24 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
         addOption("Manage Users", new ImageIcon(ClientConfig.MANAGE_USERS_ICON), this::handleManageUsers);
         addOption("Manage Courses", new ImageIcon(ClientConfig.MANAGE_COURSES_ICON), this::handleManageCourses);
         addOption("Reports", new ImageIcon(ClientConfig.REPORTS_ICON), this::handleViewReports);
-        addOption("System Settings", new ImageIcon(ClientConfig.SETTING_ICON), this::handleSystemSettings);
+        addOption("System Configuration", new ImageIcon(ClientConfig.SETTING_ICON), this::handleSystemSettings);
         addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
+        addOption("Manage Enrollment", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
         addOption("Manage Waitlist", new ImageIcon(ClientConfig.MANAGE_WAITLIST_ICON), this::handleManageWaitlists);
         addOption("Manage Schedule", new ImageIcon(ClientConfig.MANAGE_SCHEDULE_ICON), this::handleManageSchedules);
+        addOption("Manage notification", new ImageIcon(ClientConfig.MANAGE_NOTICE_ICON), this::handleManageNotifications);
 
         setVisible(true);
         revalidate();
         repaint();
+    }
+
+    private void handleManageNotifications() {
+        JOptionPane.showMessageDialog(this, "Manage notifications clicked!");
+    }
+
+    private void handleEnroll() {
+        JOptionPane.showMessageDialog(this, "Manage Enroll clicked!");
     }
 
     private void handleManageSchedules() {

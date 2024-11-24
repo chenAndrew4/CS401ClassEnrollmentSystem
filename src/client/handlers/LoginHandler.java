@@ -58,12 +58,12 @@ public class LoginHandler {
                     }
                 }
                 case Faculty -> {
-                    if (user instanceof Administrator) {
+                    if (user instanceof Faculty) {
                         new FacultyDashboardGUI((Faculty) user);
                     }
                 }
                 case Administrator -> {
-                    if (user instanceof Faculty) {
+                    if (user instanceof Administrator) {
                         new AdminDashboardGUI((Administrator) user);
                     }
                 }

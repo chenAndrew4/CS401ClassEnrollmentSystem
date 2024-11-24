@@ -113,7 +113,7 @@ public class UserDataManagerTest {
 
     @Test
     public void testLoadUserCSUEB() {
-        Map<String, User> userMap = userDataManager.getUsersByInstitution(Institutions.CSUEB);
+        Map<String, User> userMap = UserDataManager.getInstance().getUsersByInstitution(Institutions.CSUEB);
         System.out.println("CSUEB Users:");
         for (User u : userMap.values()) {
             System.out.println(getUserDetails(u));
@@ -122,7 +122,7 @@ public class UserDataManagerTest {
 
     @Test
     public void testLoadUserCSUF() {
-        Map<String, User> userMap = userDataManager.getUsersByInstitution(Institutions.CSUF);
+        Map<String, User> userMap = UserDataManager.getInstance().getUsersByInstitution(Institutions.CSUF);
         System.out.println("CSUF Users:");
         for (User u : userMap.values()) {
             System.out.println(getUserDetails(u));

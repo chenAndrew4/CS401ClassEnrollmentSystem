@@ -18,15 +18,26 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
 //        setInfo("Name: " + user.getLastName() + " " + user.getFirstName() + "\nMajor: " + user.getDepartment() + "\nAdmin Date: " + user.getDate());
 
         // Add options with images and labels
-        addOption("Enroll", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
-        addOption("Drop", new ImageIcon(ClientConfig.DROP_ICON), this::handleDrop);
-        addOption("Waitlist", new ImageIcon(ClientConfig.WAITLIST_ICON), this::handleWaitlist);
-        addOption("Grades", new ImageIcon(ClientConfig.GRADES_ICON), this::handleViewGrades);
-        addOption("Schedule", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedule);
+        addOption("Manage Courses", new ImageIcon(ClientConfig.COURSE_ICON), this::handleManageCourse);
+        addOption("Manage Waitlist", new ImageIcon(ClientConfig.WAITLIST_ICON), this::handleWaitlist);
+        addOption("Manage Schedule", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedule);
+        addOption("Notifications", new ImageIcon(ClientConfig.COMMUNICATION_ICON), this::handleCommunication);
+        addOption("View Grades", new ImageIcon(ClientConfig.GRADES_ICON), this::handleViewGrades);
         addOption("Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
 
         setVisible(true);
 
+    }
+
+    private void handleCommunication() {
+        JOptionPane.showMessageDialog(this, "Communication clicked!");
+        // Open communication tools window or perform related action
+    }
+
+    private void handleManageCourse() {
+        JOptionPane.showMessageDialog(this, "manage courses clicked!");
+//        addOption("Enroll", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
+//        addOption("Drop", new ImageIcon(ClientConfig.DROP_ICON), this::handleDrop);
     }
 
     private void handleWaitlist() {

@@ -55,29 +55,37 @@ public class UserDataManager {
 
     public synchronized User getUserByInstitution(Institutions institutionID, String userId) {
         isImported(institutionID);
-        return new User(userMap.get(institutionID).get(userId)); // Retrieve by userId
+        User u = userMap.get(institutionID).get(userId);
+        if (u == null) {
+            return null;
+        }
+        return returnUser(institutionID, u);
+    }
+
+    private User returnUser(Institutions institutionID, User u) {
+        switch (u.getAccountType()){
+            case Student -> {
+                return new Student((Student) u);
+            }
+            case Faculty -> {
+                return new Faculty((Faculty) u);
+            }
+            case Administrator -> {
+                return new Administrator((Administrator) u);
+            }
+            default -> {
+                System.err.println("Error casting user for institution: " + institutionID);
+                Log.getInstance(ServerGUI.logTextArea).error("Error casting user for institution: ", institutionID, this.getClass());
+                throw new ClassCastException("Error casting user for institution: " + institutionID);
+            }
+        }
     }
 
     public synchronized User getUserByInstitutionAndUserName(Institutions institutionID, String username) {
         isImported(institutionID);
         for (User u : userMap.get(institutionID).values()) {
             if (username.equals(u.getUsername())) {
-                switch (u.getAccountType()){
-                    case Student -> {
-                        return new Student((Student) u);
-                    }
-                    case Faculty -> {
-                        return new Faculty((Faculty) u);
-                    }
-                    case Administrator -> {
-                        return new Administrator((Administrator) u);
-                    }
-                    default -> {
-                        System.err.println("Error casting user for institution: " + institutionID);
-                        Log.getInstance(ServerGUI.logTextArea).error("Error casting user for institution: ", institutionID, this.getClass());
-                        throw new ClassCastException("Error casting user for institution: " + institutionID);
-                    }
-                }
+                return returnUser(institutionID, u);
             }
         }
         return null; // Retrieve by userId
@@ -137,7 +145,7 @@ public class UserDataManager {
             System.out.println("No data to save. Skipping save operation.");
             return;
         }
-        String filePath = FILE_PREFIX + institutionID + "/" + FILE_SUFFIX;
+        String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(users);
             modified.put(institutionID, false);

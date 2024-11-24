@@ -42,10 +42,11 @@ public class ClientConfig {
     public static final String SETTING_ICON = ICON_FILE_PATH_PREFIX + "setting.png";
     public static final String MANAGE_CLASSES_ICON = ICON_FILE_PATH_PREFIX + "course.png";
     public static final String GRADE_SUBMISSIONS_ICON = ICON_FILE_PATH_PREFIX + "grade.png";
-    public static final String COMMUNICATION_ICON = ICON_FILE_PATH_PREFIX + "user.png";
+    public static final String COMMUNICATION_ICON = ICON_FILE_PATH_PREFIX + "notices.png";
     public static final String COURSE_ICON = ICON_FILE_PATH_PREFIX + "course.png";
     public static final String MANAGE_WAITLIST_ICON = ICON_FILE_PATH_PREFIX + "waitlist.png";
     public static final String MANAGE_SCHEDULE_ICON = ICON_FILE_PATH_PREFIX + "schedule.png";
+    public static final String MANAGE_NOTICE_ICON = ICON_FILE_PATH_PREFIX + "notification.png";
 
     // frame size
     // initial frame

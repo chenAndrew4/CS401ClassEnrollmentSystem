@@ -20,7 +20,8 @@ public class WaitList implements Serializable {
         waitingStudents = null;
     }
 
-    public WaitList(String courseSectionID, int maxCapacity) {
+    public WaitList(Institutions institutionID, String courseSectionID, int maxCapacity) {
+        waitlistID = IDGenerator.getInstance().generateUniqueWaitlistID(institutionID);
         this.sectionID = courseSectionID;
         this.maxCapacity = maxCapacity;
         this.waitingStudents = new LinkedList<>();
@@ -28,11 +29,20 @@ public class WaitList implements Serializable {
 
     // Copy constructor
     public WaitList(WaitList other) {
+        this.waitlistID = other.waitlistID;
         this.sectionID = other.sectionID; // Copy sectionID
         this.maxCapacity = other.maxCapacity; // Copy maxCapacity
 
         // Deep copy the queue
         this.waitingStudents = new LinkedList<>(other.waitingStudents);
+    }
+
+    public String getWaitlistID() {
+        return waitlistID;
+    }
+
+    public void setWaitlistID(String waitlistID) {
+        this.waitlistID = waitlistID;
     }
 
     public String getSectionID() {
