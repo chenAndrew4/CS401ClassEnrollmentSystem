@@ -9,4 +9,6 @@ public class GUIConfig {
     public static final int PERSONAL_IMAGE_SIZE = 120; // Fixed size for the personal image icon
     public static final int OPTION_ICON_SIZE = 80; // Fixed size for the option icons
     public static final Color SEMI_TRANS = new Color(255, 255, 255, 150); // Semi-transparent white
+    public static final int SMALL_ICON_WIDTH = 30;
+    public static final int SMALL_ICON_HEIGHT = 30;
 }

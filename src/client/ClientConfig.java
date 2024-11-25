@@ -3,7 +3,7 @@ package client;
 import java.io.File;
 
 public class ClientConfig {
-    public static String SERVER_ADDRESS = "localhost";
+	public static String SERVER_ADDRESS = "localhost";
     public static int SERVER_PORT = 25800;
 
     // File path
@@ -25,9 +25,9 @@ public class ClientConfig {
     public static final String CSUF_DASH_BACKGROUND_FILE_PATH = CSUF_FILE_PATH_PREFIX + "dashboard_background.png";
 
     // Common Icons
-    public static final String DEFAULT_STUDENT_ICON = ICON_FILE_PATH_PREFIX + "student.png";
-    public static final String DEFAULT_FACULTY_ICON = ICON_FILE_PATH_PREFIX + "faculty.png";
-    public static final String DEFAULT_ADMIN_ICON = ICON_FILE_PATH_PREFIX + "administrator.png";
+    public static final String DEFAULT_STUDENT_ICON = ICON_FILE_PATH_PREFIX + "student1.png";
+    public static final String DEFAULT_FACULTY_ICON = ICON_FILE_PATH_PREFIX + "faculty1.png";
+    public static final String DEFAULT_ADMIN_ICON = ICON_FILE_PATH_PREFIX + "administrator1.png";
     public static final String DEFAULT_DASH_BACKGROUND_PATH = ICON_FILE_PATH_PREFIX + "dashboard_background.png";
     public static final String INVALID_CREDS_FILE_PATH = ICON_FILE_PATH_PREFIX + "invalid_creds.png";
     public static final String ENROLL_ICON = ICON_FILE_PATH_PREFIX + "add.png";
@@ -47,6 +47,9 @@ public class ClientConfig {
     public static final String MANAGE_WAITLIST_ICON = ICON_FILE_PATH_PREFIX + "waitlist.png";
     public static final String MANAGE_SCHEDULE_ICON = ICON_FILE_PATH_PREFIX + "schedule.png";
     public static final String MANAGE_NOTICE_ICON = ICON_FILE_PATH_PREFIX + "notification.png";
+    public static final String BACK_ARROW_ICON = ICON_FILE_PATH_PREFIX + "backArrow.png";
+    public static final String NEXT_TERM_ICON = ICON_FILE_PATH_PREFIX + "nextTerm.png";
+    public static final String SEARCH_ICON = ICON_FILE_PATH_PREFIX + "search.png";
 
     // frame size
     // initial frame
