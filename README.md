@@ -24,48 +24,38 @@ In a course enrollment system dashboard, students, faculty, and administrators h
 Students primarily interact with the system to manage their courses and academic progress.
 
 1. **Course Enrollment and Management**
-    - Enroll in courses.
+    - Enroll in courses.(Manage schedule conflicts or resolve enrollment holds)
     - Drop courses.
     - View waitlisted courses and positions.
-    - Manage schedule conflicts or resolve enrollment holds.
 
 2. **Schedule and Academic Details**
     - View their weekly or semester course schedule.
-    - Download or print their course timetable.
     - Access details for each course, including syllabus, instructor contact, and room location.
 
 3. **Grades and Academic Records**
     - View grades for completed courses.
-    - Access academic transcripts or progress reports.
+    - Access academic transcripts.
 
 4. **Waitlist Management**
     - Join a waitlist for full courses.
     - Check waitlist status and position.
     - Receive notifications when a seat becomes available.
 
-5. **Feedback and Evaluations**
-    - Submit course evaluations for faculty.
-    - Provide feedback on course content and teaching methods.
-
 6. **Administrative Features**
-    - Update personal details (e.g., email, phone number).
-    - Pay tuition or other fees (if integrated into the system).
+    - Update personal details (e.g., address, phone number).
     - Receive announcements and notifications from the university.
-
 ---
 
 ### **For Faculty**
 Faculty members use the system to manage the courses they teach and interact with their students.
 
 1. **Course Management**
-    - Create, modify, or delete course sections (if allowed by the institution).
+    - modify course sections (if allowed by the institution).
     - Set course capacity limits and waitlist thresholds.
     - Upload and update the course syllabus.
 
 2. **Class Roster and Attendance**
     - View enrolled students and waitlists.
-    - Mark attendance or download attendance records.
-    - Communicate with students directly through the system.
 
 3. **Grading and Assessments**
     - Enter grades and comments for assignments, exams, and final grades.
@@ -76,6 +66,8 @@ Faculty members use the system to manage the courses they teach and interact wit
     - View teaching schedule.
     - Manage office hours and meeting availability.
 
+
+** dont do for now**
 5. **Notifications and Feedback**
     - Send announcements to students enrolled in their courses.
     - Receive student feedback or course evaluations.
@@ -95,7 +87,7 @@ Administrators manage the overall functioning of the enrollment system and maint
     - Set semester schedules and registration deadlines.
 
 2. **User Management**
-    - Add or update user accounts (students, faculty, and staff).
+    - Add or update user accounts (students, faculty, and administrator).
     - Assign roles and permissions to users.
     - Reset passwords and resolve login issues.
 
@@ -114,8 +106,7 @@ Administrators manage the overall functioning of the enrollment system and maint
     - Post system updates, academic calendars, or policy changes.
 
 6. **System Configuration**
-    - Update fee structures, grading policies, and academic regulations.
-    - Integrate the system with other university software (e.g., finance, HR).
+    - Update grading policies, and academic regulations.
     - Monitor and resolve system errors or performance issues.
 
 ---
