@@ -3,22 +3,28 @@ package tests.server.dataManagers;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap; 
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import shared.models.Schedule;
 import server.dataManagers.ScheduleDataManager;
-import shared.enums.*;
-class ScheduleDataManagerTest { 
+import shared.enums.Building;
+import shared.enums.Campus;
+import shared.enums.Days;
+import shared.enums.Institutions;
+import shared.enums.Room;
+import shared.enums.Term;
+import shared.enums.Time;
+import shared.models.Schedule;
+class ScheduleDataManagerTest { //coming back to this later to change db
 
     private static ScheduleDataManager scheduleDataManager;
-
+    
     @BeforeAll
-    static void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+    static void setUp() {   
         scheduleDataManager = ScheduleDataManager.getInstance();
         Institutions institution = Institutions.CSUEB;
         Days[] days = {Days.MONDAY, Days.WEDNESDAY};
@@ -33,25 +39,15 @@ class ScheduleDataManagerTest {
                 startTime, endTime, location, campus, room, "John Smith");
         
         String scheduleID = schedule.getScheduleID();
-        
-        Map<String, Schedule> schedules = new HashMap<>();
-        schedules.put(scheduleID, schedule);
 
-        Map<Institutions, Map<String, Schedule>> institutionSchedules = new HashMap<>();
-        institutionSchedules.put(institution, schedules);
-
-        Map<Institutions, Boolean> modifiedStatus = new HashMap<>();
-        modifiedStatus.put(institution, true);
-
-        Field field = ScheduleDataManager.class.getDeclaredField("institutionSchedules");
-        field.setAccessible(true);
-        field.set(scheduleDataManager, institutionSchedules);
-
-        Field modifiedField = ScheduleDataManager.class.getDeclaredField("modified");
-        modifiedField.setAccessible(true);
-        modifiedField.set(scheduleDataManager, modifiedStatus);
+        scheduleDataManager.saveSchedule(institution, scheduleID, schedule);
     }
-
+    
+//    @AfterAll
+//    static void cleanUp() {
+//    	scheduleDataManager.deleteAllSchedules(Institutions.CSUEB);    	
+//    }
+    
     @Test
     void testEnsureSchedulesLoaded() throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException{
     	Institutions institution = Institutions.CSUEB;
@@ -120,9 +116,10 @@ class ScheduleDataManagerTest {
         Map<String, Schedule> schedules = scheduleDataManager.loadSchedulesByInstitution(institution);
 
         System.out.println("Schedules loaded using LoadSchedulesByInstitution for: " + institution);
-        schedules.forEach((id, schedule) -> {
-            System.out.println("CourseID: " + schedule.getCourseID() + " SectionID: " + schedule.getSectionID());
-        });
+        for (Map.Entry<String, Schedule> entry : schedules.entrySet()) {
+            System.out.println("CourseID: " + entry.getValue().getCourseID() + " SectionID: " + entry.getValue().getSectionID());
+        }
+        
         System.out.println("\n");
     }
 
@@ -156,8 +153,7 @@ class ScheduleDataManagerTest {
         Schedule get = scheduleDataManager.getSchedule(institution, scheduleID);
 
         if (get != null) {
-            System.out.println("GetSchedule:");
-            System.out.println("CourseID: " + get.getCourseID() + " " + "SectionID: " + get.getSectionID() + "\n");
+            System.out.println("GetSchedule:" + "\n" + "CourseID: " + get.getCourseID() + " " + "SectionID: " + get.getSectionID() + "\n");
         } 
         
         else {
@@ -181,9 +177,10 @@ class ScheduleDataManagerTest {
         Map<String, Schedule> schedules = scheduleDataManager.getAllSchedules(institution);
 
         System.out.println("All schedules using getAllSchedules for institution: " + institution);
-        schedules.forEach((id, schedule) -> {
-            System.out.println("CourseID: " + schedule.getCourseID());
-        });
+        for (Map.Entry<String, Schedule> entry : schedules.entrySet()) {
+            System.out.println("CourseID: " + entry.getValue().getCourseID());
+        }
+        
         System.out.println("\n");
     }
 
@@ -192,7 +189,7 @@ class ScheduleDataManagerTest {
     void testDeleteSchedule() {
         Institutions institution = Institutions.CSUEB;
 
-        Schedule schedule = new Schedule(institution, "Math103", "7839", Term.FALL_SEMESTER,
+        Schedule schedule = new Schedule(institution, "Math104", "7840", Term.FALL_SEMESTER,
                 new Days[]{Days.MONDAY, Days.WEDNESDAY}, null, null, Time.TIME_700, Time.TIME_815, 
                 Building.BUSINESS_HALL, Campus.HAYWARD, Room.ROOM1, "John Smith");
         
@@ -221,5 +218,5 @@ class ScheduleDataManagerTest {
     Set<String> scheduleIDs = scheduleDataManager.getScheduleIDsByInstitution(institution);
 
     System.out.println("GetScheduleIDsByinstitution for " + institution + ": " + scheduleIDs + "\n");
-    }
+    }    
 }
