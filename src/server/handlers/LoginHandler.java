@@ -33,8 +33,6 @@ public class LoginHandler {
     }
 
     private static boolean authenticateUser(User user, UserService userService) {
-        // Authentication logic (check user credentials in database)
-//        return "user1".equals(user.getUsername()) && "password123".equals(user.getPassword());
         return userService.doesUsernameAndPasswordEqualByInstitution(user.getInstitutionID() ,user.getUsername(), user.getPassword());
     }
 }
