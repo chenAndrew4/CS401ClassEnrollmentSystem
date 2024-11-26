@@ -19,7 +19,7 @@ import shared.enums.Room;
 import shared.enums.Term;
 import shared.enums.Time;
 import shared.models.Schedule;
-class ScheduleDataManagerTest { //coming back to this later to change db
+class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo this, looks bad in my opinion
 
     private static ScheduleDataManager scheduleDataManager;
     
@@ -213,10 +213,10 @@ class ScheduleDataManagerTest { //coming back to this later to change db
     
     @Test
     void testGetScheduleIDsByInstitution() {
-    Institutions institution = Institutions.CSUEB;
+    	Institutions institution = Institutions.CSUEB;
 
-    Set<String> scheduleIDs = scheduleDataManager.getScheduleIDsByInstitution(institution);
+    	Set<String> scheduleIDs = scheduleDataManager.getScheduleIDsByInstitution(institution);
 
-    System.out.println("GetScheduleIDsByinstitution for " + institution + ": " + scheduleIDs + "\n");
+    	System.out.println("GetScheduleIDsByinstitution for " + institution + ": " + scheduleIDs + "\n");
     }    
 }

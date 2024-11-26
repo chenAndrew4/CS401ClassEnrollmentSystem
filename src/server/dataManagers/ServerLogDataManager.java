@@ -186,6 +186,14 @@ public class ServerLogDataManager {
             }
         }
     }
+    
+    //Using for testing currently, may be changed later when I figure out how to make test db and change path
+    public synchronized void clearLogs(Institutions institution) {
+        if (institutionLogs.containsKey(institution)) {
+            institutionLogs.get(institution).clear(); 
+        }
+    }
+
 }
 
 
