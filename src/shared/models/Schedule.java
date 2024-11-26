@@ -5,6 +5,7 @@ import shared.utils.IDGenerator;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Schedule implements Serializable {
@@ -56,6 +57,20 @@ public class Schedule implements Serializable {
         this.campus = other.campus;
         this.room = other.room;
         this.facultyID = other.facultyID;
+    }
+
+    public boolean isDateWithinSchedule(Date selectedDate) {
+        Calendar scheduleStart = Calendar.getInstance();
+        scheduleStart.setTime(this.getStartDate());
+
+        Calendar scheduleEnd = Calendar.getInstance();
+        scheduleEnd.setTime(this.getEndDate());
+
+        Calendar selected = Calendar.getInstance();
+        selected.setTime(selectedDate);
+
+        // Check if the selected date falls within the schedule's start and end dates
+        return !selected.before(scheduleStart) && !selected.after(scheduleEnd);
     }
 
     public Schedule(String sch) {

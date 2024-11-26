@@ -10,7 +10,6 @@ public abstract class BaseRequest extends Message {
     private String sessionToken;
     private boolean isAuthenicated;
 
-
     public BaseRequest(MessageType messageType, MessageStatus messageStatus, Institutions institutionID, String sessionToken, boolean isAuthenicated) {
         super(messageType, messageStatus);
         this.institutionID = institutionID;

@@ -1,21 +1,26 @@
 package client.gui.dashboard;
 
 import client.ClientConfig;
-//import client.gui.StudentScheduleViewGUI;
 import client.gui.GUIConfig;
 import client.gui.ManageCourseGUI;
-import client.utils.ImageUtils;
+import client.gui.ManageWaitlistGUI;
+import client.gui.ViewSchedulesGUI;
+import client.handlers.GetSchedulesHandler;
+import shared.enums.MessageType;
+import shared.models.Schedule;
 import shared.models.Student;
 import shared.models.User;
+import shared.models.requests.GetSchedulesRequest;
 
 import javax.swing.*;
 import java.awt.*;
-
+import java.util.List;
 
 public class StudentDashboardGUI extends BaseDashboardGUI {
-	private JPanel mainOptionsPanel; // Stores the main options panel
+    private JPanel mainOptionsPanel; // Stores the main options panel
     private ManageCourseGUI manageCourseGUI;
-    JPanel mainContentPanel;
+    private ManageWaitlistGUI manageWaitlistGUI;
+    private ViewSchedulesGUI viewSchedulesGUI;
 
     public StudentDashboardGUI(Student user) {
         super("Student Dashboard", user);
@@ -41,7 +46,7 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
         addOptionToPanel(mainOptionsPanel, "Manage Courses", new ImageIcon(ClientConfig.COURSE_ICON), this::handleManageCourses);
         addOptionToPanel(mainOptionsPanel, "Manage Waitlist", new ImageIcon(ClientConfig.WAITLIST_ICON), this::handleWaitlist);
         addOptionToPanel(mainOptionsPanel, "Manage Schedule", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedule);
-        addOptionToPanel(mainOptionsPanel, "Notifications", new ImageIcon(ClientConfig.COMMUNICATION_ICON), this::handleCommunication);
+        addOptionToPanel(mainOptionsPanel, "Notifications", new ImageIcon(ClientConfig.COMMUNICATION_ICON), this::handleNotification);
         addOptionToPanel(mainOptionsPanel, "View Grades", new ImageIcon(ClientConfig.GRADES_ICON), this::handleViewGrades);
         addOptionToPanel(mainOptionsPanel, "Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
     }
@@ -58,7 +63,7 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
         repaint();
     }
 
-    private void replaceOptionPanel(JPanel newPanel) {
+    public void replaceOptionPanel(JPanel newPanel) {
 
         getOptionsPanel().removeAll();
         getOptionsPanel().add(newPanel, BorderLayout.CENTER);
@@ -70,24 +75,14 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
         if (manageCourseGUI == null) {
             manageCourseGUI = new ManageCourseGUI(this);
         }
-        System.out.println("handled");
         replaceOptionPanel(manageCourseGUI.getPanel());
     }
 
-    private void handleSearchCourses() {
-        JOptionPane.showMessageDialog(this, "Search Courses clicked!");
-    }
-
     private void handleWaitlist() {
-        JOptionPane.showMessageDialog(this, "Waitlist clicked!");
-    }
-
-    private void handleEnroll() {
-        JOptionPane.showMessageDialog(this, "Enroll Courses clicked!");
-    }
-
-    private void handleDrop() {
-        JOptionPane.showMessageDialog(this, "Drop Courses clicked!");
+        if (manageWaitlistGUI == null) {
+            manageWaitlistGUI = new ManageWaitlistGUI(this);
+        }
+        replaceOptionPanel(manageWaitlistGUI .getPanel());
     }
 
     private void handleViewGrades() {
@@ -95,10 +90,11 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
     }
 
     private void handleViewSchedule() {
-        JOptionPane.showMessageDialog(this, "View Schedule clicked!");
+        GetSchedulesHandler getSchedulesHandler = new GetSchedulesHandler();
+        getSchedulesHandler.handleGetSchedules(getUser(), getUser().getInstitutionID(), getOptionsPanel(), this);
     }
 
-    private void handleCommunication() {
+    private void handleNotification() {
         JOptionPane.showMessageDialog(this, "Notifications clicked!");
     }
 

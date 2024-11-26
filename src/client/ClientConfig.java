@@ -50,6 +50,8 @@ public class ClientConfig {
     public static final String BACK_ARROW_ICON = ICON_FILE_PATH_PREFIX + "backArrow.png";
     public static final String NEXT_TERM_ICON = ICON_FILE_PATH_PREFIX + "nextTerm.png";
     public static final String SEARCH_ICON = ICON_FILE_PATH_PREFIX + "search.png";
+    public static final String LEFT_ARROW_ICON = ICON_FILE_PATH_PREFIX + "left_arrow.png";
+    public static final String RIGHT_ARROW_ICON = ICON_FILE_PATH_PREFIX + "right_arrow.png";
 
     // frame size
     // initial frame

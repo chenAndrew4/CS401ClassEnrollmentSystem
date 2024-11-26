@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 
-public class ManageCourseGUI {
-    private JPanel manageCoursesPanel; // Main panel for this GUI
+public class ManageWaitlistGUI {
+    private JPanel manageWaitlistsPanel; // Main panel for this GUI
     private JPanel optionsPanel; // Options for Search, Enroll, and Drop
     private JLabel termLabel; // Displays the current term
     private JButton backArrow; // Back to main options
@@ -20,31 +20,31 @@ public class ManageCourseGUI {
     private final StudentDashboardGUI parentDashboard;
     private JPanel topRowPanel; // Top row of the options panel
 
-    public ManageCourseGUI(StudentDashboardGUI parentDashboard) {
+    public ManageWaitlistGUI(StudentDashboardGUI parentDashboard) {
         this.parentDashboard = parentDashboard;
-        initializeManageCoursesPanel();
+        initializeManageWaitlistsPanel();
     }
 
     public JPanel getPanel() {
-        return manageCoursesPanel;
+        return manageWaitlistsPanel;
     }
 
-    private void initializeManageCoursesPanel() {
-        manageCoursesPanel = new JPanel(new BorderLayout());
-        manageCoursesPanel.setOpaque(false);
+    private void initializeManageWaitlistsPanel() {
+        manageWaitlistsPanel = new JPanel(new BorderLayout());
+        manageWaitlistsPanel.setOpaque(false);
 
         optionsPanel = new JPanel(new GridLayout(0, 3, GUIConfig.MARGIN * 2, GUIConfig.MARGIN * 2)); // Increase spacing
         optionsPanel.setOpaque(false);
 
-        parentDashboard.addOptionToPanel(optionsPanel, "Search Courses", new ImageIcon(ClientConfig.SEARCH_ICON), this::handleSearchCourses);
-        parentDashboard.addOptionToPanel(optionsPanel, "Enroll Courses", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
-        parentDashboard.addOptionToPanel(optionsPanel, "Drop Courses", new ImageIcon(ClientConfig.DROP_ICON), this::handleDrop);
+        parentDashboard.addOptionToPanel(optionsPanel, "Search Waitlists", new ImageIcon(ClientConfig.SEARCH_ICON), this::handleSearchWaitlists);
+        parentDashboard.addOptionToPanel(optionsPanel, "Enroll Waitlists", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
+        parentDashboard.addOptionToPanel(optionsPanel, "Drop Waitlists", new ImageIcon(ClientConfig.DROP_ICON), this::handleDrop);
 
         initializeTopRow(true); // Back and next buttons
 
         assert topRowPanel != null;
-        manageCoursesPanel.add(topRowPanel, BorderLayout.NORTH);
-        manageCoursesPanel.add(optionsPanel, BorderLayout.CENTER);
+        manageWaitlistsPanel.add(topRowPanel, BorderLayout.NORTH);
+        manageWaitlistsPanel.add(optionsPanel, BorderLayout.CENTER);
     }
 
     private void initializeTopRow(boolean showNextTerm) {
@@ -78,7 +78,7 @@ public class ManageCourseGUI {
         if (showNextTerm) {
             topRowPanel.add(nextTermButton, BorderLayout.EAST);
         }
-        manageCoursesPanel.add(topRowPanel, BorderLayout.NORTH);
+        manageWaitlistsPanel.add(topRowPanel, BorderLayout.NORTH);
     }
 
     private void determineCurrentTerm() {
@@ -137,19 +137,15 @@ public class ManageCourseGUI {
         }
     }
 
-    private void handleSearchCourses() {
-        JOptionPane.showMessageDialog(manageCoursesPanel, "Search Courses clicked!");
+    private void handleSearchWaitlists() {
+        JOptionPane.showMessageDialog(manageWaitlistsPanel, "Search Waitlists clicked!");
     }
 
     private void handleEnroll() {
-        JOptionPane.showMessageDialog(manageCoursesPanel, "Enroll Courses clicked!");
+        JOptionPane.showMessageDialog(manageWaitlistsPanel, "Enroll Waitlists clicked!");
     }
 
     private void handleDrop() {
-        JOptionPane.showMessageDialog(manageCoursesPanel, "Drop Courses clicked!");
+        JOptionPane.showMessageDialog(manageWaitlistsPanel, "Drop Waitlists clicked!");
     }
 }
-
-
-
-

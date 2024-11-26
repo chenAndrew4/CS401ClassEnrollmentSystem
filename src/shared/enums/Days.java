@@ -1,5 +1,7 @@
 package shared.enums;
 
+import java.time.DayOfWeek;
+
 public enum Days{
 	MONDAY,
 	TUESDAY,
@@ -7,5 +9,8 @@ public enum Days{
 	THURSDAY,
 	FRIDAY,
 	SATURDAY,
-	SUNDAY
+	SUNDAY;
+	public boolean matches(DayOfWeek dayOfWeek) {
+		return this.name().equalsIgnoreCase(dayOfWeek.name());
+	}
 }
