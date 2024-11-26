@@ -24,7 +24,7 @@ public class User implements Serializable{
 	private String sessionToken;
 	private boolean isAuthenticated;
 	private Date date;  // Admission date
-	private GenderIdentity genderIdentity; // Gender identity
+	private GenderIdentity genderIdentity;
 
 	public User(Institutions institutionID) {
 		this.userId = IDGenerator.getInstance().generateUniqueUserID(institutionID);
@@ -45,16 +45,16 @@ public class User implements Serializable{
 	public User(User source) {
 		this.userId = source.userId;
 		this.username = source.username;
-		this.password = source.password; // Consider encrypting or masking passwords for safety.
+		this.password = source.password;
 		this.firstName = source.firstName;
 		this.lastName = source.lastName;
-		this.institutionID = source.institutionID; // Assuming Institutions is immutable or handles its own deep copy.
-		this.department = source.department; // Assuming Department is immutable or handles its own deep copy.
-		this.accountType = source.accountType; // Assuming AccountType is immutable.
+		this.institutionID = source.institutionID;
+		this.department = source.department;
+		this.accountType = source.accountType;
 		this.sessionToken = source.sessionToken;
 		this.isAuthenticated = source.isAuthenticated;
-		this.date = source.date != null ? new Date(source.date.getTime()) : null; // Defensive copy for mutable Date.
-		this.genderIdentity = source.genderIdentity; // Assuming GenderIdentity is immutable.
+		this.date = source.date != null ? new Date(source.date.getTime()) : null;
+		this.genderIdentity = source.genderIdentity;
 	}
 
 	public User(String username, String firstName, String lastName, String password,
