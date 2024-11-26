@@ -19,6 +19,8 @@ public class User implements Serializable{
 	private String firstName;
 	private String lastName;
 	private Institutions institutionID;
+	private String address;
+	private String phone;
 	private Department department;
 	private AccountType accountType;
 	private String sessionToken;
@@ -33,6 +35,8 @@ public class User implements Serializable{
 		this.firstName = null;
 		this.lastName = null;
 		this.institutionID = institutionID;
+		this.address = null;
+		this.phone = null;
 		this.department = null;
 		this.accountType = null;
 		this.sessionToken = null;
@@ -49,6 +53,8 @@ public class User implements Serializable{
 		this.firstName = source.firstName;
 		this.lastName = source.lastName;
 		this.institutionID = source.institutionID;
+		this.phone = source.phone;
+		this.address = source.address;
 		this.department = source.department;
 		this.accountType = source.accountType;
 		this.sessionToken = source.sessionToken;
@@ -59,7 +65,7 @@ public class User implements Serializable{
 
 	public User(String username, String firstName, String lastName, String password,
 				Institutions institution, Department department, AccountType accountType,
-				GenderIdentity genderIdentity) {
+				GenderIdentity genderIdentity, String phone, String address) {
 		this.userId = IDGenerator.getInstance().generateUniqueUserID(institutionID);
 		this.username = username;
 		this.password = password;
@@ -72,6 +78,8 @@ public class User implements Serializable{
 		this.isAuthenticated = false;
 		this.date = new Date();
 		this.genderIdentity = genderIdentity;
+		this.phone = phone;
+		this.address = address;
 	}
 
 	public boolean isAuthenticated() {
@@ -169,6 +177,22 @@ public class User implements Serializable{
 		this.genderIdentity = genderIdentity;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
@@ -176,25 +200,21 @@ public class User implements Serializable{
 		return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) &&
 				Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) &&
 				Objects.equals(lastName, user.lastName) && Objects.equals(institutionID, user.institutionID) &&
-				department == user.department && accountType == user.accountType;
+				department == user.department && accountType == user.accountType && Objects.equals(phone, user.phone) && Objects.equals(address, user.address);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(userId, username, password, firstName, lastName, institutionID, accountType, department);
+		return Objects.hash(userId, username, password, firstName, lastName, institutionID, accountType, department, phone, address);
 	}
 
 	@Override
 	public String toString() {
-		return "User{" +
-				"firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", institutionID=" + institutionID +
-				", department=" + department +
-				", accountType=" + accountType +
-				", genderIdentity=" + genderIdentity +
-				", username='" + username + '\'' +
-				", userId='" + userId + '\'' +
-				'}';
+		return "User {userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", institutionID=" + institutionID + ", address=" + address + ", phone=" + phone
+				+ ", department=" + department + ", accountType=" + accountType + ", admission date=" + date + ", genderIdentity="
+				+ genderIdentity + "}";
 	}
+	
+	
 }
