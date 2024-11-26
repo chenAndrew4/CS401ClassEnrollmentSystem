@@ -19,4 +19,8 @@ public enum GradingType {
 	public String toString() {
 		return name() + " (" + description + ")";
 	}
+
+	public double calculateGrade(Grade grade) {
+		return grade.getPointValue();
+	}
 }
