@@ -11,23 +11,22 @@ import java.util.*;
 
 public class UserService implements Serializable{
 	private static UserService instance;
-	private Log log;
 	private UserDataManager userDataManager;
 
 	private UserService() {}
 
-	public static synchronized UserService getInstance(Log log, Institutions institutionID) throws IOException {
+	private UserService(Institutions institutionID) {
+		userDataManager = UserDataManager.getInstance();
+	}
+
+
+	public static synchronized UserService getInstance(Institutions institutionID) throws IOException {
 		if (instance == null) {
-			instance = new UserService(log, institutionID);
+			instance = new UserService(institutionID);
 		}
 		return instance;
 	}
 
-	private UserService(Log log, Institutions institutionID) {
-		this.log = log;
-		userDataManager = UserDataManager.getInstance();
-	}
-	
 	public boolean addUserByInstitution(Institutions institutionID, User user) {
 		return userDataManager.addUserByInstitution(institutionID, user);
 	}
@@ -49,6 +48,14 @@ public class UserService implements Serializable{
 	public User getUserByInstitutionAndUsername(Institutions institutionID, String username) {
 		return userDataManager.getUserByInstitutionAndUserName(institutionID, username);
 	}
+
+	public List<User> getUsersByInstitutionAndUserIDs(Institutions institutionID, List<String> userIDs) {
+		List<User> result = new ArrayList<>();
+		for (String id : userIDs) {
+			result.add(userDataManager.getUserByInstitution(institutionID, id));
+		}
+		return result;
+	}
 	
 	public List<User> getUsersByInstitution(Institutions institutionID){
 		return new ArrayList<>(userDataManager.getUsersByInstitution(institutionID).values());
@@ -67,7 +74,7 @@ public class UserService implements Serializable{
 	public void updateUserByInstitutions(Institutions institutionID, User user) {
 		userDataManager.updateUserByInstitutions(institutionID, user);
 	}
-	
+
 	public void commitDBByInstitution(Institutions institutionID) {
 		userDataManager.commitDBByInstitution(institutionID);
 	}

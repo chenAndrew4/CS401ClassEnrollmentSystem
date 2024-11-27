@@ -15,8 +15,7 @@ public class GetSchedulesRequest extends BaseRequest {
         super(messageType, messageStatus, institutionID, null, false);
         this.user = user;
     }
-//    public GetSchedulesRequest(MessageType messageType, Object o, Institutions institution, User currentUser) {
-//    }
+
     public User getUser() {
     	return this.user;
     }

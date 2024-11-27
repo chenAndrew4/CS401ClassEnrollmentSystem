@@ -16,7 +16,7 @@ public class LoginHandler {
     public static LoginResponse handleLogin(BaseRequest request, Log log) throws IOException {
         LoginRequest loginRequest = (LoginRequest) request;
         User user = loginRequest.getUser();
-        UserService userService = UserService.getInstance(log,user.getInstitutionID());
+        UserService userService = UserService.getInstance(user.getInstitutionID());
         SessionService sessionService = SessionService.getInstance();
         boolean isAuthenticated = authenticateUser(user, userService);
 
