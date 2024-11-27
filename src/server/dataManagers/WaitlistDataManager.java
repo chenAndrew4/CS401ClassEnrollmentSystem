@@ -84,5 +84,25 @@ public class WaitlistDataManager {
 
         return waitlists;
     }
+
+	public boolean addOrUpdateWaitlist(Institutions institutionID, String sectionID, WaitList waitlist) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public WaitList getWaitlist(Institutions institutionID, String sectionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, WaitList> getAllWaitlists(Institutions institutionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean removeWaitlist(Institutions institutionID, String courseID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 

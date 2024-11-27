@@ -91,6 +91,31 @@ public class ScheduleDataManager {
         }
         return schedules;
     }
+
+	public void addOrUpdateSchedule(Institutions institutionID, String sectionID, Schedule updatedSchedule) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Schedule getSchedule(Institutions institutionID, String scheduleID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Schedule> getAllSchedules(Institutions institutionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean deleteAllSchedules(Institutions institutionID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean deleteSchedule(Institutions institutionID, String scheduleID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 
 

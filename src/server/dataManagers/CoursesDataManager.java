@@ -88,6 +88,36 @@ public class CoursesDataManager {
         }
         return courses;
     }
+
+	public CourseSection getSectionById(Institutions institution, String sectionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Map<String, Course> getAllCourses(Institutions institution) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Course getCourseByCourseID(Institutions institution, String courseID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Course getCourseBySectionID(Institutions institution, String sectionID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean addOrUpdateCourse(Institutions institution, Course course) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean removeCourse(Institutions institution, String courseID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 
 

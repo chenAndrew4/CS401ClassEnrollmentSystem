@@ -63,7 +63,7 @@ public class SessionService {
 
         String[] parts = sessionData.split(",");
         if (parts.length != 2) {
-            return true; // Invalid session data
+            return true;
         }
 
         int expiryTime = Integer.parseInt(parts[1]);

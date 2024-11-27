@@ -17,7 +17,7 @@ public class RequestHandler {
             case LOGOUT:
                 return LogoutHandler.handleLogout(request);
             case ENROLL_COURSE:
-                return EnrollCourseHandler.handleEnrollCourse(request);
+//                return EnrollCourseHandler.handleEnrollCourse(request);
             case DROP_COURSE:
 //                return DropCourseHandler.handleDropCourse(request, courseManager, sessionManager);
             case DELETE:
