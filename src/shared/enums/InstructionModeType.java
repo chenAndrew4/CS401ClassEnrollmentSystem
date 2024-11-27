@@ -8,10 +8,12 @@ public enum InstructionModeType {
 
 	private final String description;
 
+	// Constructor
 	InstructionModeType(String description) {
 		this.description = description;
 	}
 
+	// Getter for description
 	public String getDescription() {
 		return description;
 	}

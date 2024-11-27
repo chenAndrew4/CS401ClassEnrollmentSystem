@@ -20,6 +20,8 @@ public class Message implements Serializable {
     	this.type = type;
         this.status = null;
     }
+    
+    // Used by the server to respond to the client's request
     public Message(MessageType type, MessageStatus status){
     	this.type = type;
     	this.status = status;
@@ -45,5 +47,4 @@ public class Message implements Serializable {
                 ", status=" + status +
                 '}';
     }
-    
 }

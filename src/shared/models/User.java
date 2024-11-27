@@ -96,19 +96,19 @@ public class User implements Serializable{
 	public String getUsername() {
 		return this.username;
 	}
-	
+
 	public String getPassword() {
 		return this.password;
 	}
-	
+
 	public String getFirstName() {
 		return this.firstName;
 	}
-	
+
 	public String getLastName() {
 		return this.lastName;
 	}
-	
+
 	public Institutions getInstitutionID() {
 		return this.institutionID;
 	}
@@ -124,31 +124,31 @@ public class User implements Serializable{
 	public AccountType getAccountType() {
 		return this.accountType;
 	}
-	
+
 	public void setUserId(String id) {
 		this.userId = id;
 	}
-	
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public void setFirstName(String firstname) {
 		this.firstName = firstname;
 	}
-	
+
 	public void setLastName(String lastname) {
 		this.lastName = lastname;
 	}
-	
+
 	public void setInstitutionID(Institutions institutionID) {
 		this.institutionID = institutionID;
 	}
-	
+
 	public void setAccountType(AccountType accountType) {
 		this.accountType = accountType;
 	}
@@ -215,6 +215,6 @@ public class User implements Serializable{
 				+ ", department=" + department + ", accountType=" + accountType + ", admission date=" + date + ", genderIdentity="
 				+ genderIdentity + "}";
 	}
-	
-	
+
+
 }

@@ -6,10 +6,12 @@ public enum AcademicProgramType {
 
 	private final String description;
 
+	// Constructor
 	AcademicProgramType(String description) {
 		this.description = description;
 	}
 
+	// Getter for description
 	public String getDescription() {
 		return description;
 	}
