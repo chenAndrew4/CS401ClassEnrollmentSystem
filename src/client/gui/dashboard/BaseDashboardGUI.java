@@ -56,6 +56,7 @@ public abstract class BaseDashboardGUI extends JFrame implements Runnable {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(0, 0)); // No gaps between panels
         getContentPane().setBackground(new Color(240, 240, 240)); // Light gray background
+        setIconImage(new ImageIcon(ClientConfig.CLIENT_LOGO_FILE_PATH).getImage());
     }
 
     private void initializeMainContentPanel() {

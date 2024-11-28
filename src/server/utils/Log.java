@@ -80,11 +80,12 @@ public class Log {
 	}
 
 	// Log an error
-	public void error(String str, Institutions institutionID,Class<?> logClass) {
-		updateDateTime();
-		String text = "ERROR: " + str;
-		println(text);
-		ServerLogDataManager.getInstance().addLog(institutionID, logClass, "[" + this.formattedDateTime + "] " + text);
+	public void error(String str) {
+		println("ERROR: " + str);
+	}
+	
+	public void exception(String str) {
+		println("EXCEPTION: " + str);
 	}
 
 	// Optional: Reset the JTextArea if needed

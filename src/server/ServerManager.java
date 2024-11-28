@@ -32,7 +32,7 @@ public final class ServerManager{
 //	public static final String WAITLISTS_DB_FILE_PATH = "resources/database/waitlists.db";
 	public static final String SESSION_FILE_PATH = "resources"+File.separator+"database"+File.separator+"sessions.db";
 	public static final String LOGS_FILE_PATH_SUFFIX = "serverLog.log";
-	public static final String SERVER_ICON_FILE_PATH = "src"+File.separator+"assets"+File.separator+"icons"+File.separator+"server_32.png";
+	public static final String SERVER_ICON_FILE_PATH = "src"+File.separator+"server"+File.separator+"assets"+File.separator+"icons"+File.separator+"server_32.png";
 
 
 	public ServerManager() {

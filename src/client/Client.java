@@ -29,7 +29,7 @@ public class Client {
             try (Socket socket = new Socket(ClientConfig.SERVER_ADDRESS, ClientConfig.SERVER_PORT);
                  ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                  ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
-
+                
                 // Send the request
                 out.writeObject(request);
 

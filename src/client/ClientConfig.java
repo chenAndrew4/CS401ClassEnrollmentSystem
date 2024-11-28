@@ -8,6 +8,7 @@ public class ClientConfig {
 
     // File path
     public static final String ICON_FILE_PATH_PREFIX = "src" + File.separator + "client" + File.separator + "assets" + File.separator + "icons" + File.separator;
+    public static final String CLIENT_LOGO_FILE_PATH = "src" + File.separator + "client" + File.separator + "assets" + File.separator + "icons" + File.separator + "app_32.png";
 
     // SJSU Paths
     public static final String SJSU_FILE_PATH_PREFIX = ICON_FILE_PATH_PREFIX + "SJSU" + File.separator;

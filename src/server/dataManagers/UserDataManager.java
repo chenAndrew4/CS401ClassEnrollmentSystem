@@ -75,7 +75,7 @@ public class UserDataManager {
             }
             default -> {
                 System.err.println("Error casting user for institution: " + institutionID);
-                Log.getInstance(ServerGUI.logTextArea).error("Error casting user for institution: ", institutionID, this.getClass());
+                Log.getInstance(ServerGUI.logTextArea).error("Error casting user for institution: " + institutionID + this.getClass().toString());
                 throw new ClassCastException("Error casting user for institution: " + institutionID);
             }
         }

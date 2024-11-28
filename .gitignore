@@ -2,3 +2,4 @@
 .project
 src/server/config.ini
 /bin/
+sessions.db

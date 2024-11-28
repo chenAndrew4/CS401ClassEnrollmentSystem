@@ -45,19 +45,17 @@ public class Server {
 		try {
 			serverSocket = new ServerSocket(serverManager.getPort(), 0, serverManager.getIpAddress());
 			serverSocket.setReuseAddress(true);
-			log.println("Server started on: " + serverManager.getIpAddress() + ":" + serverManager.getPort());
-
 			while (true) {
 				try {
 					Socket clientSocket = serverSocket.accept();
 					log.println("New Connection from: " + clientSocket.getInetAddress().getHostAddress() + ":" + clientSocket.getPort());
 					pool.execute(new ClientHandler(clientSocket, log));
 				} catch (IOException e) {
-					System.err.println("Error accepting client connection: " + e.getMessage());
+					log.exception(e.getMessage());
 				}
 			}
 		} catch (IOException e) {
-			log.println("Server Error: " + e.getMessage());
+			log.exception(e.getMessage());
 		} finally {
 			end();
 		}

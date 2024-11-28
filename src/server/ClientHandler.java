@@ -24,7 +24,6 @@ class ClientHandler implements Runnable {
 
 	@Override
 	public void run() {
-			System.out.println("thread executed");
 		try (ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
 			 ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream())) {
 
@@ -50,12 +49,12 @@ class ClientHandler implements Runnable {
 			}
 
 		} catch (IOException | ClassNotFoundException e) {
-			log.println("Error handling client " + clientIpAddPort + ": " + e.getMessage());
+			log.exception("Error handling client " + clientIpAddPort + ": " + e.toString());
 		} finally {
 			try {
 				clientSocket.close();
 			} catch (IOException e) {
-				log.println("Error closing client socket: " + e.getMessage());
+				log.exception("Error closing client socket: " + e.toString());
 			}
 			log.println("Connection closed: " + clientIpAddPort);
 		}

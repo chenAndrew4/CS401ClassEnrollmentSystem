@@ -5,6 +5,7 @@ import client.gui.LoginSettingGUI;
 import client.gui.SignupGUI;
 import client.handlers.LoginHandler;
 import client.utils.ImageUtils;
+import server.ServerManager;
 import shared.enums.Institutions;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public abstract class BaseLoginGUI extends JFrame {
         this.institution = institution;
 
         setTitle(institution + " - CCES Login");
+        setIconImage(new ImageIcon(ClientConfig.CLIENT_LOGO_FILE_PATH).getImage());
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
