@@ -31,7 +31,6 @@ public class CourseDataManagerTest {
             Course course = new Course(institution, department);
             course.setName("Course " + department + " - " + institution);
             course.setDescription("Description for " + department + " course at " + institution);
-            course.setNotes("No prerequisites for this course.");
             course.setLevel(LevelType.Lower);
             course.setAcademicProgram(AcademicProgramType.UGM);
             course.setUnits(3.0f + i);
@@ -44,6 +43,7 @@ public class CourseDataManagerTest {
                 section.setEnrollmentLimit(30 + j * 5);
                 section.setGrading(GradingType.Letter);
                 section.setInstructionMode(InstructionModeType.InPerson);
+                section.setNotes("No prerequisites for this course.");
 
                 // Create a schedule for the section
                 Schedule schedule = new Schedule(institution);

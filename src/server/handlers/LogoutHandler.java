@@ -11,7 +11,7 @@ public class LogoutHandler {
         SessionService sessionService = SessionService.getInstance();
         LogoutRequest logoutRequest = (LogoutRequest) request;
         String sessionToken = logoutRequest.getSessionToken();
-        if (logoutRequest.isAuthenicated()) {
+        if (logoutRequest.isAuthenticated()) {
             sessionService.terminateSession(sessionToken);
             return new LogoutResponse(true,  "Logout successful", MessageStatus.SUCCESS);
         }

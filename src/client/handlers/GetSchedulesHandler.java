@@ -8,9 +8,8 @@ import client.gui.dashboard.FacultyDashboardGUI;
 import client.gui.dashboard.StudentDashboardGUI;
 import shared.enums.Institutions;
 import shared.enums.MessageType;
-import shared.models.Faculty;
 import shared.models.Schedule;
-import shared.models.User;
+import shared.models.Student;
 import shared.models.requests.GetSchedulesRequest;
 import shared.models.responses.GetSchedulesResponse;
 
@@ -18,9 +17,9 @@ import javax.swing.*;
 import java.util.List;
 
 public class GetSchedulesHandler {
-    public void handleGetSchedules(User currentUser, Institutions institution, JPanel parentGUI, BaseDashboardGUI parentDashboard) {
+    public void handleGetSchedules(Student currentUser, Institutions institution, JPanel parentGUI, final BaseDashboardGUI parentDashboard) {
         // Create the GetSchedulesRequest
-        GetSchedulesRequest getSchedulesRequest = new GetSchedulesRequest(MessageType.GET_SCHEDULES, null, institution, currentUser);
+        GetSchedulesRequest getSchedulesRequest = new GetSchedulesRequest(MessageType.GET_SCHEDULES, null, institution, currentUser.getUserId(), currentUser.getEnrolledCourses(), currentUser.getSessionToken(), currentUser.isAuthenticated());
 
         // Send the request via the client
         Client.getInstance().sendRequest(getSchedulesRequest, new ResponseCallback<GetSchedulesResponse, Void>() {
@@ -30,13 +29,13 @@ public class GetSchedulesHandler {
                 List<Schedule> schedules = getSchedulesResponse.getSchedules();
 
                 SwingUtilities.invokeLater(() -> {
-                	if (parentDashboard instanceof StudentDashboardGUI) {
+                    if (parentDashboard instanceof StudentDashboardGUI) {
                         // Open ViewSchedulesGUI and pass the schedules list
                         ViewSchedulesGUI viewSchedulesGUI = new ViewSchedulesGUI(parentDashboard, schedules);
                         ((StudentDashboardGUI) parentDashboard).replaceOptionPanel(viewSchedulesGUI.getPanel());
-                    } else if (parentDashboard instanceof FacultyDashboardGUI) {
-                        ViewSchedulesGUI viewSchedulesGUI = new ViewSchedulesGUI(parentDashboard, schedules);
-                        ((FacultyDashboardGUI) parentDashboard).replaceOptionPanel(viewSchedulesGUI.getPanel());
+//                    } else if (parentDashboard instanceof FacultyDashboardGUI) {
+//                        ViewSchedulesGUI viewSchedulesGUI = new ViewSchedulesGUI(parentDashboard, schedules);
+//                        ((FacultyDashboardGUI) parentDashboard).replaceOptionPanel(viewSchedulesGUI.getPanel());
                     } else {
                         ViewSchedulesGUI viewSchedulesGUI = new ViewSchedulesGUI(parentDashboard, schedules);
                         ((AdminDashboardGUI) parentDashboard).replaceOptionPanel(viewSchedulesGUI.getPanel());

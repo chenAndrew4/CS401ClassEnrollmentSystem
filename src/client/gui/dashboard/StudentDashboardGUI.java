@@ -6,15 +6,10 @@ import client.gui.ManageCourseGUI;
 import client.gui.ManageWaitlistGUI;
 import client.gui.ViewSchedulesGUI;
 import client.handlers.GetSchedulesHandler;
-import shared.enums.MessageType;
-import shared.models.Schedule;
 import shared.models.Student;
-import shared.models.User;
-import shared.models.requests.GetSchedulesRequest;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class StudentDashboardGUI extends BaseDashboardGUI {
     private JPanel mainOptionsPanel; // Stores the main options panel
@@ -91,7 +86,7 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
 
     private void handleViewSchedule() {
         GetSchedulesHandler getSchedulesHandler = new GetSchedulesHandler();
-        getSchedulesHandler.handleGetSchedules(getUser(), getUser().getInstitutionID(), getOptionsPanel(), this);
+        getSchedulesHandler.handleGetSchedules((Student) getUser(), getUser().getInstitutionID(), getOptionsPanel(), this);
     }
 
     private void handleNotification() {

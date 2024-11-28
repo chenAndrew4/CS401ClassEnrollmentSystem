@@ -40,7 +40,7 @@ class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo thi
         
         String scheduleID = schedule.getScheduleID();
 
-        scheduleDataManager.saveSchedule(institution, scheduleID, schedule);
+        scheduleDataManager.addOrUpdateSchedule(institution, scheduleID, schedule);
     }
     
 //    @AfterAll
@@ -134,7 +134,7 @@ class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo thi
         
         String scheduleID = schedule.getScheduleID();
         
-        boolean result = scheduleDataManager.saveSchedule(institution, scheduleID, schedule);
+        boolean result = scheduleDataManager.addOrUpdateSchedule(institution, scheduleID, schedule);
         System.out.println("SaveSchedule result: " + result + "\n");
     }
     
@@ -148,7 +148,7 @@ class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo thi
         
         String scheduleID = schedule.getScheduleID();
 
-        scheduleDataManager.saveSchedule(institution, scheduleID, schedule);
+        scheduleDataManager.addOrUpdateSchedule(institution, scheduleID, schedule);
 
         Schedule get = scheduleDataManager.getSchedule(institution, scheduleID);
 
@@ -172,7 +172,7 @@ class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo thi
         
         String scheduleID = schedule1.getScheduleID();
         
-        scheduleDataManager.saveSchedule(institution, scheduleID, schedule1);
+        scheduleDataManager.addOrUpdateSchedule(institution, scheduleID, schedule1);
         
         Map<String, Schedule> schedules = scheduleDataManager.getAllSchedules(institution);
 
@@ -195,7 +195,7 @@ class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo thi
         
         String scheduleID = schedule.getScheduleID();
         
-        scheduleDataManager.saveSchedule(institution, scheduleID, schedule);
+        scheduleDataManager.addOrUpdateSchedule(institution, scheduleID, schedule);
         
         boolean result = scheduleDataManager.deleteSchedule(institution, scheduleID);
 

@@ -5,10 +5,7 @@ import client.gui.GUIConfig;
 import client.gui.ManageAssignedCoursesGUI;
 import client.gui.ViewSchedulesGUI;
 import client.gui.ViewWaitlistGUI;
-import client.handlers.GetSchedulesHandler;
 import shared.models.Faculty;
-import shared.models.User;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -86,8 +83,10 @@ public class FacultyDashboardGUI extends BaseDashboardGUI {
     }
 
     private void handleViewSchedules() {
-        GetSchedulesHandler getSchedulesHandler = new GetSchedulesHandler();
-        getSchedulesHandler.handleGetSchedules(getUser(), getUser().getInstitutionID(), getOptionsPanel(), this);
+        if (viewWaitlistGUI == null) {
+            viewSchedulesGUI = new ViewSchedulesGUI(this, ((Faculty)getUser()).getSchedule());
+        }
+        replaceOptionPanel(viewSchedulesGUI.getPanel());
     }
 
     private void handleCommunication() {

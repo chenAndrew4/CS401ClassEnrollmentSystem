@@ -94,7 +94,7 @@ public class UserDataManager {
     public synchronized Map<String, User> getUsersByInstitution(Institutions institutionID) {
         isImported(institutionID);
         return userMap.containsKey(institutionID)
-                ? Collections.unmodifiableMap(new HashMap<>(userMap.get(institutionID)))
+                ? Map.copyOf(userMap.get(institutionID))
                 : Collections.emptyMap();
     }
 
@@ -125,8 +125,8 @@ public class UserDataManager {
     public synchronized Set<String> getUserIDsByInstitution(Institutions institutionID) {
         isImported(institutionID);
         return userMap.containsKey(institutionID)
-                ? Collections.unmodifiableSet(userMap.get(institutionID).keySet())
-                : Collections.emptySet();
+                ? Set.copyOf(userMap.get(institutionID).keySet())
+                : new HashSet<>();
     }
 
     public synchronized void saveAllUsers() {

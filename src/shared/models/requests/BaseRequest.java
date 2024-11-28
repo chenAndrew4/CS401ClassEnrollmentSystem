@@ -8,17 +8,17 @@ import shared.models.Message;
 public abstract class BaseRequest extends Message {
     private Institutions institutionID;
     private String sessionToken;
-    private boolean isAuthenicated;
+    private boolean isAuthenticated;
 
-    public BaseRequest(MessageType messageType, MessageStatus messageStatus, Institutions institutionID, String sessionToken, boolean isAuthenicated) {
+    public BaseRequest(MessageType messageType, MessageStatus messageStatus, Institutions institutionID, String sessionToken, boolean isAuthenticated) {
         super(messageType, messageStatus);
         this.institutionID = institutionID;
         this.sessionToken = sessionToken;
-        this.isAuthenicated = isAuthenicated;
+        this.isAuthenticated = isAuthenticated;
     }
 
-    public boolean isAuthenicated() {
-        return isAuthenicated;
+    public boolean isAuthenticated() {
+        return isAuthenticated;
     }
 
     public Institutions getInstitutionID() {

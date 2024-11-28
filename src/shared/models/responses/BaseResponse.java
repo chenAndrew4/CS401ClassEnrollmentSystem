@@ -5,7 +5,7 @@ import shared.enums.MessageType;
 import shared.models.Message;
 
 public class BaseResponse extends Message {
-    private String message; // Human-readable message for the client
+    private String message;
 
     public BaseResponse() {
         super();

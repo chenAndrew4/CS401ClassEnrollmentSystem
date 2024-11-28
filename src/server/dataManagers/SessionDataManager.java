@@ -95,7 +95,7 @@ public class SessionDataManager {
 
     // Retrieve all session data
     public synchronized Map<String, String> getAllSessionData() {
-        return Collections.unmodifiableMap(new HashMap<>(sessionData));
+        return Map.copyOf(sessionData);
     }
 }
 

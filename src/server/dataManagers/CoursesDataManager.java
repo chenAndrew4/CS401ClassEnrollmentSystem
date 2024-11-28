@@ -8,6 +8,7 @@ import shared.models.CourseSection;
 import java.io.*;
 import java.util.*;
 
+// all method return a copy of data object to prevent directly data access
 public class CoursesDataManager {
 
     private static CoursesDataManager instance;
@@ -37,6 +38,113 @@ public class CoursesDataManager {
             institutionCourses.put(institution, loadCoursesByInstitution(institution));
             modified.putIfAbsent(institution, false);
         }
+    }
+
+    public synchronized boolean addOrUpdateCourse(Institutions institution, Course course) {
+        if (institution == null || course == null) {
+            return false;
+        }
+        ensureCoursesLoaded(institution);
+
+        institutionCourses.putIfAbsent(institution, new HashMap<>());
+        institutionCourses.get(institution).put(course.getCourseID(), course);
+        modified.put(institution, true); // Mark as modified
+        return true;
+    }
+
+    public synchronized boolean removeCourse(Institutions institution, String courseID) {
+        if (institution == null || courseID == null) {
+            return false;
+        }
+        ensureCoursesLoaded(institution);
+
+        Map<String, Course> courses = institutionCourses.get(institution);
+        if (courses == null || !courses.containsKey(courseID)) {
+            return false;
+        }
+
+        courses.remove(courseID);
+        modified.put(institution, true); // Mark as modified
+        return true;
+    }
+
+    // return a course map<ID, Course>
+    public synchronized Map<String, Course> getAllCourses(Institutions institution) {
+        if (institution == null) {
+            return Collections.emptyMap();
+        }
+        ensureCoursesLoaded(institution);
+
+        return Map.copyOf(institutionCourses.getOrDefault(institution, Collections.emptyMap()));
+    }
+
+    public synchronized Course getCourseByCourseID(Institutions institutionID, String courseID) {
+        if (institutionID == null || courseID == null) {
+            return null;
+        }
+        ensureCoursesLoaded(institutionID);
+
+        Course course = institutionCourses.getOrDefault(institutionID, Collections.emptyMap()).get(courseID);
+        return course != null ? new Course(course) : null;
+    }
+
+    public synchronized Course getCourseBySectionID(Institutions institutionID, String sectionID) {
+        if (institutionID == null || sectionID == null) {
+            return null;
+        }
+        ensureCoursesLoaded(institutionID);
+        for (Course course : institutionCourses.get(institutionID).values()) {
+            for (CourseSection s : course.getSections()) {
+                if (s.getSectionID().equals(sectionID)) {
+                    return new Course(course);
+                }
+            }
+        }
+        return null;
+    }
+
+    // return a courseID set
+    public synchronized Set<String> getCourseIDsByInstitution(Institutions institution) {
+        if (institution == null) {
+            return Collections.emptySet();
+        }
+        ensureCoursesLoaded(institution);
+
+        return Set.copyOf(institutionCourses.getOrDefault(institution, Collections.emptyMap()).keySet());
+    }
+
+    // return a sectionID set
+    public synchronized Set<String> getSectionIDsByInstitution(Institutions institution) {
+        if (institution == null) {
+            return Collections.emptySet();
+        }
+        ensureCoursesLoaded(institution);
+
+        Set<String> sectionIDs = new HashSet<>();
+        for (Course course : institutionCourses.getOrDefault(institution, Collections.emptyMap()).values()) {
+            for (CourseSection section : course.getSections()) {
+                sectionIDs.add(section.getSectionID());
+            }
+        }
+
+        return Collections.unmodifiableSet(sectionIDs);
+    }
+
+    // return a courseSection
+    public synchronized CourseSection getSectionById(Institutions institution, String sectionID) {
+        if (institution == null || sectionID == null) {
+            return null;
+        }
+        ensureCoursesLoaded(institution);
+
+        for (Course course : institutionCourses.getOrDefault(institution, Collections.emptyMap()).values()) {
+            for (CourseSection section : course.getSections()) {
+                if (section.getSectionID().equals(sectionID)) {
+                    return new CourseSection(section);
+                }
+            }
+        }
+        return null;
     }
 
     public synchronized void saveAllCourses() {
@@ -88,36 +196,6 @@ public class CoursesDataManager {
         }
         return courses;
     }
-
-	public CourseSection getSectionById(Institutions institution, String sectionID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Map<String, Course> getAllCourses(Institutions institution) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Course getCourseByCourseID(Institutions institution, String courseID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Course getCourseBySectionID(Institutions institution, String sectionID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean addOrUpdateCourse(Institutions institution, Course course) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean removeCourse(Institutions institution, String courseID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }
 
 

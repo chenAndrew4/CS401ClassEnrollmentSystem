@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
+// all method return a copy of data object to prevent directly data access
 public class ServerLogDataManager {
     private static ServerLogDataManager instance;
 
@@ -55,9 +56,13 @@ public class ServerLogDataManager {
         if (!institutionLogs.containsKey(institution)) {
             return Collections.emptyList();
         }
-        return institutionLogs.get(institution).values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        List<String> result = new ArrayList<>();
+        for (List<String> l : institutionLogs.get(institution).values()) {
+            if (!l.isEmpty()) {
+                result.addAll(l);
+            }
+        }
+        return result;
     }
 
     // Retrieve logs by class type for an institution
@@ -73,28 +78,49 @@ public class ServerLogDataManager {
         if (!institutionLogs.containsKey(institution)) {
             return Collections.emptyList();
         }
-        return institutionLogs.get(institution).values().stream()
-                .flatMap(Collection::stream)
-                .filter(log -> log.toLowerCase().contains(content.toLowerCase()))
-                .collect(Collectors.toList());
+        List<String> result = new ArrayList<>();
+        for (List<String> l : institutionLogs.get(institution).values()) {
+            if (!l.isEmpty()) {
+                for (String s : l){
+                    if (s.toLowerCase().contains(content.toLowerCase())) {
+                        result.add(s);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     // Retrieve logs by date
     public synchronized List<String> getLogsByDate(String date) {
-        return institutionLogs.values().stream()
-                .flatMap(map -> map.values().stream())
-                .flatMap(Collection::stream)
-                .filter(log -> log.startsWith("[" + date))
-                .collect(Collectors.toList());
+        List<String> result = new ArrayList<>();
+        for (Map<Class<?> ,List<String>> m : institutionLogs.values()) {
+            if (!m.isEmpty()) {
+                for (List<String> l : m.values()){
+                    for (String s : l){
+                        if (s.startsWith("[" + date)) {
+                            result.add(s);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     // Retrieve logs by institution and date
     public synchronized List<String> getLogsByInstitutionIDAndDate(Institutions institution, String date) {
-        return institutionLogs.getOrDefault(institution, Collections.emptyMap())
-                .values().stream()
-                .flatMap(Collection::stream)
-                .filter(log -> log.startsWith("[" + date))
-                .collect(Collectors.toList());
+        List<String> result = new ArrayList<>();
+        for (List<String> l : institutionLogs.get(institution).values()) {
+            if (!l.isEmpty()) {
+                for (String s : l){
+                    if (s.startsWith("[" + date)) {
+                        result.add(s);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     // Retrieve logs for an institution between two times
@@ -106,18 +132,23 @@ public class ServerLogDataManager {
         LocalDateTime start = LocalDateTime.parse(startTime, DATE_TIME_FORMATTER);
         LocalDateTime end = LocalDateTime.parse(endTime, DATE_TIME_FORMATTER);
 
-        return institutionLogs.get(institution).values().stream()
-                .flatMap(Collection::stream)
-                .filter(log -> {
-                    String timestamp = log.substring(1, log.indexOf("]")).trim();
+        List<String> result = new ArrayList<>();
+        for (List<String> l : institutionLogs.get(institution).values()) {
+            if (!l.isEmpty()) {
+                for (String s : l){
+                    String timestamp = s.substring(1, s.indexOf("]")).trim();
                     try {
                         LocalDateTime logTime = LocalDateTime.parse(timestamp, DATE_TIME_FORMATTER);
-                        return !logTime.isBefore(start) && !logTime.isAfter(end);
+                        if (!logTime.isBefore(start) && !logTime.isAfter(end)) {
+                            result.add(s);
+                        }
                     } catch (Exception e) {
-                        return false;
+                        System.out.println(e);
                     }
-                })
-                .collect(Collectors.toList());
+                }
+            }
+        }
+        return result;
     }
 
     // Save all logs to files

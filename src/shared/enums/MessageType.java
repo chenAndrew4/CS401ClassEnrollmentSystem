@@ -22,5 +22,6 @@ public enum MessageType{
 	ADD,
 	DELETE,
 	DEBUG,
-	DEFUALT,
+	DEFUALT, 
+	ADD_COURSESECTION,
 }

@@ -85,24 +85,72 @@ public class WaitlistDataManager {
         return waitlists;
     }
 
-	public boolean addOrUpdateWaitlist(Institutions institutionID, String sectionID, WaitList waitlist) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    // Add or Update a waitlist
+    public synchronized boolean addOrUpdateWaitlist(Institutions institutionID, String sectionID, WaitList waitlist) {
+        institutionWaitlists.putIfAbsent(institutionID, loadWaitlistsByInstitution(institutionID));
+        institutionWaitlists.get(institutionID).put(sectionID, waitlist);
+        modified.put(institutionID, true); // Mark as modified
+        return true;
+    }
 
-	public WaitList getWaitlist(Institutions institutionID, String sectionID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    // Get a specific waitlist (Defensive Copy)
+    public synchronized WaitList getWaitlist(Institutions institutionID, String sectionID) {
+        if (!institutionWaitlists.containsKey(institutionID)) {
+            institutionWaitlists.put(institutionID, loadWaitlistsByInstitution(institutionID));
+        }
+        WaitList waitlist = institutionWaitlists.get(institutionID).get(sectionID);
+        return waitlist != null ? new WaitList(waitlist) : null;
+    }
 
-	public Map<String, WaitList> getAllWaitlists(Institutions institutionID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    // Get all waitlists for an institution (Unmodifiable Map)
+    public synchronized Map<String, WaitList> getAllWaitlists(Institutions institutionID) {
+        if (!institutionWaitlists.containsKey(institutionID)) {
+            institutionWaitlists.put(institutionID, loadWaitlistsByInstitution(institutionID));
+        }
+        return Map.copyOf(institutionWaitlists.get(institutionID));
+    }
 
-	public boolean removeWaitlist(Institutions institutionID, String courseID) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    // Get a set of all waitlist IDs for an institution
+    public synchronized Set<String> getWaitlistIDsByInstitution(Institutions institutionID) {
+        if (!institutionWaitlists.containsKey(institutionID)) {
+            institutionWaitlists.put(institutionID, loadWaitlistsByInstitution(institutionID));
+        }
+        return Set.copyOf(institutionWaitlists.get(institutionID).keySet());
+    }
+
+    // Get a waitlist by waitlist ID across all institutions
+    public synchronized WaitList getWaitlistByWaitlistID(String waitlistID) {
+        for (Map.Entry<Institutions, Map<String, WaitList>> institutionEntry : institutionWaitlists.entrySet()) {
+            Map<String, WaitList> waitlists = institutionEntry.getValue();
+            if (waitlists.containsKey(waitlistID)) {
+                return new WaitList(waitlists.get(waitlistID));
+            }
+        }
+        System.err.println("Waitlist not found for ID: " + waitlistID);
+        return null;
+    }
+
+    // Remove a specific waitlist
+    public synchronized boolean removeWaitlist(Institutions institutionID, String sectionID) {
+        if (!institutionWaitlists.containsKey(institutionID)) {
+            return false; // Institution not found
+        }
+
+        Map<String, WaitList> waitlists = institutionWaitlists.get(institutionID);
+        if (waitlists.remove(sectionID) != null) {
+            modified.put(institutionID, true); // Mark as modified
+            return true;
+        }
+        return false;
+    }
+
+    // Remove all waitlists for an institution
+    public synchronized boolean removeAllWaitlists(Institutions institutionID) {
+        if (institutionWaitlists.remove(institutionID) != null) {
+            modified.put(institutionID, true); // Mark as modified
+            return true;
+        }
+        return false;
+    }
 }
 

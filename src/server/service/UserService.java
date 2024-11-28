@@ -13,16 +13,13 @@ public class UserService implements Serializable{
 	private static UserService instance;
 	private UserDataManager userDataManager;
 
-	private UserService() {}
-
-	private UserService(Institutions institutionID) {
+	private UserService() {
 		userDataManager = UserDataManager.getInstance();
 	}
 
-
-	public static synchronized UserService getInstance(Institutions institutionID) throws IOException {
+	public static synchronized UserService getInstance() throws IOException {
 		if (instance == null) {
-			instance = new UserService(institutionID);
+			instance = new UserService();
 		}
 		return instance;
 	}

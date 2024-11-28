@@ -19,7 +19,7 @@ class ServerLogDatamanagerTest {//Date methods have not been done, maybe will do
 	@BeforeEach
 	void setUp() {
 		serverLogDataManager = ServerLogDataManager.getInstance();
-		serverLogDataManager.clearLogs(Institutions.CSUEB); 
+//		serverLogDataManager.clearLogs(Institutions.CSUEB); 
 	}
 	
 	@Test
@@ -93,7 +93,7 @@ class ServerLogDatamanagerTest {//Date methods have not been done, maybe will do
 	    System.out.println("After saving logs:");
 	    System.out.println("Modified status: " + modifiedStatus);
         
-	    serverLogDataManager.clearLogs(institution);  
+//	    serverLogDataManager.clearLogs(institution);  
 	    serverLogDataManager.loadAllLogs();  
 
 	    List<String> log = serverLogDataManager.getAllLogs(institution);
