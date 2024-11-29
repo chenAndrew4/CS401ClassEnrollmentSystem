@@ -17,8 +17,8 @@ public class ManageCourseGUI {
     private int termOffset; // Tracks term navigation
     private String currentTerm; // Current term
     private int currentYear; // Current year
-    private final StudentDashboardGUI parentDashboard;
     private JPanel topRowPanel; // Top row of the options panel
+    private final StudentDashboardGUI parentDashboard;
 
     public ManageCourseGUI(StudentDashboardGUI parentDashboard) {
         this.parentDashboard = parentDashboard;

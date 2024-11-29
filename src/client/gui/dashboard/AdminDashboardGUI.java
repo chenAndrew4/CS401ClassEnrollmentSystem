@@ -50,12 +50,12 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
 
         addOptionToPanel(mainOptionsPanel, "Manage Users", new ImageIcon(ClientConfig.MANAGE_USERS_ICON), this::handleManageUsers);
         addOptionToPanel(mainOptionsPanel, "Manage Courses", new ImageIcon(ClientConfig.MANAGE_COURSES_ICON), this::handleManageCourses);
-        addOptionToPanel(mainOptionsPanel, "Reports", new ImageIcon(ClientConfig.REPORTS_ICON), this::handleViewReports);
-        addOptionToPanel(mainOptionsPanel, "System Configuration", new ImageIcon(ClientConfig.SETTING_ICON), this::handleSystemSettings);
-        addOptionToPanel(mainOptionsPanel, "Manage Enrollment", new ImageIcon(ClientConfig.ENROLL_ICON), this::handleEnroll);
-        addOptionToPanel(mainOptionsPanel, "Manage Waitlist", new ImageIcon(ClientConfig.MANAGE_WAITLIST_ICON), this::handleWaitlists);
-        addOptionToPanel(mainOptionsPanel, "Manage Schedule", new ImageIcon(ClientConfig.MANAGE_SCHEDULE_ICON), this::handleSchedules);
-        addOptionToPanel(mainOptionsPanel, "Manage Notifications", new ImageIcon(ClientConfig.MANAGE_NOTICE_ICON), this::handleNotifications);
+        addOptionToPanel(mainOptionsPanel, "Reports", new ImageIcon(ClientConfig.MANAGE_REPORTS_ICON), this::handleViewReports);
+        addOptionToPanel(mainOptionsPanel, "System Configuration", new ImageIcon(ClientConfig.SYSTEM_CONFIG), this::handleSystemSettings);
+        addOptionToPanel(mainOptionsPanel, "Manage Enrollment", new ImageIcon(ClientConfig.MANAGE_ENROLLMENT_ICON), this::handleEnroll);
+        addOptionToPanel(mainOptionsPanel, "Manage Waitlists", new ImageIcon(ClientConfig.MANAGE_WAITLIST), this::handleWaitlists);
+        addOptionToPanel(mainOptionsPanel, "Manage Schedules", new ImageIcon(ClientConfig.MANAGE_SCHEDULES), this::handleSchedules);
+        addOptionToPanel(mainOptionsPanel, "Manage Notifications", new ImageIcon(ClientConfig.MANAGE_NOTIFICATIONS), this::handleNotifications);
         addOptionToPanel(mainOptionsPanel, "Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);
     }
 

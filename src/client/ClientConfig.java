@@ -28,7 +28,7 @@ public class ClientConfig {
     // Common Icons
     public static final String DEFAULT_STUDENT_ICON = ICON_FILE_PATH_PREFIX + "student1.png";
     public static final String DEFAULT_FACULTY_ICON = ICON_FILE_PATH_PREFIX + "faculty1.png";
-    public static final String DEFAULT_ADMIN_ICON = ICON_FILE_PATH_PREFIX + "administrator1.png";
+    public static final String DEFAULT_ADMIN_ICON = ICON_FILE_PATH_PREFIX + "admin.png";
     public static final String DEFAULT_DASH_BACKGROUND_PATH = ICON_FILE_PATH_PREFIX + "dashboard_background.png";
     public static final String INVALID_CREDS_FILE_PATH = ICON_FILE_PATH_PREFIX + "invalid_creds.png";
     public static final String ENROLL_ICON = ICON_FILE_PATH_PREFIX + "add.png";
@@ -37,9 +37,10 @@ public class ClientConfig {
     public static final String GRADES_ICON = ICON_FILE_PATH_PREFIX + "grade1.png";
     public static final String SCHEDULE_ICON = ICON_FILE_PATH_PREFIX + "schedule.png";
     public static final String LOGOUT_ICON = ICON_FILE_PATH_PREFIX + "logout.png";
-    public static final String MANAGE_USERS_ICON = ICON_FILE_PATH_PREFIX + "user.png";
-    public static final String MANAGE_COURSES_ICON = ICON_FILE_PATH_PREFIX + "course.png";
+    public static final String MANAGE_USERS_ICON = ICON_FILE_PATH_PREFIX + "users.png";
+    public static final String MANAGE_COURSES_ICON = ICON_FILE_PATH_PREFIX + "manage_course.png";
     public static final String REPORTS_ICON = ICON_FILE_PATH_PREFIX + "report.png";
+    public static final String MANAGE_REPORTS_ICON = ICON_FILE_PATH_PREFIX + "reports.png";
     public static final String SETTING_ICON = ICON_FILE_PATH_PREFIX + "setting.png";
     public static final String MANAGE_CLASSES_ICON = ICON_FILE_PATH_PREFIX + "course.png";
     public static final String GRADE_SUBMISSIONS_ICON = ICON_FILE_PATH_PREFIX + "grade.png";
@@ -53,7 +54,33 @@ public class ClientConfig {
     public static final String SEARCH_ICON = ICON_FILE_PATH_PREFIX + "search.png";
     public static final String LEFT_ARROW_ICON = ICON_FILE_PATH_PREFIX + "left_arrow.png";
     public static final String RIGHT_ARROW_ICON = ICON_FILE_PATH_PREFIX + "right_arrow.png";
-
+    public static final String ADD_USER = ICON_FILE_PATH_PREFIX + "add_user.png";
+    public static final String DELETE_USER = ICON_FILE_PATH_PREFIX + "remove_user.png";
+    public static final String EDIT_USER = ICON_FILE_PATH_PREFIX + "edit_user.png";
+    public static final String ADD_COURSE = ICON_FILE_PATH_PREFIX + "add_course.png";
+    public static final String DELETE_COURSE = ICON_FILE_PATH_PREFIX + "remove_course.png";
+    public static final String EDIT_COURSE = ICON_FILE_PATH_PREFIX + "edit_course.png";
+    public static final String COURSE_DETAILS_REPORT = ICON_FILE_PATH_PREFIX + "course_details.png";
+    public static final String GRADE_REPORT = ICON_FILE_PATH_PREFIX + "grades_report.png";
+    public static final String WAITLISTS_REPORT = ICON_FILE_PATH_PREFIX + "waitlist_report.png";
+    public static final String SCHEDULE_REPORT = ICON_FILE_PATH_PREFIX + "manage_schedule.png";
+    public static final String ENROLLMENT_REPORT = ICON_FILE_PATH_PREFIX + "enrollment_report.png";
+    public static final String SERVER_SETTINGS = ICON_FILE_PATH_PREFIX + "server_settings.png";
+    public static final String PROFILE_SETTINGS = ICON_FILE_PATH_PREFIX + "edit_profile.png";
+    public static final String SYSTEM_CONFIG = ICON_FILE_PATH_PREFIX + "system_config.png";
+    public static final String MANAGE_SCHEDULES = ICON_FILE_PATH_PREFIX + "manage_schedule.png";
+    public static final String MANAGE_ENROLLMENT_ICON = ICON_FILE_PATH_PREFIX + "manage_enrollment.png";
+    public static final String MANAGE_NOTIFICATIONS = ICON_FILE_PATH_PREFIX + "manage_notifications.png";
+    public static final String MANAGE_WAITLIST = ICON_FILE_PATH_PREFIX + "manage_waitlist.png";
+    public static final String ADD_WAITLIST = ICON_FILE_PATH_PREFIX + "add_waitlist.png";
+    public static final String DELETE_WAITLIST = ICON_FILE_PATH_PREFIX + "delete_waitlist.png";
+    public static final String EDIT_WAITLIST = ICON_FILE_PATH_PREFIX + "edit_waitlist.png";
+    public static final String ADD_SCHEDULE = ICON_FILE_PATH_PREFIX + "add_schedule.png";
+    public static final String DELETE_SCHEDULE = ICON_FILE_PATH_PREFIX + "delete_schedule.png";
+    public static final String EDIT_SCHEDULE = ICON_FILE_PATH_PREFIX + "edit_schedule.png";
+    
+    
+    
     // frame size
     // initial frame
     public static final int INITIAL_FRAME_WIDTH = 1600;

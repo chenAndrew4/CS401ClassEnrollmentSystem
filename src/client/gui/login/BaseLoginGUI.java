@@ -84,6 +84,7 @@ public abstract class BaseLoginGUI extends JFrame {
         // Login button
         JButton loginButton = new JButton("Login");
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        getRootPane().setDefaultButton(loginButton);
         LoginHandler loginHandler = new LoginHandler();
 
         loginButton.addActionListener(e -> {
