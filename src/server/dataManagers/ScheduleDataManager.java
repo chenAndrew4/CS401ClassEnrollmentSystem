@@ -1,6 +1,8 @@
 package server.dataManagers;
 
 import server.ServerManager;
+import server.gui.ServerGUI;
+import server.utils.Log;
 import shared.enums.Institutions;
 import shared.models.Schedule;
 
@@ -9,7 +11,7 @@ import java.util.*;
 
 // all method return a copy of data object to prevent directly data access
 public class ScheduleDataManager {
-
+	private static Log log;
     private static ScheduleDataManager instance;
 
     private static final String FILE_PREFIX = ServerManager.DB_FILE_PATH_PREFIX;
@@ -23,6 +25,7 @@ public class ScheduleDataManager {
         modified = new HashMap<>();
         // Register save task for centralized data saving
         DataSaveManager.getInstance().registerSaveTask(this::saveAllSchedules);
+        log = Log.getInstance(ServerGUI.logTextArea);
     }
 
     public static synchronized ScheduleDataManager getInstance() {
@@ -61,10 +64,11 @@ public class ScheduleDataManager {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(schedules);
-            System.out.println("Schedules saved successfully for institution: " + institutionID);
+            log.println("ScheduleDataManager: Schedules saved successfully for institution: " + institutionID);
         } catch (Exception e) {
-            System.err.println("Error saving schedules for institution: " + institutionID);
-            e.printStackTrace();
+           log.exception("ScheduleDataManager: Error saving schedules for institution: " + institutionID);
+           log.exception("ScheduleDataManager: " + e.toString());
+           e.printStackTrace();
         }
     }
 
@@ -83,11 +87,12 @@ public class ScheduleDataManager {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             schedules = (Map<String, Schedule>) ois.readObject();
-            System.out.println("Schedules loaded successfully for institution: " + institutionID);
+            log.println("ScheduleDataManager: Schedules loaded successfully for institution: " + institutionID);
         } catch (FileNotFoundException e) {
-            System.err.println("File not found for institution: " + institutionID + ". Returning empty map.");
+            log.exception("ScheduleDataManager: File not found for institution: " + institutionID + ". Returning empty map.");
         } catch (Exception e) {
-            System.err.println("Error loading schedules for institution: " + institutionID);
+            log.exception("ScheduleDataManager: Error loading schedules for institution: " + institutionID);
+            log.exception("ScheduleDataManager: " + e.toString());
             e.printStackTrace();
         }
         return schedules;
@@ -152,7 +157,7 @@ public class ScheduleDataManager {
             String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
             File file = new File(filePath);
             if (file.exists() && file.delete()) {
-                System.out.println("All schedules deleted for institution: " + institutionID);
+                log.println("ScheduleDataManager: All schedules deleted for institution: " + institutionID);
             }
             modified.put(institutionID, true); // Mark as modified
             return true;

@@ -2,6 +2,8 @@ package server.dataManagers;
 
 import server.Server;
 import server.ServerManager;
+import server.gui.ServerGUI;
+import server.utils.Log;
 import shared.enums.Institutions;
 import shared.enums.MessageType;
 
@@ -13,6 +15,7 @@ import java.util.stream.Collectors;
 
 // all method return a copy of data object to prevent directly data access
 public class ServerLogDataManager {
+	private static Log mainLog;
     private static ServerLogDataManager instance;
 
     // Internal storage for logs by institution and class type
@@ -27,6 +30,7 @@ public class ServerLogDataManager {
         modified = new HashMap<>();
         // Register save task for centralized data saving
         DataSaveManager.getInstance().registerSaveTask(this::saveAllLogs);
+        mainLog = Log.getInstance(ServerGUI.logTextArea);
     }
 
     public static synchronized ServerLogDataManager getInstance() {
@@ -143,7 +147,7 @@ public class ServerLogDataManager {
                             result.add(s);
                         }
                     } catch (Exception e) {
-                        System.out.println(e);
+                    	mainLog.exception("ServerLogDataManager: " + e.toString());
                     }
                 }
             }
@@ -171,9 +175,10 @@ public class ServerLogDataManager {
             for (String log : logs) {
                 writer.write(log + System.lineSeparator());
             }
-            System.out.println("Logs saved for Institution: " + institution + ", Class: " + logClass.getSimpleName());
+            mainLog.println("ServerLogDataManager: Logs saved for Institution: " + institution + ", Class: " + logClass.getSimpleName());
         } catch (IOException e) {
-            System.err.println("Error saving logs for Institution: " + institution + ", Class: " + logClass.getSimpleName());
+            mainLog.exception("ServerLogDataManager: Error saving logs for Institution: " + institution + ", Class: " + logClass.getSimpleName());
+            mainLog.exception("ServerLogDataManager: " + e.toString());
             e.printStackTrace();
         }
     }
@@ -185,14 +190,14 @@ public class ServerLogDataManager {
         for (Institutions i : Institutions.values()) {
             log = new File(ServerManager.DB_FILE_PATH_PREFIX + i.name() + File.separator + LOG_FILE_PATH_SUFFIX);
             if (!log.exists() || !log.isDirectory()) {
-                System.err.println("Log directory not found. Skipping load operation.");
+                mainLog.warn("ServerLogDataManager: Log directory not found. Skipping load operation.");
                 return;
             }
             logFiles.add(log);
         }
 
         if (logFiles.isEmpty()) {
-            System.err.println("No log files found. Skipping load operation.");
+        	mainLog.warn("ServerLogDataManager: No log files found. Skipping load operation.");
             return;
         }
 
@@ -212,7 +217,8 @@ public class ServerLogDataManager {
                     }
                 }
             } catch (ClassNotFoundException | IOException e) {
-                System.err.println("Error loading logs from file: " + logFile.getName());
+            	mainLog.exception("ServerLogDataManager: Error loading logs from file: " + logFile.getName());
+            	mainLog.exception("ServerLogDataManager: " + e.toString());
                 e.printStackTrace();
             }
         }

@@ -1,6 +1,8 @@
 package server.dataManagers;
 
 import server.ServerManager;
+import server.gui.ServerGUI;
+import server.utils.Log;
 import shared.enums.Institutions;
 import shared.models.Course;
 import shared.models.CourseSection;
@@ -10,7 +12,7 @@ import java.util.*;
 
 // all method return a copy of data object to prevent directly data access
 public class CoursesDataManager {
-
+	private static Log log;
     private static CoursesDataManager instance;
 
     private static final String FILE_PREFIX = ServerManager.DB_FILE_PATH_PREFIX;
@@ -24,6 +26,7 @@ public class CoursesDataManager {
         modified = new HashMap<>();
         // Register save task for centralized data saving
         DataSaveManager.getInstance().registerSaveTask(this::saveAllCourses);
+        log = Log.getInstance(ServerGUI.logTextArea);
     }
 
     public static synchronized CoursesDataManager getInstance() {
@@ -167,10 +170,10 @@ public class CoursesDataManager {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(courses);
-            System.out.println("Courses saved successfully for institution: " + institutionID);
+            log.println("CoursesDataManager: Courses saved successfully for institution: " + institutionID);
         } catch (Exception e) {
-            System.err.println("Error saving courses for institution: " + institutionID);
-            e.printStackTrace();
+        	log.exception("CoursesDataManager: Error saving courses for institution: " + institutionID);
+            log.exception("CoursesDataManager: " + e.toString());
         }
     }
 
@@ -186,13 +189,13 @@ public class CoursesDataManager {
         Map<String, Course> courses = new HashMap<>();
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-            courses = (Map<String, Course>) ois.readObject();
-            System.out.println("Courses loaded successfully for institution: " + institutionID);
+        	courses = (Map<String, Course>) ois.readObject();
+            log.println("CoursesDataManager: Courses loaded successfully for institution: " + institutionID);
         } catch (FileNotFoundException e) {
-            System.err.println("File not found for institution: " + institutionID + ". Returning empty map.");
+            log.exception("CoursesDataManager: File not found for institution: " + institutionID + ". Returning empty map.");
         } catch (Exception e) {
-            System.err.println("Error loading courses for institution: " + institutionID);
-            e.printStackTrace();
+            log.exception("CoursesDataManager: Error loading courses for institution: " + institutionID);
+            log.exception("CoursesDataManager: " + e.toString());
         }
         return courses;
     }

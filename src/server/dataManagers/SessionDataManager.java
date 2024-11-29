@@ -1,6 +1,8 @@
 package server.dataManagers;
 
 import server.ServerManager;
+import server.gui.ServerGUI;
+import server.utils.Log;
 
 import java.io.*;
 import java.util.*;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SessionDataManager {
+	private static Log log = Log.getInstance(ServerGUI.logTextArea);;
     private static SessionDataManager instance;
 
     private final Map<String, String> sessionData;
@@ -34,9 +37,9 @@ public class SessionDataManager {
     public synchronized void saveSessionData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SESSION_FILE_PATH))) {
             oos.writeObject(new HashMap<>(sessionData)); // Write a copy to preserve encapsulation
-            System.out.println("Session data saved successfully.");
+            log.println("SessionDataManager: Session data saved successfully.");
         } catch (Exception e) {
-            System.err.println("Error saving session data.");
+            log.exception("SessionDataManager: Error saving session data.");
             e.printStackTrace();
         }
     }
@@ -48,7 +51,7 @@ public class SessionDataManager {
 
         // Check if the file exists and is non-empty
         if (!file.exists() || file.length() == 0) {
-            System.err.println("Session file not found or empty. Initializing with empty data.");
+            log.warn("SessionDataManager: Session file not found or empty. Initializing with empty data.");
             sessionData.clear();
             return;
         }
@@ -61,18 +64,18 @@ public class SessionDataManager {
             if (loadedData instanceof Map) {
                 sessionData.clear();
                 sessionData.putAll((Map<String, String>) loadedData);
-                System.out.println("Session data loaded successfully.");
+                log.println("SessionDataManager: Session data loaded successfully.");
             } else {
                 throw new IOException("Invalid data format in session file.");
             }
         } catch (EOFException e) {
-            System.err.println("Session file is empty or incomplete. Initializing with empty data.");
+            log.exception("SessionDataManager: Session file is empty or incomplete. Initializing with empty data.");
             sessionData.clear();
         } catch (FileNotFoundException e) {
-            System.err.println("Session file not found. Initializing with empty data.");
+            log.exception("SessionDataManager: Session file not found. Initializing with empty data.");
             sessionData.clear();
         } catch (Exception e) {
-            System.err.println("Error loading session data: " + e.getMessage());
+            log.exception("SessionDataManager: Error loading session data: " + e.toString());
             e.printStackTrace();
             sessionData.clear();
         }

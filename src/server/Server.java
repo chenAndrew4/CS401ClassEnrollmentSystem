@@ -40,7 +40,7 @@ public class Server {
 			}));
 			log.println("Server is bound to: " + serverManager.getIpAddress().toString().replace("/", "") + ":" + serverManager.getPort());
 		} catch (UnknownHostException e) {
-			log.println("Error retrieving IP Address: " + e.getMessage());
+			log.exception("Error retrieving IP Address: " + e.toString());
 		}
 		try {
 			serverSocket = new ServerSocket(serverManager.getPort(), 0, serverManager.getIpAddress());
@@ -51,11 +51,11 @@ public class Server {
 					log.println("New Connection from: " + clientSocket.getInetAddress().getHostAddress() + ":" + clientSocket.getPort());
 					pool.execute(new ClientHandler(clientSocket, log));
 				} catch (IOException e) {
-					log.exception(e.getMessage());
+					log.exception(e.toString());
 				}
 			}
 		} catch (IOException e) {
-			log.exception(e.getMessage());
+			log.exception(e.toString());
 		} finally {
 			end();
 		}
