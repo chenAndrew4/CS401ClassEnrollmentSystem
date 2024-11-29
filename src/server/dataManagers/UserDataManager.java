@@ -1,5 +1,6 @@
 package server.dataManagers;
 
+import server.Server;
 import server.ServerManager;
 import server.gui.ServerGUI;
 import server.utils.Log;
@@ -13,6 +14,7 @@ import java.io.*;
 import java.util.*;
 
 public class UserDataManager {
+	private static Log log;
     private static UserDataManager instance;
 
     private static final String FILE_PREFIX = ServerManager.DB_FILE_PATH_PREFIX;
@@ -28,6 +30,8 @@ public class UserDataManager {
         modified = new HashMap<>();
         // Register save task for centralized data saving
         DataSaveManager.getInstance().registerSaveTask(this::saveAllUsers);
+        
+        log = Log.getInstance(ServerGUI.logTextArea);
     }
 
     public static synchronized UserDataManager getInstance() {
@@ -74,8 +78,7 @@ public class UserDataManager {
                 return new Administrator((Administrator) u);
             }
             default -> {
-                System.err.println("Error casting user for institution: " + institutionID);
-                Log.getInstance(ServerGUI.logTextArea).error("Error casting user for institution: " + institutionID + this.getClass().toString());
+                log.error("UserDataManager: Error casting user for institution: " + institutionID + " " + this.getClass().toString());
                 throw new ClassCastException("Error casting user for institution: " + institutionID);
             }
         }
@@ -131,7 +134,7 @@ public class UserDataManager {
 
     public synchronized void saveAllUsers() {
         if (userMap == null || userMap.isEmpty()) {
-            System.out.println("No data to save. Skipping save operation.");
+            log.warn("UserDataManager: No data to save. Skipping save operation.");
             return;
         }
         for (Map.Entry<Institutions, Map<String, User>> entry : userMap.entrySet()) {
@@ -142,7 +145,7 @@ public class UserDataManager {
 
     private synchronized void saveUsersByInstitution(Institutions institutionID, Map<String, User> users) {
         if (users == null || users.isEmpty()) {
-            System.out.println("No data to save. Skipping save operation.");
+            log.warn("UserDataManager: No data to save. Skipping save operation.");
             return;
         }
         String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
@@ -150,9 +153,9 @@ public class UserDataManager {
             oos.writeObject(users);
             modified.put(institutionID, false);
             userMap.get(institutionID).clear();
-            System.out.println("Users saved successfully for institution: " + institutionID);
+            log.println("UserDataManager: Users saved successfully for institution: " + institutionID);
         } catch (Exception e) {
-            System.err.println("Error saving users for institution: " + institutionID);
+            log.exception("UserDataManager: Error saving users for institution: " + institutionID + e.toString());
             e.printStackTrace();
         }
     }
@@ -164,19 +167,19 @@ public class UserDataManager {
 
         try (FileInputStream fis = new FileInputStream(filePath)) {
             if (fis.available() == 0) {
-                System.err.println("File is empty for institution: " + institutionID + ". Returning empty map.");
+                log.warn("UserDataManager: File is empty for institution: " + institutionID + ". Returning empty map.");
                 return new HashMap<>();
             }
 
             try (ObjectInputStream ois = new ObjectInputStream(fis)) {
                 users = (Map<String, User>) ois.readObject();
-                System.out.println("Users loaded successfully for institution: " + institutionID);
+                log.println("UserDataManager: Users loaded successfully for institution: " + institutionID);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("File not found for institution: " + institutionID + ". Returning empty map.");
+            log.exception("UserDataManager: File not found for institution: " + institutionID + ". Returning empty map.");
             users = new HashMap<>();
         } catch (Exception e) {
-            System.err.println("Error loading users for institution: " + institutionID);
+            log.exception("UserDataManager: Error loading users for institution: " + institutionID);
             e.printStackTrace();
             users = new HashMap<>();
         }

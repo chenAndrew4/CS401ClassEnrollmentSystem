@@ -87,6 +87,10 @@ public class Log {
 	public void exception(String str) {
 		println("EXCEPTION: " + str);
 	}
+	
+	public void warn(String str) {
+		println("WARNING: " + str);
+	}
 
 	// Optional: Reset the JTextArea if needed
 	public void setJTextArea(JTextArea jtextArea) {
