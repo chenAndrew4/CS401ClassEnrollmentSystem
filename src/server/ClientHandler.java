@@ -24,27 +24,36 @@ class ClientHandler implements Runnable {
 
 	@Override
 	public void run() {
-		try (ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-			 ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream())) {
+		try {
+			InputStream inputStream = null;
+			OutputStream outputStream = null;
+			
+			inputStream = this.clientSocket.getInputStream();
+			outputStream = this.clientSocket.getOutputStream();
+			
+			ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 
 			boolean quit = false;
 
 			while (!quit) {
-				// Read message from client
-				BaseRequest request = (BaseRequest) objectInputStream.readObject();
-				log.receivedMessage(clientIpAddPort, request);
+				while (inputStream.available() > 0) {
+					// Read message from client
+					BaseRequest request = (BaseRequest) objectInputStream.readObject();
+					log.receivedMessage(clientIpAddPort, request);
 
-				// Delegate message handling to the appropriate handler
-				BaseResponse response = RequestHandler.handleRequest(request, log);
+					// Delegate message handling to the appropriate handler
+					BaseResponse response = RequestHandler.handleRequest(request, log);
 
-				if (response != null) {
-					log.sendingMessage(clientIpAddPort, response);
-					objectOutputStream.writeObject(response);
-				}
+					if (response != null) {
+						log.sendingMessage(clientIpAddPort, response);
+						objectOutputStream.writeObject(response);
+					}
 
-				// Handle LOGOUT message specifically to terminate the connection
-				if (request.getType() == MessageType.LOGOUT) {
-					quit = true;
+					// Handle LOGOUT message specifically to terminate the connection
+					if (request.getType() == MessageType.LOGOUT) {
+						quit = true;
+					}
 				}
 			}
 
