@@ -1,6 +1,8 @@
 package server.dataManagers;
 
 import server.ServerManager;
+import server.gui.ServerGUI;
+import server.utils.Log;
 import shared.enums.Institutions;
 import shared.models.WaitList;
 
@@ -8,6 +10,7 @@ import java.io.*;
 import java.util.*;
 
 public class WaitlistDataManager {
+	private static Log log;
     private static WaitlistDataManager instance;
 
     private WaitlistDataManager() {
@@ -15,6 +18,7 @@ public class WaitlistDataManager {
         modified = new HashMap<>();
         // Register save task for centralized data saving
         DataSaveManager.getInstance().registerSaveTask(this::saveAllWaitlists);
+        log = Log.getInstance(ServerGUI.logTextArea);
     }
 
     public static synchronized WaitlistDataManager getInstance() {
@@ -50,9 +54,10 @@ public class WaitlistDataManager {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(waitlists);
-            System.out.println("Waitlists saved successfully for institution: " + institutionID);
+            log.println("WaitlistDataManager: Waitlists saved successfully for institution: " + institutionID);
         } catch (Exception e) {
-            System.err.println("Error saving waitlists for institution: " + institutionID);
+            log.exception("WaitlistDataManager: Error saving waitlists for institution: " + institutionID);
+            log.exception("WaitlistDataManager: " + e.toString());
             e.printStackTrace();
         }
     }
@@ -73,12 +78,13 @@ public class WaitlistDataManager {
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             waitlists = (Map<String, WaitList>) ois.readObject();
-            System.out.println("Waitlists loaded successfully for institution: " + institutionID);
+            log.println("WaitlistDataManager: Waitlists loaded successfully for institution: " + institutionID);
         } catch (FileNotFoundException e) {
-            System.err.println("File not found for institution: " + institutionID + ". Returning empty map.");
+            log.exception("WaitlistDataManager: File not found for institution: " + institutionID + ". Returning empty map.");
             waitlists = new HashMap<>();
         } catch (Exception e) {
-            System.err.println("Error loading waitlists for institution: " + institutionID);
+            log.exception("WaitlistDataManager: Error loading waitlists for institution: " + institutionID);
+            log.exception("WaitlistDataManager: " + e.toString());
             e.printStackTrace();
         }
 
@@ -126,7 +132,7 @@ public class WaitlistDataManager {
                 return new WaitList(waitlists.get(waitlistID));
             }
         }
-        System.err.println("Waitlist not found for ID: " + waitlistID);
+        log.error("WaitlistDataManager: Waitlist not found for ID: " + waitlistID);
         return null;
     }
 
