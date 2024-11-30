@@ -1,5 +1,7 @@
 .classpath
 .project
+.idea
 src/server/config.ini
-/bin/
+bin/
+src/out
 resources/database/sessions.db
