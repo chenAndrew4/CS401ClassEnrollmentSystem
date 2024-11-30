@@ -2,6 +2,8 @@ package server.service;
 
 import server.dataManagers.CoursesDataManager;
 import server.dataManagers.ScheduleDataManager;
+import server.gui.ServerGUI;
+import server.utils.Log;
 import shared.enums.Institutions;
 import shared.enums.Time;
 import shared.models.CourseSection;
@@ -11,12 +13,14 @@ import shared.models.Schedule;
 import java.util.*;
 
 public class ScheduleService {
+	private Log log;
     private static ScheduleService instance;
     private final ScheduleDataManager scheduleDataManager;
 
     // Private constructor for Singleton
     private ScheduleService() {
         this.scheduleDataManager = ScheduleDataManager.getInstance();
+        log = Log.getInstance(ServerGUI.logTextArea);
     }
 
     public static synchronized ScheduleService getInstance() {
@@ -31,7 +35,7 @@ public class ScheduleService {
 
         CourseSection course = CoursesDataManager.getInstance().getSectionById(institutionID, sectionID);
         if (institutionID == null || scheduleID == null || updatedSchedule == null || course == null) {
-            System.err.println("Invalid input for adding or updating schedule.");
+            log.error("ScheduleService: Invalid input for adding or updating schedule.");
             return false;
         }
         course.setScheduleID(updatedSchedule.getScheduleID());
@@ -42,7 +46,7 @@ public class ScheduleService {
     // Get a specific Schedule by ID
     public Schedule getSchedule(Institutions institutionID, String scheduleID) {
         if (institutionID == null || scheduleID == null) {
-            System.err.println("Invalid input for retrieving schedule.");
+            log.error("ScheduleService: Invalid input for retrieving schedule.");
             return null;
         }
         return scheduleDataManager.getSchedule(institutionID, scheduleID);
@@ -51,7 +55,7 @@ public class ScheduleService {
     // Get all schedules for an institution
     public Map<String, Schedule> getAllSchedules(Institutions institutionID) {
         if (institutionID == null) {
-            System.err.println("Invalid institution ID.");
+            log.error("ScheduleService: Invalid institution ID.");
             return Collections.emptyMap();
         }
         return scheduleDataManager.getAllSchedules(institutionID);
@@ -60,7 +64,7 @@ public class ScheduleService {
     // Delete a specific Schedule and update a course
     public boolean deleteSchedule(Institutions institutionID, String scheduleID, String sectionID) {
         if (institutionID == null || scheduleID == null) {
-            System.err.println("Invalid input for deleting schedule.");
+            log.error("ScheduleService: Invalid input for deleting schedule.");
             return false;
         }
         boolean result = scheduleDataManager.deleteSchedule(institutionID, scheduleID);
@@ -74,9 +78,9 @@ public class ScheduleService {
         }
 
         if (result) {
-            System.out.println("Schedule deleted: " + scheduleID);
+            log.println("ScheduleService: Schedule deleted: " + scheduleID);
         } else {
-            System.err.println("Failed to delete schedule: " + scheduleID);
+            log.error("ScheduleService: Failed to delete schedule: " + scheduleID);
         }
         return result;
     }
@@ -84,14 +88,14 @@ public class ScheduleService {
     // Delete all schedules for an institution
     public boolean deleteAllSchedules(Institutions institutionID) {
         if (institutionID == null) {
-            System.err.println("Invalid institution ID.");
+            log.error("ScheduleService: Invalid institution ID.");
             return false;
         }
         boolean result = scheduleDataManager.deleteAllSchedules(institutionID);
         if (result) {
-            System.out.println("All schedules deleted for institution: " + institutionID);
+        	log.println("ScheduleService: All schedules deleted for institution: " + institutionID);
         } else {
-            System.err.println("Failed to delete schedules for institution: " + institutionID);
+            log.error("ScheduleService: Failed to delete schedules for institution: " + institutionID);
         }
         return result;
     }
@@ -99,7 +103,7 @@ public class ScheduleService {
     // Check if a Schedule Exists
     public boolean scheduleExists(Institutions institutionID, String scheduleID) {
         if (institutionID == null || scheduleID == null) {
-            System.err.println("Invalid input for checking schedule existence.");
+            log.error("ScheduleService: Invalid input for checking schedule existence.");
             return false;
         }
         Schedule schedule = scheduleDataManager.getSchedule(institutionID, scheduleID);
@@ -109,21 +113,21 @@ public class ScheduleService {
     // Validate Schedule (example business rule)
     public boolean validateSchedule(Schedule schedule) {
         if (schedule == null) {
-            System.err.println("Invalid schedule: null");
+            log.error("ScheduleService: Invalid schedule: null");
             return false;
         }
         if (schedule.getStartTime().after(schedule.getEndTime())) {
-            System.err.println("Invalid schedule: start time is after end time.");
+            log.error("ScheduleService: Invalid schedule: start time is after end time.");
             return false;
         }
-        System.out.println("Schedule is valid.");
+        log.println("ScheduleService: Schedule is valid.");
         return true;
     }
 
     // Search schedules by time range
     public List<Schedule> searchSchedulesByTime(Institutions institutionID, Time startTime, Time endTime) {
         if (institutionID == null || startTime == null || endTime == null) {
-            System.err.println("Invalid input for searching schedules by time.");
+            log.error("ScheduleService: Invalid input for searching schedules by time.");
             return Collections.emptyList();
         }
         Map<String, Schedule> schedules = scheduleDataManager.getAllSchedules(institutionID);
