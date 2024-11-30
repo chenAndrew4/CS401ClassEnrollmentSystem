@@ -78,7 +78,9 @@ public class ClientConfig {
     public static final String ADD_SCHEDULE = ICON_FILE_PATH_PREFIX + "add_schedule.png";
     public static final String DELETE_SCHEDULE = ICON_FILE_PATH_PREFIX + "delete_schedule.png";
     public static final String EDIT_SCHEDULE = ICON_FILE_PATH_PREFIX + "edit_schedule.png";
-    
+    public static final String ASSIGNED_COURSES = ICON_FILE_PATH_PREFIX + "course.png";
+    public static final String ASSIGNED_SYLLABUS = ICON_FILE_PATH_PREFIX + "syllabus.png";
+
     
     
     // frame size
