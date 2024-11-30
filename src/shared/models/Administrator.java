@@ -23,7 +23,7 @@ public class Administrator extends User {
 
     // Constructor
     public Administrator(String username,String firstName, String lastName, String password, Institutions institutionID, Department department, GenderIdentity genderIdentity, String phone, String address) {
-        super(username, firstName, lastName, password, institutionID, department,AccountType.Administrator, genderIdentity, phone, address);
+    	super(username, firstName, lastName, password, institutionID, department, AccountType.Administrator, genderIdentity, phone, address);
         this.managedUsers = new ArrayList<>();
     }
     

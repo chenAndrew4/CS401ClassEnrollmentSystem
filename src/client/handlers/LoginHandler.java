@@ -1,6 +1,7 @@
 package client.handlers;
 
 import client.Client;
+import client.ClientConfig;
 import client.gui.login.BaseLoginGUI;
 import client.gui.dashboard.AdminDashboardGUI;
 import client.gui.dashboard.FacultyDashboardGUI;
@@ -19,7 +20,7 @@ import javax.swing.*;
 public class LoginHandler {
     public void handleLogin(String username, String password, Institutions institution, JFrame loginGUI) {
         if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(loginGUI, "Username or password cannot be empty.", "Login Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(loginGUI, "Username or password cannot be empty.", "Login Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(ClientConfig.ERROR_ICON));
             return;
         }
 
@@ -67,7 +68,7 @@ public class LoginHandler {
                         new AdminDashboardGUI((Administrator) user);
                     }
                 }
-                default -> JOptionPane.showMessageDialog(null, "Unknown Account type: " + user.getAccountType(), "Error", JOptionPane.ERROR_MESSAGE);
+                default -> JOptionPane.showMessageDialog(null, "Unknown Account type: " + user.getAccountType(), "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(ClientConfig.ERROR_ICON));
             }
         });
     }

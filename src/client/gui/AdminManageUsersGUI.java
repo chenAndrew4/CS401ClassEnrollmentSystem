@@ -4,6 +4,12 @@ import client.ClientConfig;
 import client.gui.dashboard.AdminDashboardGUI;
 import client.gui.dashboard.StudentDashboardGUI;
 import client.utils.ImageUtils;
+import shared.enums.AccountType;
+import shared.enums.Department;
+import shared.enums.GenderIdentity;
+import shared.enums.Institutions;
+import shared.models.Administrator;
+import shared.models.User;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,20 +21,21 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class AdminManageUsersGUI {
+public class AdminManageUsersGUI{
     private JPanel manageUsersPanel;
     private JPanel optionsPanel; // Options for Add, Delete, and Edit
     private JLabel titleLabel; // Displays the title
     private JButton backArrow; // Back to main options
     private JPanel topRowPanel; // Top row of the options panel
     private final AdminDashboardGUI parentDashboard;
+    private AdminAddUserGUI adminAddUserGUI;
 
-    public AdminManageUsersGUI(AdminDashboardGUI adminDashboardGUI) {
+    public AdminManageUsersGUI(Administrator user, AdminDashboardGUI adminDashboardGUI) {
         this.parentDashboard = adminDashboardGUI;
         initializeManageUsersPanel();
     }
     
-    private void initializeManageUsersPanel() {
+    protected void initializeManageUsersPanel() {
     	manageUsersPanel = new JPanel(new BorderLayout());
     	manageUsersPanel.setOpaque(false);
 
@@ -66,12 +73,72 @@ public class AdminManageUsersGUI {
         manageUsersPanel.add(topRowPanel, BorderLayout.NORTH);
     }
     
+    public void goBackToAdminManageUsers() {
+    	parentDashboard.getOptionsPanel().removeAll();
+    	initializeManageUsersPanel();
+        // Add main components to the options panel
+    	parentDashboard.getOptionsPanel().setLayout(new BorderLayout());
+    	parentDashboard.getOptionsPanel().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Add padding around options panel
+    	parentDashboard.getOptionsPanel().add(manageUsersPanel, BorderLayout.CENTER);
+
+    	parentDashboard.revalidate();
+    	parentDashboard.repaint();
+    }
+
+    public void replaceOptionPanel(JPanel newPanel) {
+    	parentDashboard.getOptionsPanel().removeAll();
+    	parentDashboard.getOptionsPanel().add(newPanel, BorderLayout.CENTER);
+    	parentDashboard.revalidate();
+    	parentDashboard.repaint();
+    }
+    
     private void handleBack() {
     	parentDashboard.goBackToMainOptions();
     }
     
+    
     private void handleAddUser() {
-        JOptionPane.showMessageDialog(manageUsersPanel, "Add User clicked!");
+        if (adminAddUserGUI == null) {
+        	adminAddUserGUI = new AdminAddUserGUI(this);
+        }
+        replaceOptionPanel(adminAddUserGUI.getPanel());
+//    	Integer choice;
+//    	String choices[] = {"Add User", "Cancel"};
+//    	JPanel panel = new JPanel(new GridLayout(10, 2));		
+//		JTextField username = new JTextField();
+//		JTextField password = new JPasswordField();
+//		JTextField firstName = new JTextField();
+//		JTextField lastName = new JTextField();
+//    	JComboBox<Institutions> institutionID = new JComboBox<Institutions>(Institutions.values());
+//		JTextField address = new JTextField();
+//		JTextField phone = new JTextField();
+//		JComboBox<Department> department = new JComboBox<Department>(Department.values());
+//		JComboBox<AccountType> accountType = new JComboBox<AccountType>(AccountType.values());
+//		JComboBox<GenderIdentity> genderIdentity = new JComboBox<GenderIdentity>(GenderIdentity.values());
+//		
+//		panel.add(new JLabel("Username:"));
+//		panel.add(username);
+//		panel.add(new JLabel("Password:"));
+//		panel.add(password);
+//		panel.add(new JLabel("First Name:"));
+//		panel.add(firstName);
+//		panel.add(new JLabel("Last Name:"));
+//		panel.add(lastName);
+//		panel.add(new JLabel("Institution:"));
+//		panel.add(institutionID);
+//		panel.add(new JLabel("Address:"));
+//		panel.add(address);
+//		panel.add(new JLabel("Phone:"));
+//		panel.add(phone);
+//		panel.add(new JLabel("Department:"));
+//		panel.add(department);
+//		panel.add(new JLabel("Account Type:"));
+//		panel.add(accountType);
+//		panel.add(new JLabel("Gender Identity:"));
+//		panel.add(genderIdentity);
+//		
+//		choice = JOptionPane.showOptionDialog(parentDashboard, panel, "Add User", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon(ClientConfig.ADD_USER_32), choices, choices[1]);
+		
     }
 
     private void handleEditUser() {

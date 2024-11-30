@@ -12,8 +12,8 @@ public class AddUserRequest extends BaseRequest {
     private AccountType accountType;
     private String userID;
 
-    public AddUserRequest(MessageType messageType, MessageStatus messageStatus,  String userID,Institutions institutionID, String sessionToken, User userToAdd, User currentUser, boolean isAuthenicated) {
-        super(messageType, messageStatus,institutionID, sessionToken, isAuthenicated); // Pass the current user (administrator)
+    public AddUserRequest(MessageType messageType, MessageStatus messageStatus, String userID, Institutions institutionID, String sessionToken, boolean isAuthenicated, User userToAdd, User currentUser) {
+        super(messageType, messageStatus, institutionID, sessionToken, isAuthenicated); // Pass the current user (administrator)
         this.userToAdd = userToAdd;
         this.accountType = currentUser.getAccountType();
         this.userID = userID;

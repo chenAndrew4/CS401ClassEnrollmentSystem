@@ -12,6 +12,8 @@ import java.io.IOException;
 public class RequestHandler {
     public static BaseResponse handleRequest(BaseRequest request, Log log) throws IOException {
         switch (request.getType()) {
+        	case ADD_USER:
+        		return AddUserHandler.handleAddUser(request, log);
             case LOGIN:
                 return LoginHandler.handleLogin(request, log);
             case LOGOUT:

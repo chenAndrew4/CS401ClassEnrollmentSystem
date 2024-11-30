@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdminDashboardGUI extends BaseDashboardGUI {
-    private JPanel mainOptionsPanel; // Stores the main options panel
+    public JPanel mainOptionsPanel; // Stores the main options panel
     private AdminManageCoursesGUI adminManageCoursesGUI;
     private AdminManageUsersGUI manageUsersGUI;
     private AdminManageWaitlistGUI manageWaitlistGUI;
@@ -26,10 +26,13 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
     private AdminManageSchedulesGUI manageSchedulesGUI;
     private ReportsGUI reportsGUI;
     private SystemSettingsGUI systemSettingsGUI;
+    private Administrator adminUser;
 
     public AdminDashboardGUI(Administrator user) {
         super("Administrator Dashboard", user);
-
+        
+        adminUser = user;
+        
         // Set personal image and info
         setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_ADMIN_ICON));
 
@@ -44,7 +47,7 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
         setVisible(true);
     }
 
-    private void initializeMainOptions() {
+    public void initializeMainOptions() {
         mainOptionsPanel = new JPanel(new GridLayout(0, 3, GUIConfig.MARGIN * 2, GUIConfig.MARGIN * 2)); // Increase cell spacing
         mainOptionsPanel.setOpaque(false);
 
@@ -80,7 +83,7 @@ public class AdminDashboardGUI extends BaseDashboardGUI {
 
     private void handleManageUsers() {
         if (manageUsersGUI == null) {
-            manageUsersGUI = new AdminManageUsersGUI(this);
+            manageUsersGUI = new AdminManageUsersGUI(adminUser, this);
         }
         replaceOptionPanel(manageUsersGUI.getPanel());
     }

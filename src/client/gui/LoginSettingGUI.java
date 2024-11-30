@@ -34,7 +34,7 @@ public class LoginSettingGUI extends JDialog {
             try {
                 ClientConfig.SERVER_PORT = Integer.parseInt(portField.getText());
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Invalid port number. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Invalid port number. Please try again.", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(ClientConfig.ERROR_ICON));
             }
         }
         setVisible(true);

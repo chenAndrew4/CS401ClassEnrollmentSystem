@@ -2,6 +2,8 @@ package client;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
+
 public class ClientConfig {
 	public static String SERVER_ADDRESS = "localhost";
     public static int SERVER_PORT = 25800;
@@ -54,33 +56,52 @@ public class ClientConfig {
     public static final String SEARCH_ICON = ICON_FILE_PATH_PREFIX + "search.png";
     public static final String LEFT_ARROW_ICON = ICON_FILE_PATH_PREFIX + "left_arrow.png";
     public static final String RIGHT_ARROW_ICON = ICON_FILE_PATH_PREFIX + "right_arrow.png";
+    public static final String ERROR_ICON = ICON_FILE_PATH_PREFIX + "error_32.png";
+    public static final String SUCCESS_ICON = ICON_FILE_PATH_PREFIX + "success_32.png";
+    
+    // Administrator *GUI
+    // Administrator - Manage Users
     public static final String ADD_USER = ICON_FILE_PATH_PREFIX + "add_user.png";
     public static final String DELETE_USER = ICON_FILE_PATH_PREFIX + "remove_user.png";
     public static final String EDIT_USER = ICON_FILE_PATH_PREFIX + "edit_user.png";
+    // Administrator - Manage Courses
     public static final String ADD_COURSE = ICON_FILE_PATH_PREFIX + "add_course.png";
     public static final String DELETE_COURSE = ICON_FILE_PATH_PREFIX + "remove_course.png";
     public static final String EDIT_COURSE = ICON_FILE_PATH_PREFIX + "edit_course.png";
+    // Administrator - Reports
     public static final String COURSE_DETAILS_REPORT = ICON_FILE_PATH_PREFIX + "course_details.png";
     public static final String GRADE_REPORT = ICON_FILE_PATH_PREFIX + "grades_report.png";
     public static final String WAITLISTS_REPORT = ICON_FILE_PATH_PREFIX + "waitlist_report.png";
     public static final String SCHEDULE_REPORT = ICON_FILE_PATH_PREFIX + "manage_schedule.png";
     public static final String ENROLLMENT_REPORT = ICON_FILE_PATH_PREFIX + "enrollment_report.png";
+    // Administrator - System Configuration
     public static final String SERVER_SETTINGS = ICON_FILE_PATH_PREFIX + "server_settings.png";
     public static final String PROFILE_SETTINGS = ICON_FILE_PATH_PREFIX + "edit_profile.png";
     public static final String SYSTEM_CONFIG = ICON_FILE_PATH_PREFIX + "system_config.png";
-    public static final String MANAGE_SCHEDULES = ICON_FILE_PATH_PREFIX + "manage_schedule.png";
+    // Administrator - Manage Enrollment
     public static final String MANAGE_ENROLLMENT_ICON = ICON_FILE_PATH_PREFIX + "manage_enrollment.png";
+    // Administrator - Manage Notifications
     public static final String MANAGE_NOTIFICATIONS = ICON_FILE_PATH_PREFIX + "manage_notifications.png";
+    // Administrator - Manage Waitlist
     public static final String MANAGE_WAITLIST = ICON_FILE_PATH_PREFIX + "manage_waitlist.png";
     public static final String ADD_WAITLIST = ICON_FILE_PATH_PREFIX + "add_waitlist.png";
     public static final String DELETE_WAITLIST = ICON_FILE_PATH_PREFIX + "delete_waitlist.png";
     public static final String EDIT_WAITLIST = ICON_FILE_PATH_PREFIX + "edit_waitlist.png";
+    // Administrator - Manage Schedules
+    public static final String MANAGE_SCHEDULES = ICON_FILE_PATH_PREFIX + "manage_schedule.png";
     public static final String ADD_SCHEDULE = ICON_FILE_PATH_PREFIX + "add_schedule.png";
     public static final String DELETE_SCHEDULE = ICON_FILE_PATH_PREFIX + "delete_schedule.png";
     public static final String EDIT_SCHEDULE = ICON_FILE_PATH_PREFIX + "edit_schedule.png";
     public static final String ASSIGNED_COURSES = ICON_FILE_PATH_PREFIX + "course.png";
     public static final String ASSIGNED_SYLLABUS = ICON_FILE_PATH_PREFIX + "syllabus.png";
 
+    
+    // Administrator - JOptionPane.showMessageDialog()
+    // Administrator - Add User
+    public static final String ADD_USER_32 = ICON_FILE_PATH_PREFIX + "add_user_32.png";
+    // Administrator - Edit User
+    public static final String EDIT_USER_32 = ICON_FILE_PATH_PREFIX + "edit_user_32.png";
+    
     
     
     // frame size

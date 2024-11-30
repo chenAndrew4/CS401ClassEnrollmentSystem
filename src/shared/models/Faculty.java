@@ -27,7 +27,7 @@ public class Faculty extends User {
 
     // Constructor
     public Faculty(String username, String firstName, String lastName, String password, Institutions institutionID, Department department, GenderIdentity genderIdentity, String phone, String address) {
-        super(username,firstName, lastName, password, institutionID, department, AccountType.Faculty, genderIdentity, phone, address);
+    	super(username, firstName, lastName, password, institutionID, department, AccountType.Administrator, genderIdentity, phone, address);
         this.assignedCourses = new ArrayList<>();
         this.teachingSchedule = new ArrayList<>();
     }

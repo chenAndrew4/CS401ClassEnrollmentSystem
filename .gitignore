@@ -5,3 +5,5 @@ src/server/config.ini
 bin/
 src/out
 resources/database/sessions.db
+src/*.iml
+*/*.iml
