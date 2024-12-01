@@ -6,21 +6,21 @@ import shared.models.Administrator;
 import shared.models.User;
 
 public class AddUserRequest extends BaseRequest {
-    private User userToAdd;  // User to add
-    private Administrator currentUser; // The user making the request
+	private Administrator admin; // The user making the request
+    private User user;  // User to update
 
-    public AddUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, User userToAdd) {
-        super(messageType, messageStatus, currentUser.getInstitutionID(), currentUser.getSessionToken(), currentUser.isAuthenticated()); // Pass the current user (administrator)
-        this.currentUser = currentUser;
-        this.userToAdd = userToAdd;
+    public AddUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator admin, User user) {
+        super(messageType, messageStatus, admin.getInstitutionID(), admin.getSessionToken(), admin.isAuthenticated()); // Pass the current user (administrator)
+        this.admin = admin;
+        this.user = user;
     }
 
-    public User getUserToAdd() {
-        return this.userToAdd;
+    public String getUserId() {
+    	return this.admin.getUserId();
     }
-
-    public Administrator getCurrentUser() {
-        return this.currentUser;
+    
+    public User getUser() {
+        return this.user;
     }
 }
 

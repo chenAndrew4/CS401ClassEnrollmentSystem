@@ -54,7 +54,7 @@ public class AdminManageEnrollmentGUI {
         topRowPanel.add(backArrow, BorderLayout.WEST);
 
         // Title label in the center
-        titleLabel = new JLabel("Manage Courses", SwingConstants.CENTER);
+        titleLabel = new JLabel("Manage Enrollment", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         titleLabel.setForeground(Color.BLACK);
         topRowPanel.add(titleLabel, BorderLayout.CENTER);

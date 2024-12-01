@@ -3,23 +3,24 @@ package shared.models.requests;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
 import shared.models.Administrator;
+import shared.models.Course;
 import shared.models.User;
 
 public class UpdateUserRequest extends BaseRequest {
-    private User userToUpdate;  // User to update
-    private Administrator currentUser; // The user making the request
+	private Administrator admin; // The user making the request
+    private User user;  // User to update
 
-    public UpdateUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, User userToUpdate) {
-        super(messageType, messageStatus, currentUser.getInstitutionID(), currentUser.getSessionToken(), currentUser.isAuthenticated()); // Pass the current user (administrator)
-        this.currentUser = currentUser;
-        this.userToUpdate = userToUpdate;
+    public UpdateUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator admin, User user) {
+        super(messageType, messageStatus, admin.getInstitutionID(), admin.getSessionToken(), admin.isAuthenticated()); // Pass the current user (administrator)
+        this.admin = admin;
+        this.user = user;
     }
 
-    public User getUserToUpdate() {
-        return userToUpdate;
+    public String getUserId() {
+    	return this.admin.getUserId();
     }
-
-    public Administrator getCurrentUser() {
-        return this.currentUser;
+    
+    public User getUser() {
+        return this.user;
     }
 }

@@ -15,7 +15,7 @@ import shared.models.responses.EnrollCourseResponse;
 public class AddCourseHandler {
     public static AddCourseResponse handleAddCourse(BaseRequest request) {
         AddCourseRequest addCourseRequest = (AddCourseRequest) request;
-        if (addCourseRequest.isAuthenticated() && SessionService.getInstance().validateSession(addCourseRequest.getUserID(), addCourseRequest.getSessionToken())) {
+        if (addCourseRequest.isAuthenticated() && SessionService.getInstance().validateSession(addCourseRequest.getUserId(), addCourseRequest.getSessionToken())) {
             boolean success = CourseService.getInstance().addOrUpdateCourse(addCourseRequest.getInstitutionID(), addCourseRequest.getCourse());
             if (success ) {
                 return new AddCourseResponse( MessageStatus.SUCCESS, MessageType.ADD_COURSE, "added");

@@ -6,21 +6,21 @@ import shared.models.Administrator;
 import shared.models.User;
 
 public class DeleteUserRequest extends BaseRequest {
-    private User userToDelete;  // User to delete
-    private Administrator currentUser; // The user making the request
+	private Administrator admin; // The user making the request
+    private User user;  // User to update
 
-    public DeleteUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, User userToDelete) {
-        super(messageType, messageStatus, currentUser.getInstitutionID(), currentUser.getSessionToken(), currentUser.isAuthenticated()); // Pass the current user (administrator)
-        this.currentUser = currentUser;
-        this.userToDelete = userToDelete;
+    public DeleteUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator admin, User user) {
+        super(messageType, messageStatus, admin.getInstitutionID(), admin.getSessionToken(), admin.isAuthenticated()); // Pass the current user (administrator)
+        this.admin = admin;
+        this.user = user;
     }
 
-    public User getUserToDelete() {
-        return this.userToDelete;
+    public String getUserId() {
+    	return this.admin.getUserId();
     }
-
-    public Administrator getCurrentUser() {
-        return this.currentUser;
+    
+    public User getUser() {
+        return this.user;
     }
 }
 

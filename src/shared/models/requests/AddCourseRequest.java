@@ -6,14 +6,20 @@ import shared.models.Administrator;
 import shared.models.Course;
 
 public class AddCourseRequest extends BaseRequest {
-    private Course course;
-    private String userID;
+    private Administrator admin; // The user making the request
+    private Course course; // Course to be deleted
     
-    public AddCourseRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, Course courseToAdd) {
-        super(messageType, messageStatus, currentUser.getInstitutionID(), currentUser.getSessionToken(), currentUser.isAuthenticated());
-        this.course = courseToAdd;
+    public AddCourseRequest(MessageType messageType, MessageStatus messageStatus, Administrator admin, Course course) {
+        super(messageType, messageStatus, admin.getInstitutionID(), admin.getSessionToken(), admin.isAuthenticated());
+        this.admin = admin;
+        this.course = course;
     }
+    
+    public String getUserId() {
+    	return this.admin.getUserId();
+    }
+    
     public Course getCourse() {
-        return course;
+        return this.course;
     }
 }

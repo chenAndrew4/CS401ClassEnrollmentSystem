@@ -6,20 +6,20 @@ import shared.models.Administrator;
 import shared.models.Course;
 
 public class UpdateCourseRequest extends BaseRequest {
-    private Course courseToUpdate;  // Course to update
-    private Administrator currentUser; // The user making the request
+    private Administrator admin; // The user making the request
+    private Course course; // Course to be deleted
 
-    public UpdateCourseRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, Course courseToUpdate) {
-        super(messageType, messageStatus, currentUser.getInstitutionID(), currentUser.getSessionToken(), currentUser.isAuthenticated()); // Pass the current user (administrator)
-        this.courseToUpdate = courseToUpdate;
-        this.currentUser = currentUser;
+    public UpdateCourseRequest(MessageType messageType, MessageStatus messageStatus, Administrator admin, Course course) {
+        super(messageType, messageStatus, admin.getInstitutionID(), admin.getSessionToken(), admin.isAuthenticated()); // Pass the current user (administrator)
+        this.admin = admin;
+        this.course = course;
     }
 
-    public Course getCourseToUpdate() {
-        return courseToUpdate;
+    public String getUserId() {
+    	return this.admin.getUserId();
     }
-
-    public Administrator getCurrentUser() {
-        return this.currentUser;
+    
+    public Course getCourse() {
+        return this.course;
     }
 }
