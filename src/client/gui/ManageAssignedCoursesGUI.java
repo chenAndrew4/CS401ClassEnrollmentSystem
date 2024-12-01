@@ -3,14 +3,13 @@ package client.gui;
 import client.ClientConfig;
 import client.gui.dashboard.FacultyDashboardGUI;
 import client.utils.ImageUtils;
+import shared.models.Faculty;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class ManageAssignedCoursesGUI {
@@ -20,6 +19,8 @@ public class ManageAssignedCoursesGUI {
     private JPanel topRowPanel;
     private JButton backArrow;
     private JLabel titleLabel;
+    Faculty faculty;
+    
     public ManageAssignedCoursesGUI(FacultyDashboardGUI facultyDashboardGUI) {
     	this.parentDashboard = facultyDashboardGUI;
     	initializeManageAssignedCourses();
@@ -71,10 +72,7 @@ public class ManageAssignedCoursesGUI {
     }
     
     private void handleCourses() {
-    	JFrame frame = new JFrame("Courses");
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	frame.setSize(800, 300);    
-        
+        JOptionPane.showMessageDialog(manageAssignedCoursePanel, "Courses clicked!");
     }
     
     private void handleSyllabus() {
