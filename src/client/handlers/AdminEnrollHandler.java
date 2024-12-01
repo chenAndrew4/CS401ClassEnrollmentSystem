@@ -12,9 +12,7 @@ import shared.models.Administrator;
 import shared.models.Course;
 import shared.models.Student;
 import shared.models.requests.AdminEnrollRequest;
-import shared.models.requests.EnrollCourseRequest;
 import shared.models.responses.AdminEnrollResponse;
-import shared.models.responses.EnrollCourseResponse;
 
 public class AdminEnrollHandler {
 	public void handleAdminEnroll(Administrator admin, Student student, Course course, String sectionId, JPanel parentGUI, final BaseDashboardGUI parentDashboard) {

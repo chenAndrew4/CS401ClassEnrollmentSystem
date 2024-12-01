@@ -1,18 +1,19 @@
 package shared.models.requests;
 
-import shared.enums.Institutions;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
+import shared.models.Administrator;
+import shared.models.WaitList;
 
 public class DeleteWaitlistRequest extends BaseRequest {
-    private String sectionId;
+    private WaitList waitlist;
 
-    public DeleteWaitlistRequest(MessageType messageType, MessageStatus messageStatus, Institutions institutionID, String sessionToken, String sectionId, boolean isAuthenicated) {
-        super(messageType, messageStatus, institutionID, sessionToken, isAuthenicated);
-        this.sectionId = sectionId;
+    public DeleteWaitlistRequest(MessageType messageType, MessageStatus messageStatus, Administrator admin, WaitList waitlist) {
+        super(messageType, messageStatus, admin.getInstitutionID(), admin.getSessionToken(), admin.isAuthenticated());
+        this.waitlist = waitlist;
     }
 
     public String getSectionId() {
-        return sectionId;
+        return this.waitlist.getSectionID();
     }
 }

@@ -55,7 +55,7 @@ public class AdminManageSchedulesGUI {
         topRowPanel.add(backArrow, BorderLayout.WEST);
 
         // Title label in the center
-        titleLabel = new JLabel("Manage Users", SwingConstants.CENTER);
+        titleLabel = new JLabel("Manage Schedules", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         titleLabel.setForeground(Color.BLACK);
         topRowPanel.add(titleLabel, BorderLayout.CENTER);
