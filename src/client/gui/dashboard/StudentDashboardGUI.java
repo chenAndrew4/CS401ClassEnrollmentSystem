@@ -40,7 +40,7 @@ public class StudentDashboardGUI extends BaseDashboardGUI {
 
         addOptionToPanel(mainOptionsPanel, "Manage Courses", new ImageIcon(ClientConfig.COURSE_ICON), this::handleManageCourses);
         addOptionToPanel(mainOptionsPanel, "Manage Waitlist", new ImageIcon(ClientConfig.WAITLIST_ICON), this::handleWaitlist);
-        addOptionToPanel(mainOptionsPanel, "Manage Schedule", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedule);
+        addOptionToPanel(mainOptionsPanel, "View Schedule", new ImageIcon(ClientConfig.SCHEDULE_ICON), this::handleViewSchedule);
         addOptionToPanel(mainOptionsPanel, "Notifications", new ImageIcon(ClientConfig.COMMUNICATION_ICON), this::handleNotification);
         addOptionToPanel(mainOptionsPanel, "View Grades", new ImageIcon(ClientConfig.GRADES_ICON), this::handleViewGrades);
         addOptionToPanel(mainOptionsPanel, "Logout", new ImageIcon(ClientConfig.LOGOUT_ICON), this::handleLogout);

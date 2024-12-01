@@ -12,7 +12,7 @@ public class AddScheduleHandler {
     public static AddScheduleSectionResponse handleAddSchedule(BaseRequest request) {
         AddScheduleRequest addScheduleRequest = (AddScheduleRequest) request;
         if (addScheduleRequest.isAuthenticated() && SessionService.getInstance().validateSession(addScheduleRequest.getUserID(), addScheduleRequest.getSessionToken())) {
-            boolean success = ScheduleService.getInstance().addOrUpdateSchedule(addScheduleRequest.getInstitutionID(), addScheduleRequest.getSchedule().getScheduleID(), addScheduleRequest.getSchedule(),addScheduleRequest.getSectionId());
+            boolean success = ScheduleService.getInstance().addOrUpdateSchedule(addScheduleRequest.getInstitutionID(), addScheduleRequest.getSchedule().getScheduleID(), addScheduleRequest.getSchedule(),addScheduleRequest.getSchedule().getSectionID());
             if (success) {
                 return new AddScheduleSectionResponse(MessageStatus.SUCCESS, MessageType.ADD_SCHEDULE, "added");
             } else {

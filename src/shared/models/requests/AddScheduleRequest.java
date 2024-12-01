@@ -1,24 +1,18 @@
 package shared.models.requests;
 
-import shared.enums.Institutions;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
+import shared.models.Administrator;
 import shared.models.Schedule;
 
 public class AddScheduleRequest extends BaseRequest {
-    private String sectionId;
-    private Schedule schedule;
-    private String userID;
+    private Administrator admin;
+	private Schedule schedule;
 
-    public AddScheduleRequest(MessageType messageType, MessageStatus messageStatus, String userID, Institutions institutionID, String sessionToken, String sectionId, Schedule schedule, boolean isAuthenicated) {
-        super(messageType, messageStatus,institutionID, sessionToken, isAuthenicated);
-        this.sectionId = sectionId;
+    public AddScheduleRequest(MessageType messageType, MessageStatus messageStatus, Administrator admin, Schedule schedule) {
+        super(messageType, messageStatus, admin.getInstitutionID(), admin.getSessionToken(), admin.isAuthenticated());
+        this.admin = admin;
         this.schedule = schedule;
-        this.userID = userID;
-    }
-
-    public String getSectionId() {
-        return sectionId;
     }
 
     public Schedule getSchedule() {
@@ -26,7 +20,7 @@ public class AddScheduleRequest extends BaseRequest {
     }
 
     public String getUserID() {
-        return userID;
+        return admin.getUserId();
     }
 
 }
