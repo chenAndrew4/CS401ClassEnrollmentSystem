@@ -5,22 +5,21 @@ import shared.enums.MessageType;
 import shared.models.Administrator;
 import shared.models.User;
 
-public class DeleteUserRequest extends BaseRequest {
-    private User userToDelete;  // User to delete
+public class UpdateUserRequest extends BaseRequest {
+    private User userToUpdate;  // User to update
     private Administrator currentUser; // The user making the request
 
-    public DeleteUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, User userToDelete) {
+    public UpdateUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, User userToUpdate) {
         super(messageType, messageStatus, currentUser.getInstitutionID(), currentUser.getSessionToken(), currentUser.isAuthenticated()); // Pass the current user (administrator)
         this.currentUser = currentUser;
-        this.userToDelete = userToDelete;
+        this.userToUpdate = userToUpdate;
     }
 
-    public User getUserToDelete() {
-        return this.userToDelete;
+    public User getUserToUpdate() {
+        return userToUpdate;
     }
 
     public Administrator getCurrentUser() {
         return this.currentUser;
     }
 }
-

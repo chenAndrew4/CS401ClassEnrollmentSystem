@@ -1,34 +1,26 @@
 package shared.models.requests;
 
-import shared.enums.AccountType;
-import shared.enums.Institutions;
 import shared.enums.MessageStatus;
 import shared.enums.MessageType;
-import shared.models.Schedule;
+import shared.models.Administrator;
 import shared.models.User;
 
 public class AddUserRequest extends BaseRequest {
-    private User userToAdd; // The user object to be added
-    private AccountType accountType;
-    private String userID;
+    private User userToAdd;  // User to add
+    private Administrator currentUser; // The user making the request
 
-    public AddUserRequest(MessageType messageType, MessageStatus messageStatus, String userID, Institutions institutionID, String sessionToken, boolean isAuthenicated, User userToAdd, User currentUser) {
-        super(messageType, messageStatus, institutionID, sessionToken, isAuthenicated); // Pass the current user (administrator)
+    public AddUserRequest(MessageType messageType, MessageStatus messageStatus, Administrator currentUser, User userToAdd) {
+        super(messageType, messageStatus, currentUser.getInstitutionID(), currentUser.getSessionToken(), currentUser.isAuthenticated()); // Pass the current user (administrator)
+        this.currentUser = currentUser;
         this.userToAdd = userToAdd;
-        this.accountType = currentUser.getAccountType();
-        this.userID = userID;
     }
 
     public User getUserToAdd() {
-        return userToAdd;
+        return this.userToAdd;
     }
 
-    public AccountType getAccountType() {
-        return accountType;
-    }
-
-    public String getUserID() {
-        return userID;
+    public Administrator getCurrentUser() {
+        return this.currentUser;
     }
 }
 
