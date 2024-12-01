@@ -68,8 +68,8 @@ public class UserService implements Serializable{
 		return userDataManager.removeUserByInstitution(institutionID, username);
 	}
 	
-	public void updateUserByInstitutions(Institutions institutionID, User user) {
-		userDataManager.updateUserByInstitutions(institutionID, user);
+	public boolean updateUserByInstitutions(Institutions institutionID, User user) {
+		return userDataManager.updateUserByInstitutions(institutionID, user);
 	}
 
 	public void commitDBByInstitution(Institutions institutionID) {

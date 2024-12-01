@@ -13,6 +13,7 @@ import shared.models.Administrator;
 import shared.models.User;
 import shared.models.requests.UpdateUserRequest;
 import shared.models.responses.AddUserResponse;
+import shared.models.responses.UpdateUserResponse;
 
 public class UpdateUserHandler {
 	public void handleUpdateUser(Administrator currentUser, User userToUpdate, JPanel parentGUI, final BaseDashboardGUI parentDashboard) {
@@ -21,9 +22,9 @@ public class UpdateUserHandler {
 		// if (){}
 		UpdateUserRequest updateUserRequest = new UpdateUserRequest(MessageType.UPDATE_USER, null, currentUser, userToUpdate);
         
-		Client.getInstance().sendRequest(updateUserRequest, new ResponseCallback<AddUserResponse, Void>() {
+		Client.getInstance().sendRequest(updateUserRequest, new ResponseCallback<UpdateUserResponse, Void>() {
             @Override
-            public Void onSuccess(AddUserResponse updateUserResponse) {
+            public Void onSuccess(UpdateUserResponse updateUserResponse) {
             	JOptionPane.showMessageDialog(parentGUI, "User added successfully!", "Add User", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ClientConfig.SUCCESS_ICON));
                 return null;
             }

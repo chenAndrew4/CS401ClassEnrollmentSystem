@@ -114,14 +114,21 @@ public class UserDataManager {
         return false;
     }
 
-    public synchronized void updateUserByInstitutions(Institutions institutionID, User user) {
+    public synchronized boolean updateUserByInstitutions(Institutions institutionID, User user) {
         isImported(institutionID);
         if (userMap.containsKey(institutionID)) {
             Map<String, User> curMap = userMap.getOrDefault(institutionID,new HashMap<>());
             if (curMap.containsKey(user.getUserId())) {
                 curMap.put(user.getUserId(), user); // Update by userId
                 modified.put(institutionID, true);
+                return true;
+            } else {
+            	log.error("UserDataManager: User " + user.getUsername() + " does not exist.");
+            	return false;
             }
+        } else {
+        	log.error("UserDataManager: institutionID " + institutionID + " does not exist.");
+        	return false;
         }
     }
 

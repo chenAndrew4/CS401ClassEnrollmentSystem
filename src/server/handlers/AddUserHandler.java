@@ -17,12 +17,12 @@ public class AddUserHandler {
         if (addUserRequest.isAuthenticated() && SessionService.getInstance().validateSession(addUserRequest.getUserId(), addUserRequest.getSessionToken())) {
             boolean success = UserService.getInstance().addUserByInstitution(addUserRequest.getUser().getInstitutionID(), addUserRequest.getUser());
             if (success) {
-                return new AddUserResponse("added", MessageStatus.SUCCESS, MessageType.ADD_USER);
+                return new AddUserResponse(MessageStatus.SUCCESS, MessageType.ADD_USER, "User has been created!");
             } else {
-                return new AddUserResponse("not added", MessageStatus.FAILURE, MessageType.ADD_USER);
+                return new AddUserResponse(MessageStatus.FAILURE, MessageType.ADD_USER, "User could not be created!");
             }
         } else {
-            return new AddUserResponse("Invalid credentials", MessageStatus.FAILURE, MessageType.ADD_USER);
+            return new AddUserResponse(MessageStatus.FAILURE, MessageType.ADD_USER, "Invalid credentials");
         }
     }
 }

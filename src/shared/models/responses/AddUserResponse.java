@@ -5,7 +5,7 @@ import shared.enums.MessageType;
 import shared.models.User;
 
 public class AddUserResponse extends BaseResponse {
-    public AddUserResponse(String message, MessageStatus messageStatus, MessageType messageType) {
+    public AddUserResponse(MessageStatus messageStatus, MessageType messageType, String message) {
         super(message,  messageStatus, messageType);
     }
 }

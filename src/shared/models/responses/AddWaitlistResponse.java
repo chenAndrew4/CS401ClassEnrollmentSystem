@@ -7,10 +7,8 @@ public class AddWaitlistResponse extends BaseResponse {
     private String courseId;
     private int waitlistPosition;
 
-    public AddWaitlistResponse( MessageStatus messageStatus, MessageType messageType, String message, String courseId, int waitlistPosition) {
+    public AddWaitlistResponse(MessageStatus messageStatus, MessageType messageType, String message) {
         super(message, messageStatus, messageType);
-        this.courseId = courseId;
-        this.waitlistPosition = waitlistPosition;
     }
 
     public String getCourseId() {

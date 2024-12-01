@@ -6,9 +6,8 @@ import shared.enums.MessageType;
 public class DeleteUserResponse extends BaseResponse {
     private String deletedUsername; // The username of the deleted user
 
-    public DeleteUserResponse(MessageStatus messageStatus, MessageType messageType, String message, String deletedUsername) {
+    public DeleteUserResponse(MessageStatus messageStatus, MessageType messageType, String message) {
         super(message,  messageStatus, messageType);
-        this.deletedUsername = deletedUsername;
     }
 
     public String getDeletedUsername() {
