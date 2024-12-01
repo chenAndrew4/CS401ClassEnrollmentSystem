@@ -23,7 +23,7 @@ public class UpdateUserHandler {
         
 		Client.getInstance().sendRequest(updateUserRequest, new ResponseCallback<AddUserResponse, Void>() {
             @Override
-            public Void onSuccess(AddUserResponse addUserResponse) {
+            public Void onSuccess(AddUserResponse updateUserResponse) {
             	JOptionPane.showMessageDialog(parentGUI, "User added successfully!", "Add User", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ClientConfig.SUCCESS_ICON));
                 return null;
             }

@@ -16,7 +16,7 @@ import shared.models.requests.DeleteUserRequest;
 import shared.models.responses.DeleteUserResponse;
 
 public class DeleteUserHandler {
-	public void handleAddUser(Administrator currentUser, User userToDelete, JPanel parentGUI, final BaseDashboardGUI parentDashboard) {
+	public void handleDeleteUser(Administrator currentUser, User userToDelete, JPanel parentGUI, final BaseDashboardGUI parentDashboard) {
 		// If conditions to control what we can delete and what cannot be deleted. e.g. we cannot delete an admin since we can lock ourself out from the app
 		// if (){}
 		DeleteUserRequest deleteUserRequest = new DeleteUserRequest(MessageType.DELETE_USER, null, currentUser, userToDelete);

@@ -24,5 +24,6 @@ public enum MessageType{
 	LOGIN,
 	LOGOUT,
 	SET_SYLLABUS,
+	UPDATE_COURSE,
 	UPDATE_USER
 }
