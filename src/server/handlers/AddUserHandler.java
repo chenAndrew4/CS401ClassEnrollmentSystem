@@ -14,6 +14,8 @@ import java.io.IOException;
 public class AddUserHandler {
     public static AddUserResponse handleAddUser(BaseRequest request, Log log) throws IOException {
         AddUserRequest addUserRequest = (AddUserRequest) request;
+        
+        log.debug("AddUserHandler: Trying to add: " + addUserRequest.getUser().toString() );
         if (addUserRequest.isAuthenticated() && SessionService.getInstance().validateSession(addUserRequest.getUserId(), addUserRequest.getSessionToken())) {
             boolean success = UserService.getInstance().addUserByInstitution(addUserRequest.getUser().getInstitutionID(), addUserRequest.getUser());
             if (success) {

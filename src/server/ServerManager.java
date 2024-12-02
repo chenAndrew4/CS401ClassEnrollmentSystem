@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public final class ServerManager{
 	private String ipAddress;
 	private Integer port;
-	private Integer sessionTimeout;
+	private static Integer sessionTimeout;
 	private String serverConfigIni;
 
 	// Paths to various data files
@@ -127,7 +127,7 @@ public final class ServerManager{
 		return port;
 	}
 	
-	public Integer getSessionTimeout() {
+	public static Integer getSessionTimeout() {
 		return sessionTimeout;
 	}
 	

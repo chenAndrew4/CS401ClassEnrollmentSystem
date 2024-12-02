@@ -29,10 +29,12 @@ public class AdminManageUsersGUI{
     private JPanel topRowPanel; // Top row of the options panel
     private final AdminDashboardGUI parentDashboard;
     private AdminAddUserGUI adminAddUserGUI;
+    private Administrator adminUser;
 
     public AdminManageUsersGUI(Administrator user, AdminDashboardGUI adminDashboardGUI) {
         this.parentDashboard = adminDashboardGUI;
         initializeManageUsersPanel();
+        this.adminUser = user;
     }
     
     protected void initializeManageUsersPanel() {
@@ -99,46 +101,9 @@ public class AdminManageUsersGUI{
     
     private void handleAddUser() {
         if (adminAddUserGUI == null) {
-        	adminAddUserGUI = new AdminAddUserGUI(this);
+        	adminAddUserGUI = new AdminAddUserGUI(adminUser, this);
         }
         replaceOptionPanel(adminAddUserGUI.getPanel());
-//    	Integer choice;
-//    	String choices[] = {"Add User", "Cancel"};
-//    	JPanel panel = new JPanel(new GridLayout(10, 2));		
-//		JTextField username = new JTextField();
-//		JTextField password = new JPasswordField();
-//		JTextField firstName = new JTextField();
-//		JTextField lastName = new JTextField();
-//    	JComboBox<Institutions> institutionID = new JComboBox<Institutions>(Institutions.values());
-//		JTextField address = new JTextField();
-//		JTextField phone = new JTextField();
-//		JComboBox<Department> department = new JComboBox<Department>(Department.values());
-//		JComboBox<AccountType> accountType = new JComboBox<AccountType>(AccountType.values());
-//		JComboBox<GenderIdentity> genderIdentity = new JComboBox<GenderIdentity>(GenderIdentity.values());
-//		
-//		panel.add(new JLabel("Username:"));
-//		panel.add(username);
-//		panel.add(new JLabel("Password:"));
-//		panel.add(password);
-//		panel.add(new JLabel("First Name:"));
-//		panel.add(firstName);
-//		panel.add(new JLabel("Last Name:"));
-//		panel.add(lastName);
-//		panel.add(new JLabel("Institution:"));
-//		panel.add(institutionID);
-//		panel.add(new JLabel("Address:"));
-//		panel.add(address);
-//		panel.add(new JLabel("Phone:"));
-//		panel.add(phone);
-//		panel.add(new JLabel("Department:"));
-//		panel.add(department);
-//		panel.add(new JLabel("Account Type:"));
-//		panel.add(accountType);
-//		panel.add(new JLabel("Gender Identity:"));
-//		panel.add(genderIdentity);
-//		
-//		choice = JOptionPane.showOptionDialog(parentDashboard, panel, "Add User", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon(ClientConfig.ADD_USER_32), choices, choices[1]);
-		
     }
 
     private void handleEditUser() {

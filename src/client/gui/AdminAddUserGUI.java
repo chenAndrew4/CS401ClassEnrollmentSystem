@@ -10,6 +10,7 @@ import shared.enums.AccountType;
 import shared.enums.Department;
 import shared.enums.GenderIdentity;
 import shared.enums.Institutions;
+import shared.models.Administrator;
 import shared.models.User;
 
 import java.awt.BorderLayout;
@@ -30,6 +31,7 @@ public class AdminAddUserGUI {
     private JButton saveButton; // Button to save 
     private JPanel topRowPanel; // Top row of the options panel
     private final AdminManageUsersGUI parentDashboard;
+    private Administrator adminUser;
     
 	private JTextField username;
 	private JTextField password;
@@ -42,11 +44,10 @@ public class AdminAddUserGUI {
 	private JComboBox<AccountType> accountType;
 	private JComboBox<GenderIdentity> genderIdentity;
 
-    public AdminAddUserGUI(AdminManageUsersGUI adminAddUserGUI) {
+    public AdminAddUserGUI(Administrator user, AdminManageUsersGUI adminAddUserGUI) {
         this.parentDashboard = adminAddUserGUI;
         initializeManageUsersPanel();
-        
-
+        this.adminUser = user;
     }
     
     private void initializeManageUsersPanel() {
@@ -114,11 +115,12 @@ public class AdminAddUserGUI {
         topRowPanel.add(titleLabel, BorderLayout.CENTER);
         
         // Save button on the right
-        saveButton = new JButton(ImageUtils.resizeImageIcon(new ImageIcon(ClientConfig.NEXT_TERM_ICON), GUIConfig.SMALL_ICON_WIDTH, GUIConfig.SMALL_ICON_HEIGHT));
+        saveButton = new JButton(ImageUtils.resizeImageIcon(new ImageIcon(ClientConfig.SAVE_ICON), GUIConfig.SMALL_ICON_WIDTH, GUIConfig.SMALL_ICON_HEIGHT));
         saveButton.setContentAreaFilled(false);
         saveButton.setBorderPainted(false);
         saveButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         saveButton.addActionListener(e -> addUser());
+        topRowPanel.add(saveButton, BorderLayout.EAST);
         
         addUsersPanel.add(topRowPanel, BorderLayout.NORTH);
     }
@@ -133,8 +135,8 @@ public class AdminAddUserGUI {
     			(AccountType)accountType.getSelectedItem(), (GenderIdentity)genderIdentity.getSelectedItem(),
     			phone.getText(), address.getText());
     			
-//    	AddUserHandler addUserHandler = new AddUserHandler(newUser, addUsersPanel);
-    	
+    	AddUserHandler addUserHandler = new AddUserHandler();
+    	addUserHandler.handleAddUser(adminUser, newUser, addUsersPanel);
     }
     
 	public JPanel getPanel() {

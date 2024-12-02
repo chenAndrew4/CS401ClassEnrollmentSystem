@@ -18,14 +18,14 @@ public abstract class BaseRequest extends Message {
     }
 
     public boolean isAuthenticated() {
-        return isAuthenticated;
+        return this.isAuthenticated;
     }
 
     public Institutions getInstitutionID() {
-        return institutionID;
+        return this.institutionID;
     }
 
     public String getSessionToken() {
-        return sessionToken;
+        return this.sessionToken;
     }
 }

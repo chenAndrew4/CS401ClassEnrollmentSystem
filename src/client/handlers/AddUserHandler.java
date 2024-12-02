@@ -16,7 +16,7 @@ import shared.models.requests.AddUserRequest;
 import shared.models.responses.AddUserResponse;
 
 public class AddUserHandler {
-	public void handleAddUser(Administrator currentUser, User userToAdd, JPanel parentGUI, final BaseDashboardGUI parentDashboard) {
+	public void handleAddUser(Administrator currentUser, User userToAdd, JPanel parentGUI) {
 		if (userToAdd.getUsername().isBlank() || userToAdd.getPassword().isBlank()) {
 			JOptionPane.showMessageDialog(parentGUI, "Username or password cannot be empty.", "Add User Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(ClientConfig.ERROR_ICON));
 			return;

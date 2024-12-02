@@ -58,6 +58,7 @@ public class ClientConfig {
     public static final String RIGHT_ARROW_ICON = ICON_FILE_PATH_PREFIX + "right_arrow.png";
     public static final String ERROR_ICON = ICON_FILE_PATH_PREFIX + "error_32.png";
     public static final String SUCCESS_ICON = ICON_FILE_PATH_PREFIX + "success_32.png";
+    public static final String SAVE_ICON = ICON_FILE_PATH_PREFIX + "save_24.png";
     
     // Administrator *GUI
     // Administrator - Manage Users

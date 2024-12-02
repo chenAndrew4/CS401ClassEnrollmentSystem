@@ -42,6 +42,7 @@ public class UserDataManager {
     }
 
     private synchronized void isImported(Institutions institutionID) {
+    	log.debug("isImported: institutionID = " + institutionID);
         if (!imported.getOrDefault(institutionID, false)) {
             Map<String, User> users = loadUsersByInstitution(institutionID);
             userMap.put(institutionID, users);
@@ -51,6 +52,7 @@ public class UserDataManager {
     }
 
     public synchronized boolean addUserByInstitution(Institutions institutionID, User user) {
+    	log.debug("addUserByInstitution: institutionID = " + institutionID);
         isImported(institutionID);
         userMap.get(institutionID).put(user.getUserId(), user); // Use userId as key
         modified.put(institutionID, true);
@@ -169,6 +171,7 @@ public class UserDataManager {
 
     @SuppressWarnings("unchecked")
     private synchronized Map<String, User> loadUsersByInstitution(Institutions institutionID) {
+    	log.debug("loadUsersByInstitution: institutionID = " + institutionID);
         String filePath = FILE_PREFIX + institutionID + File.separator + FILE_SUFFIX;
         Map<String, User> users = null;
 

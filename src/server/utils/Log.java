@@ -79,6 +79,10 @@ public class Log {
 		message(msg);
 	}
 
+	public void debug(String str) {
+		println("DEBUG: " + str);
+	}
+	
 	// Log an error
 	public void error(String str) {
 		println("ERROR: " + str);

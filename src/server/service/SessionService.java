@@ -4,6 +4,7 @@ import server.dataManagers.SessionDataManager;
 
 import java.time.Instant;
 import java.util.UUID;
+import server.ServerManager;
 
 public class SessionService {
 
@@ -77,7 +78,7 @@ public class SessionService {
 
     // Helper method to generate an expiry time (current time + 30 minutes)
     private int generateExpiryTime() {
-        return (int) (Instant.now().getEpochSecond() + 30 * 60);
+        return (int) (Instant.now().getEpochSecond() + ServerManager.getSessionTimeout() * 60);
     }
 }
 
