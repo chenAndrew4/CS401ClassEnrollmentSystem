@@ -103,4 +103,13 @@ public class CourseSection implements Serializable {
     public boolean isFullyEnrolled() {
         return classRoster.getEnrollmentCount() >= enrollmentLimit;
     }
+
+	@Override
+	public String toString() {
+		return "CourseSection {sectionID=" + sectionID + ", enrollmentLimit=" + enrollmentLimit + ", waitlistID="
+				+ waitlistID + ", classRoster=" + classRoster + ", grading=" + grading + ", instructionMode="
+				+ instructionMode + ", scheduleID=" + scheduleID + ", notes=" + notes + "}";
+	}
+    
+    
 }

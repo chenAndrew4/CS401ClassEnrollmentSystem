@@ -200,4 +200,14 @@ public class Schedule implements Serializable {
         }
         return false;
     }
+
+	@Override
+	public String toString() {
+		return "Schedule {scheduleID=" + scheduleID + ", courseID=" + courseID + ", sectionID=" + sectionID + ", term="
+				+ term + ", days=" + Arrays.toString(days) + ", endDate=" + endDate + ", startDate=" + startDate
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", building=" + building + ", campus=" + campus
+				+ ", room=" + room + ", facultyID=" + facultyID + "}";
+	}
+    
+    
 }

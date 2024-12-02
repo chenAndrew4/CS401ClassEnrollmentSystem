@@ -48,4 +48,11 @@ public class ClassRoster implements Serializable {
     public boolean removeStudent(Student student) {
         return enrolledStudents.remove(student.getUserId());
     }
+
+	@Override
+	public String toString() {
+		return "ClassRoster {sectionID=" + sectionID + ", enrolledStudents=" + enrolledStudents + "}";
+	}
+    
+    
 }

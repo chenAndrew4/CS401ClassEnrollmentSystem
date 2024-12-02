@@ -116,4 +116,12 @@ public class WaitList implements Serializable {
     public Student pollNextStudent() {
         return waitingStudents.poll();
     }
+
+	@Override
+	public String toString() {
+		return "WaitList {sectionID=" + sectionID + ", waitlistID=" + waitlistID + ", maxCapacity=" + maxCapacity
+				+ ", waitingStudents=" + waitingStudents + "}";
+	}
+    
+    
 }
