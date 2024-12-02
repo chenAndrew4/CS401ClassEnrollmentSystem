@@ -23,7 +23,6 @@ class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo thi
 
     private static ScheduleDataManager scheduleDataManager;
     
-    @BeforeAll
     static void setUp() {   
         scheduleDataManager = ScheduleDataManager.getInstance();
         Institutions institution = Institutions.CSUEB;
@@ -50,6 +49,9 @@ class ScheduleDataManagerTest { //made this when sleepy, probably gonna redo thi
     
     @Test
     void testEnsureSchedulesLoaded() throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException{
+    	
+    	setUp();
+    	
     	Institutions institution = Institutions.CSUEB;
        
     	//Make the method accessible

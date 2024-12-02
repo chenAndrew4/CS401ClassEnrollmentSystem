@@ -2,6 +2,7 @@ package shared.enums;
 
 public enum Term {
     FALL_SEMESTER("Fall Semester", "August - December"),
+    WINTER_SEMESTER("Winter Semester", "December - January"),
     SPRING_SEMESTER("Spring Semester", "January - May"),
     SUMMER_SEMESTER("Summer Semester", "May - August"),
     FALL_QUARTER("Fall Quarter", "September - December"),

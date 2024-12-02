@@ -193,7 +193,9 @@ public class CoursesDataManager {
             log.println("CoursesDataManager: Courses loaded successfully for institution: " + institutionID);
         } catch (FileNotFoundException e) {
             log.exception("CoursesDataManager: File not found for institution: " + institutionID + ". Returning empty map.");
-        } catch (Exception e) {
+        } catch (EOFException e) {
+            System.err.println("File is empty or incomplete for institution: " + institutionID + ".  Returning empty map.");
+        }catch (Exception e) {
             log.exception("CoursesDataManager: Error loading courses for institution: " + institutionID);
             log.exception("CoursesDataManager: " + e.toString());
         }

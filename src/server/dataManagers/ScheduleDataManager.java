@@ -90,6 +90,8 @@ public class ScheduleDataManager {
             log.println("ScheduleDataManager: Schedules loaded successfully for institution: " + institutionID);
         } catch (FileNotFoundException e) {
             log.exception("ScheduleDataManager: File not found for institution: " + institutionID + ". Returning empty map.");
+        } catch (EOFException e) {
+            System.err.println("File is empty or incomplete for institution: " + institutionID + ".  Returning empty map.");
         } catch (Exception e) {
             log.exception("ScheduleDataManager: Error loading schedules for institution: " + institutionID);
             log.exception("ScheduleDataManager: " + e.toString());
