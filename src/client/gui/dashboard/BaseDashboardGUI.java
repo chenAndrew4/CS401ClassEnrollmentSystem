@@ -46,7 +46,7 @@ public abstract class BaseDashboardGUI extends JFrame implements Runnable {
         });
     }
 
-    User getUser() {
+    public User getUser() {
         return this.user;
     }
 
