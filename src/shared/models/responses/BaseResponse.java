@@ -23,4 +23,8 @@ public class BaseResponse extends Message {
     public void setMessage(String message) {
         this.message = message;
     }
+    
+    public String toString() {
+    	return "BaseResponse{message=" + this.message + "}";
+    }
 }

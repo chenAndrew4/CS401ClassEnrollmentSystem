@@ -12,6 +12,8 @@ import java.io.IOException;
 public class RequestHandler {
     public static BaseResponse handleRequest(BaseRequest request, Log log) throws IOException {
         switch (request.getType()) {
+            case GET_ASSIGNED_COURSES:
+                return GetAssignedCoursesHandler.handleGetAssignedCourses(request, log);
         	case ADD_USER:
         		return AddUserHandler.handleAddUser(request, log);
             case DEBUG:

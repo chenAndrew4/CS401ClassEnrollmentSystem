@@ -64,14 +64,14 @@ public class User implements Serializable{
 	}
 
 	public User(String username, String firstName, String lastName, String password,
-				Institutions institution, Department department, AccountType accountType,
+				Institutions institutionID, Department department, AccountType accountType,
 				GenderIdentity genderIdentity, String phone, String address) {
 		this.userId = IDGenerator.getInstance().generateUniqueUserID(institutionID);
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.institutionID = institution;
+		this.institutionID = institutionID;
 		this.department = department;
 		this.accountType = accountType;
 		this.sessionToken = null;
@@ -212,7 +212,7 @@ public class User implements Serializable{
 	public String toString() {
 		return "User {userId=" + userId + ", username=" + username + ", firstName=" + firstName + ", lastName="
 				+ lastName + ", institutionID=" + institutionID + ", address=" + address + ", phone=" + phone
-				+ ", department=" + department + ", accountType=" + accountType + ", admission date=" + date + ", genderIdentity="
+				+ ", department=" + department + ", accountType=" + accountType + ", date=" + date + ", genderIdentity="
 				+ genderIdentity + "}";
 	}
 

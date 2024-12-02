@@ -22,5 +22,9 @@ public class AddUserRequest extends BaseRequest {
     public User getUser() {
         return this.user;
     }
+    
+    public String toString() {
+    	return this.user.toString() + " " + this.admin.toString();
+    }
 }
 

@@ -14,9 +14,12 @@ public class FacultyDashboardGUI extends BaseDashboardGUI {
     private ManageAssignedCoursesGUI manageAssignedCoursesGUI;
     private ViewWaitlistGUI viewWaitlistGUI;
     private ViewSchedulesGUI viewSchedulesGUI;
+    private Faculty user;
 
     public FacultyDashboardGUI(Faculty user) {
         super("Faculty Dashboard", user);
+
+        this.user = user;
 
         // Set personal image and info
         setPersonalImage(new ImageIcon(ClientConfig.DEFAULT_FACULTY_ICON));
@@ -65,7 +68,7 @@ public class FacultyDashboardGUI extends BaseDashboardGUI {
 
     private void handleManageAssignedCourses() {
         if (manageAssignedCoursesGUI == null) {
-            manageAssignedCoursesGUI = new ManageAssignedCoursesGUI(this);
+            manageAssignedCoursesGUI = new ManageAssignedCoursesGUI(user, this);
         }
         replaceOptionPanel(manageAssignedCoursesGUI.getPanel());
     }

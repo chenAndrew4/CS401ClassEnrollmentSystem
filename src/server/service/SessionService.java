@@ -1,18 +1,21 @@
 package server.service;
 
 import server.dataManagers.SessionDataManager;
+import server.gui.ServerGUI;
+import server.utils.Log;
 
 import java.time.Instant;
 import java.util.UUID;
 import server.ServerManager;
 
 public class SessionService {
-
+	private static Log log;
     private static SessionService instance;
     private final SessionDataManager sessionDataManager;
 
     private SessionService() {
         this.sessionDataManager = SessionDataManager.getInstance();
+        log = Log.getInstance(ServerGUI.logTextArea);
     }
 
     public static synchronized SessionService getInstance() {
@@ -36,11 +39,15 @@ public class SessionService {
     public synchronized boolean validateSession(String userId, String token) {
         String sessionData = sessionDataManager.getSessionData(userId);
         if (sessionData == null) {
+        	log.error("SessionService: sessionData is null for userId=" + userId);
+//        	log.debug("SessionService: " + sessionDataManager.toString());
+        	sessionDataManager.toLog();
             return false;
         }
 
         String[] parts = sessionData.split(",");
         if (parts.length != 2) {
+        	log.error("SessionService: Invalid session data: parts=" + parts.toString());
             return false; // Invalid session data
         }
 
@@ -59,15 +66,19 @@ public class SessionService {
     public synchronized boolean isSessionExpired(String userId) {
         String sessionData = sessionDataManager.getSessionData(userId);
         if (sessionData == null) {
+        	log.error("SessionService: sessionData is null!");
             return true;
         }
 
         String[] parts = sessionData.split(",");
         if (parts.length != 2) {
+        	log.error("SessionService: Invalid session data: parts=" + parts.toString());
             return true;
         }
 
         int expiryTime = Integer.parseInt(parts[1]);
+        if (Instant.now().getEpochSecond() > expiryTime)
+        	log.warn("SessionService: expiryTime=" + expiryTime + " > " + Instant.now().getEpochSecond());
         return Instant.now().getEpochSecond() > expiryTime;
     }
 
