@@ -19,7 +19,7 @@ public class GetAssignedCoursesHandler {
 
         if (getAssignedCoursesRequest.isAuthenticated() && SessionService.getInstance().validateSession(getAssignedCoursesRequest.getUserID(), getAssignedCoursesRequest.getSessionToken())) {
              // Fetch list of assigned courses
-            List<CourseSection> assignedCourses = Faculty.getAssignedCourses();
+            List<CourseSection> assignedCourses = getAssignedCoursesRequest.getUser().getAssignedCourses();
 
             if (assignedCourses != null) {
                 return new GetAssignedCoursesResponse(MessageType.GET_ASSIGNED_COURSES, MessageStatus.SUCCESS, assignedCourses, "Success");

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GetAssignedCoursesHandler {
     public void handleGetAssignedCourses(Faculty currentUser, Institutions institution, JPanel parentGUI, final BaseDashboardGUI parentDashboard){
-        GetAssignedCoursesRequest getAssignedCoursesRequest = new GetAssignedCoursesRequest(MessageType.GET_ASSIGNED_COURSES, null, institution, currentUser.getUserId(), currentUser.getAssignedCourses(), currentUser.getSessionToken(), currentUser.isAuthenticated());
+        GetAssignedCoursesRequest getAssignedCoursesRequest = new GetAssignedCoursesRequest(MessageType.GET_ASSIGNED_COURSES, null, institution, currentUser, currentUser.getAssignedCourses(), currentUser.getSessionToken(), currentUser.isAuthenticated());
 
         Client.getInstance().sendRequest(getAssignedCoursesRequest, new ResponseCallback<GetAssignedCoursesResponse, Void>(){
             @Override

@@ -2,6 +2,7 @@ package client.gui;
 
 import client.ClientConfig;
 import client.gui.dashboard.FacultyDashboardGUI;
+import client.handlers.GetAssignedCoursesHandler;
 import client.utils.ImageUtils;
 import shared.models.Faculty;
 
@@ -19,10 +20,11 @@ public class ManageAssignedCoursesGUI {
     private JPanel topRowPanel;
     private JButton backArrow;
     private JLabel titleLabel;
-    Faculty faculty;
+    Faculty currentUser;
     
-    public ManageAssignedCoursesGUI(FacultyDashboardGUI facultyDashboardGUI) {
+    public ManageAssignedCoursesGUI(Faculty currentUser, FacultyDashboardGUI facultyDashboardGUI) {
     	this.parentDashboard = facultyDashboardGUI;
+        this.currentUser = currentUser;
     	initializeManageAssignedCourses();
     }
     
@@ -72,7 +74,8 @@ public class ManageAssignedCoursesGUI {
     }
     
     private void handleCourses() {
-        JOptionPane.showMessageDialog(manageAssignedCoursePanel, "Courses clicked!");
+        GetAssignedCoursesHandler handler = new GetAssignedCoursesHandler();
+        handler.handleGetAssignedCourses(currentUser, currentUser.getInstitutionID(), manageAssignedCoursePanel, parentDashboard);
     }
     
     private void handleSyllabus() {
