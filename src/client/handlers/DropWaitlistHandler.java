@@ -21,7 +21,7 @@ public class DropWaitlistHandler {
 		DropWaitlistRequest dropWaitlistRequest = new DropWaitlistRequest(MessageType.DROP_WAITLIST, null, sessionToken, course.getCourseID(), sectionId, student);
 		Client.getInstance().sendRequest(dropWaitlistRequest, new ResponseCallback<DropWaitlistResponse, Void>() {
             @Override
-            public Void onSuccess(DropWaitlistResponse enrollCourseResponse) {
+            public Void onSuccess(DropWaitlistResponse dropWaitlistResponse) {
             	JOptionPane.showMessageDialog(parentGUI, "Student has successfully been dropped from " + course.getCourseID() + " Section: " + sectionId, "Drop Waitlist", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ClientConfig.SUCCESS_ICON));
                 return null;
             }
