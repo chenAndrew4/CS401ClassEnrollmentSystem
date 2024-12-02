@@ -33,7 +33,7 @@ public class LogTest {
 
         // Use the log instance to log messages
         log.println("Application started");
-        log.error("An example error occurred", Institutions.CSUEB,this.getClass());
+        log.error("An example error occurred");
         log.print("This is a log message without a new line.");
 
 //        // Example message class usage (implementing your Message class)

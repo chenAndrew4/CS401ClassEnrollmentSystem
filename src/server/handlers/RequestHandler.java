@@ -23,7 +23,7 @@ public class RequestHandler {
             case ENROLL_COURSE:
 //              return EnrollCourseHandler.handleEnrollCourse(request);
             case GET_USERS:
-            	return GetUsersHandler.handleGetUsers(request, log);
+//            	return GetUsersHandler.handleGetUsers(request, log);
             case LOGIN:
                 return LoginHandler.handleLogin(request, log);
             case LOGOUT:
