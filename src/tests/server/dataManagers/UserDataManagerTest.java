@@ -82,7 +82,6 @@ public class UserDataManagerTest {
         userDataManager.addUserByInstitution(institution, student);
     }
 
-    @Test
     public void testDeleteDB() throws IOException {
         UserDataManager.getInstance().deleteDB();
     }

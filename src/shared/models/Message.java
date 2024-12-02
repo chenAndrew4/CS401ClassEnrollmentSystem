@@ -42,9 +42,6 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "Message{" +
-                "type=" + type +
-                ", status=" + status +
-                '}';
+        return "{" + "type=" + type + ", status=" + status + "}";
     }
 }

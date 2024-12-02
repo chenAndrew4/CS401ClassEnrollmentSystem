@@ -19,14 +19,14 @@ public class LoginHandler {
         UserService userService = UserService.getInstance();
         SessionService sessionService = SessionService.getInstance();
         boolean isAuthenticated = authenticateUser(user, userService);
+        User actualUser = userService.getUserByInstitutionAndUsername(user.getInstitutionID(), user.getUsername());
         
         if (isAuthenticated) {
             // set user's token as sessionToken
-            String sessionToken = sessionService.createSession(user.getUserId());
-            user = userService.getUserByInstitutionAndUsername(user.getInstitutionID(), user.getUsername());
-            user.setSessionToken(sessionToken);
-            user.setAuthenticated(true);
-            return new LoginResponse(MessageType.LOGIN, MessageStatus.SUCCESS,"Log in success", sessionToken, true, user);
+            String sessionToken = sessionService.createSession(actualUser.getUserId());
+            actualUser.setSessionToken(sessionToken);
+            actualUser.setAuthenticated(true);
+            return new LoginResponse(MessageType.LOGIN, MessageStatus.SUCCESS,"Log in success", sessionToken, true, actualUser);
         } else {
             return new LoginResponse(MessageType.LOGIN, MessageStatus.FAILURE, "Invalid credentials");
         }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SessionDataManager {
-	private static Log log = Log.getInstance(ServerGUI.logTextArea);;
+	private static Log log = Log.getInstance(ServerGUI.logTextArea);
     private static SessionDataManager instance;
 
     private final Map<String, String> sessionData;
@@ -65,6 +65,7 @@ public class SessionDataManager {
                 sessionData.clear();
                 sessionData.putAll((Map<String, String>) loadedData);
                 log.println("SessionDataManager: Session data loaded successfully.");
+                toLog();
             } else {
                 throw new IOException("Invalid data format in session file.");
             }
@@ -99,6 +100,10 @@ public class SessionDataManager {
     // Retrieve all session data
     public synchronized Map<String, String> getAllSessionData() {
         return Map.copyOf(sessionData);
+    }
+    
+    public synchronized void toLog() {
+    	sessionData.forEach((k, v) -> log.println("SessionDataManager: " + k + ": " + v));
     }
 }
 

@@ -10,8 +10,6 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.JTextArea;
 
 import javax.swing.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Log {
 	private static Log instance; // Singleton instance
@@ -63,7 +61,7 @@ public class Log {
 			updateDateTime();
 			this.jtextArea.append("[" + this.formattedDateTime + "]     Status: " + msg.getStatus() + "\n");
 			updateDateTime();
-			this.jtextArea.append("[" + this.formattedDateTime + "]     shared.models.User: " + msg.toString() + "\n");
+			this.jtextArea.append("[" + this.formattedDateTime + "]     Message: " + msg.toString() + "\n");
 		}
 	}
 

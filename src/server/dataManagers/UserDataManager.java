@@ -42,7 +42,7 @@ public class UserDataManager {
     }
 
     private synchronized void isImported(Institutions institutionID) {
-    	log.debug("isImported: institutionID = " + institutionID);
+//    	log.debug("isImported: institutionID = " + institutionID);
         if (!imported.getOrDefault(institutionID, false)) {
             Map<String, User> users = loadUsersByInstitution(institutionID);
             userMap.put(institutionID, users);
@@ -52,7 +52,7 @@ public class UserDataManager {
     }
 
     public synchronized boolean addUserByInstitution(Institutions institutionID, User user) {
-    	log.debug("addUserByInstitution: institutionID = " + institutionID);
+//    	log.debug("addUserByInstitution: institutionID = " + institutionID);
         isImported(institutionID);
         userMap.get(institutionID).put(user.getUserId(), user); // Use userId as key
         modified.put(institutionID, true);

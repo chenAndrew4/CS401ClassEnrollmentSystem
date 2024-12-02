@@ -54,7 +54,14 @@ public class Administrator extends User {
         }
         return false;
     }
-
+    
+	public String toString() {
+		return "Administrator {userId=" + this.getUserId() + ", username=" + this.getUsername() + ", firstName=" + this.getFirstName() + ", lastName="
+				+ this.getLastName() + ", institutionID=" + this.getInstitutionID() + ", address=" + this.getAddress() + ", phone=" + this.getPhone()
+				+ ", department=" + this.getDepartment() + ", accountType=" + this.getAccountType() + ", date=" + this.getDate() + ", genderIdentity="
+				+ this.getGenderIdentity() + "}";
+	}
+    
     // Generate a report to do
 }
 
