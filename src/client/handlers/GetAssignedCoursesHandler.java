@@ -2,6 +2,7 @@ package client.handlers;
 
 import javax.swing.JPanel;
 import client.Client;
+import client.gui.ViewAssignedCoursesGUI;
 import client.gui.dashboard.BaseDashboardGUI;
 import shared.enums.Institutions;
 import shared.enums.MessageType;
@@ -21,6 +22,10 @@ public class GetAssignedCoursesHandler {
             @Override
             public Void onSuccess(GetAssignedCoursesResponse getAssignedCoursesResponse) {
                 List<CourseSection> assignedCourses = getAssignedCoursesResponse.getAssignedCourses();
+
+                SwingUtilities.invokeLater(() -> {
+                    ViewAssignedCoursesGUI viewAssignedCoursesGUI = new ViewAssignedCoursesGUI(null , assignedCourses);
+                });
                 return null;
             }
 
