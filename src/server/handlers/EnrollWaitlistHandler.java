@@ -10,12 +10,12 @@ import shared.models.requests.EnrollWaitlistRequest;
 import shared.models.responses.EnrollWaitlistResponse;
 
 public class EnrollWaitlistHandler {
-    public static EnrollWaitlistResponse handleEnrollCourse(BaseRequest request, CourseService courseService, SessionService sessionService) 
+    public static EnrollWaitlistResponse handleEnrollCourse(BaseRequest request, WaitlistService waitlistService, SessionService sessionService) 
     {
         EnrollWaitlistRequest enrollWaitlistRequest = (EnrollWaitlistRequest) request;
         if (sessionService.validateSession(enrollWaitlistRequest.getStudent().getUserId(), enrollWaitlistRequest.getSessionToken()))
         {
-        	boolean success = courseService.enrollInCourse(enrollWaitlistRequest.getStudent(), enrollWaitlistRequest.getSectionId());
+        	boolean success = waitlistService.addToWaitlist(enrollWaitlistRequest.getInstitutionID(), enrollWaitlistRequest.getStudent(), enrollWaitlistRequest.getSectionId());
         	if (success ) 
         	{
                 return new EnrollWaitlistResponse("enrolled", MessageStatus.SUCCESS, MessageType.ENROLL_WAITLIST, enrollWaitlistRequest.getSectionId(), WaitlistService.getInstance().getWaitlistPositions(enrollWaitlistRequest.getStudent().getInstitutionID(), enrollWaitlistRequest.getSectionId(), enrollWaitlistRequest.getStudent()));
