@@ -18,19 +18,14 @@ public class GetAssignedCoursesHandler {
         GetAssignedCoursesRequest getAssignedCoursesRequest = (GetAssignedCoursesRequest) request;
 
         if (getAssignedCoursesRequest.isAuthenticated() && SessionService.getInstance().validateSession(getAssignedCoursesRequest.getUserID(), getAssignedCoursesRequest.getSessionToken())) {
+             // Fetch list of assigned courses
+            List<CourseSection> assignedCourses = Faculty.getAssignedCourses();
 
-            if (getAssignedCoursesRequest.isAuthenticated() &&
-                    SessionService.getInstance().validateSession(getAssignedCoursesRequest.getUserID(), getAssignedCoursesRequest.getSessionToken())) {
+            if (assignedCourses != null) {
+                return new GetAssignedCoursesResponse(MessageType.GET_ASSIGNED_COURSES, MessageStatus.SUCCESS, assignedCourses, "Success");
 
-                // Fetch list of assigned courses
-                List<CourseSection> assignedCourses = Faculty.getAssignedCourses();
-
-                if (assignedCourses != null) {
-                    return new GetAssignedCoursesResponse(MessageType.GET_ASSIGNED_COURSES, MessageStatus.SUCCESS, assignedCourses, "Success");
-
-                } else {
-                    return new GetAssignedCoursesResponse(MessageType.GET_ASSIGNED_COURSES, MessageStatus.FAILURE, null, "Failed to retrieve courses");
-                }
+            } else {
+                return new GetAssignedCoursesResponse(MessageType.GET_ASSIGNED_COURSES, MessageStatus.FAILURE, null, "Failed to retrieve courses");
             }
         }
         return new GetAssignedCoursesResponse(MessageType.GET_ASSIGNED_COURSES, MessageStatus.FAILURE, null, "Invalid request or authentication failed");
