@@ -8,13 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 public class ViewAssignedCoursesGUI {
-    private final ManageAssignedCoursesGUI parentDashboard;
+    private ManageAssignedCoursesGUI parentDashboard;
     private JPanel topRowPanel;
     private JButton backArrow;
     private JLabel titleLabel;
     private List<CourseSection> assignedCourses;
     private JTextField enrollmentLimit;
-    private JPanel viewAssignedCoursesPanel;
+    private JPanel assignedCoursesPanel;
+    private JPanel coursesPanel;
 
     public ViewAssignedCoursesGUI(ManageAssignedCoursesGUI parentDashboard, List<CourseSection> assignedCourses) {
         this.parentDashboard = parentDashboard;
@@ -23,23 +24,19 @@ public class ViewAssignedCoursesGUI {
     }
 
     private void initializeManageAssignedCoursesPanel() {
-        viewAssignedCoursesPanel = new JPanel(new BorderLayout());
+        assignedCoursesPanel = new JPanel(new BorderLayout());
+        assignedCoursesPanel.setOpaque(false);
 
-        // Convert the list of CourseSection to a list of Strings
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (CourseSection courseSection : assignedCourses) {
-            listModel.addElement(courseSection.getSectionID());
+        coursesPanel = new JPanel(new BorderLayout());
+        coursesPanel.setOpaque(false);
+
+        for (CourseSection courseSection : assignedCourses){
+            coursesPanel.add(new JLabel(courseSection.getSectionID()));
         }
 
-        // Create the JList with course sections
-        JList<String> courseList = new JList<>(listModel);
-        courseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        initializeTopRow();
 
-        // Add the JList to a JScrollPane
-        JScrollPane scrollPane = new JScrollPane(courseList);
-
-        // Add JScrollPane to the main panel at the center
-        viewAssignedCoursesPanel.add(scrollPane, BorderLayout.CENTER);
+        assignedCoursesPanel.add(coursesPanel, BorderLayout.CENTER);
     }
     private void initializeTopRow() {
         topRowPanel = new JPanel(new BorderLayout());
@@ -60,14 +57,15 @@ public class ViewAssignedCoursesGUI {
         titleLabel.setForeground(Color.BLACK);
         topRowPanel.add(titleLabel, BorderLayout.CENTER);
 
-        viewAssignedCoursesPanel.add(topRowPanel, BorderLayout.NORTH);
+        assignedCoursesPanel.add(topRowPanel, BorderLayout.NORTH);
     }
 
     private void handleBack() {
+        parentDashboard.goBackToManageAssignedCourses();
     }
 
     public JPanel getPanel() {
-        return viewAssignedCoursesPanel;
+        return assignedCoursesPanel;
     }
 
     private void updateCourse(){
