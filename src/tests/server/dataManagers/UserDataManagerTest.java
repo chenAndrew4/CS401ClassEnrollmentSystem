@@ -86,13 +86,14 @@ public class UserDataManagerTest {
         UserDataManager.getInstance().deleteDB();
     }
 
-    @Test
-    public void testSaveUser() {
-        beforeTest();
-        userDataManager.commitDBByInstitution(Institutions.SJSU);
-        userDataManager.commitDBByInstitution(Institutions.CSUEB);
-        userDataManager.commitDBByInstitution(Institutions.CSUF);
-    }
+// use when want to update the db
+//    @Test
+//    public void testSaveUser() {
+//        beforeTest();
+//        userDataManager.commitDBByInstitution(Institutions.SJSU);
+//        userDataManager.commitDBByInstitution(Institutions.CSUEB);
+//        userDataManager.commitDBByInstitution(Institutions.CSUF);
+//    }
 
     @Test
     public void testLoadUserSJSU() {
@@ -130,7 +131,7 @@ public class UserDataManagerTest {
 
     private String getUserDetails(User user) {
         return String.format(
-                "ID: %s, Username: %s, Name: %s %s, AccountType: %s, Institution: %s, Department: %s, AdmissionDate: %s",
+                "ID: %s, Username: %s, Name: %s %s, AccountType: %s, Institution: %s, Department: %s, AdmissionDate: %s, Password: %s",
                 user.getUserId(),
                 user.getUsername(),
                 user.getFirstName(),
@@ -138,7 +139,8 @@ public class UserDataManagerTest {
                 user.getAccountType(),
                 user.getInstitutionID(),
                 user.getDepartment() != null ? user.getDepartment() : "N/A",
-                user.getDate()
+                user.getDate(),
+                user.getPassword()
         );
     }
 }

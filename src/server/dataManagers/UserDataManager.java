@@ -148,6 +148,7 @@ public class UserDataManager {
         }
         for (Map.Entry<Institutions, Map<String, User>> entry : userMap.entrySet()) {
             saveUsersByInstitution(entry.getKey(), entry.getValue());
+//            System.out.println("user data is saved");
         }
         userMap.clear();
     }

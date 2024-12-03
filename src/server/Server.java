@@ -37,6 +37,7 @@ public class Server {
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 				log.println("Server is shutting down. Saving all data...");
 				DataSaveManager.getInstance().saveAll();
+				System.out.println("Server is shutting down. Saving all data...");
 			}));
 			log.println("Server is bound to: " + serverManager.getIpAddress().toString().replace("/", "") + ":" + serverManager.getPort());
 		} catch (UnknownHostException e) {
