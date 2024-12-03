@@ -9,11 +9,16 @@ public class ClassRoster implements Serializable {
     private List<String> enrolledStudents; // studentID list
 
     public ClassRoster() {
+        enrolledStudents = new ArrayList<>();
     }
 
     public ClassRoster(ClassRoster other) {
         this.sectionID = other.sectionID;
-        this.enrolledStudents = new ArrayList<>(other.enrolledStudents);
+        if (other.enrolledStudents == null || other.enrolledStudents.isEmpty()) {
+            this.enrolledStudents = new ArrayList<>();
+        } else {
+            this.enrolledStudents = new ArrayList<>(other.enrolledStudents);
+        }
     }
 
     public ClassRoster(String sectionID) {

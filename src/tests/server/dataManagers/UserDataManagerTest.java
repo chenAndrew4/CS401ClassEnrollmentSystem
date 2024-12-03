@@ -117,6 +117,9 @@ public class UserDataManagerTest {
         System.out.println("CSUEB Users:");
         for (User u : userMap.values()) {
             System.out.println(getUserDetails(u));
+//            if (u instanceof Student) {
+//                System.out.println(((Student) u).getEnrolledCourses());
+//            }
         }
     }
 

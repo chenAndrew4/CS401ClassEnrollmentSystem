@@ -1,8 +1,8 @@
 package client.gui.login;
 
 import client.ClientConfig;
+import client.deleted.SignupGUI;
 import client.gui.LoginSettingGUI;
-import client.gui.SignupGUI;
 import client.handlers.LoginHandler;
 import client.utils.ImageUtils;
 import server.ServerManager;

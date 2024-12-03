@@ -14,7 +14,8 @@ public class UpdateAssignedCourseHandler {
         UpdateAssignedCourseRequest updateAssignedCourseRequest = (UpdateAssignedCourseRequest) request;
 
         if (updateAssignedCourseRequest.isAuthenticated() && SessionService.getInstance().validateSession(updateAssignedCourseRequest.getUserId(), updateAssignedCourseRequest.getSessionToken())) {
-            boolean success = CourseService.getInstance().addOrUpdateCourse(updateAssignedCourseRequest.getInstitutionID(), updateAssignedCourseRequest.getCourse());
+//            boolean success = CourseService.getInstance().addOrUpdateCourse(updateAssignedCourseRequest.getInstitutionID(), updateAssignedCourseRequest.getCourse());
+            boolean success = false;
             if (success){
                 return new UpdateAssignedCourseResponse("updated", MessageStatus.SUCCESS, MessageType.UPDATE_COURSE);
             }else{

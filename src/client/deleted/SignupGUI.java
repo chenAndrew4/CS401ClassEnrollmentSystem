@@ -1,4 +1,4 @@
-package client.gui;
+package client.deleted;
 
 import javax.swing.*;
 

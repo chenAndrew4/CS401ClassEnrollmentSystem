@@ -229,396 +229,201 @@ class ScheduleDataManagerTest {
     }    
 }
 
-//Courses for Institution: CSUEB
-//Course: Course CHEM - CSUEB | CourseID: CHEM981
-//Section ID: CHEM981-SEC946
-//Schedule ID: SCH9249
-//Section ID: CHEM981-SEC223
-//Schedule ID: SCH2322
-//Section ID: CHEM981-SEC565
-//Schedule ID: SCH5646
-//Section ID: CHEM981-SEC745
-//Schedule ID: SCH1926
-//Section ID: CHEM981-SEC236
-//Schedule ID: SCH0502
-//Section ID: CHEM981-SEC995
-//Schedule ID: SCH6803
-//Course: Course CS - CSUEB | CourseID: CS022
-//Section ID: CS022-SEC827
-//Schedule ID: SCH0804
-//Section ID: CS022-SEC533
-//Schedule ID: SCH2616
-//Section ID: CS022-SEC046
-//Schedule ID: SCH7569
-//Section ID: CS022-SEC802
-//Schedule ID: SCH1305
-//Section ID: CS022-SEC538
-//Schedule ID: SCH6082
-//Section ID: CS022-SEC215
-//Schedule ID: SCH5481
-//Course: Course PHYS - CSUEB | CourseID: PHYS291
-//Section ID: PHYS291-SEC889
-//Schedule ID: SCH7089
-//Section ID: PHYS291-SEC372
-//Schedule ID: SCH1473
-//Section ID: PHYS291-SEC160
-//Schedule ID: SCH8533
-//Section ID: PHYS291-SEC795
-//Schedule ID: SCH5744
-//Section ID: PHYS291-SEC945
-//Schedule ID: SCH3118
-//Section ID: PHYS291-SEC719
-//Schedule ID: SCH7373
-//Course: Course BIO - CSUEB | CourseID: BIO465
-//Section ID: BIO465-SEC903
-//Schedule ID: SCH5554
-//Section ID: BIO465-SEC971
-//Schedule ID: SCH5766
-//Section ID: BIO465-SEC849
-//Schedule ID: SCH3204
-//Section ID: BIO465-SEC886
-//Schedule ID: SCH9556
-//Section ID: BIO465-SEC693
-//Schedule ID: SCH0063
-//Section ID: BIO465-SEC245
-//Schedule ID: SCH8717
-//Course: Course CS - CSUEB | CourseID: CS155
-//Section ID: CS155-SEC682
-//Schedule ID: SCH9417
-//Section ID: CS155-SEC768
-//Schedule ID: SCH3677
-//Section ID: CS155-SEC722
-//Schedule ID: SCH5539
-//Section ID: CS155-SEC142
-//Schedule ID: SCH3135
-//Section ID: CS155-SEC162
-//Schedule ID: SCH9433
-//Section ID: CS155-SEC335
-//Schedule ID: SCH0593
-//Course: Course MATH - CSUEB | CourseID: MATH973
-//Section ID: MATH973-SEC468
-//Schedule ID: SCH7337
-//Section ID: MATH973-SEC988
-//Schedule ID: SCH3981
-//Section ID: MATH973-SEC373
-//Schedule ID: SCH7001
-//Section ID: MATH973-SEC486
-//Schedule ID: SCH4004
-//Section ID: MATH973-SEC310
-//Schedule ID: SCH6117
-//Section ID: MATH973-SEC357
-//Schedule ID: SCH8721
-//Course: Course MATH - CSUEB | CourseID: MATH404
-//Section ID: MATH404-SEC750
-//Schedule ID: SCH4227
-//Section ID: MATH404-SEC361
-//Schedule ID: SCH9169
-//Section ID: MATH404-SEC369
-//Schedule ID: SCH4519
-//Section ID: MATH404-SEC772
-//Schedule ID: SCH4122
-//Section ID: MATH404-SEC227
-//Schedule ID: SCH1147
-//Section ID: MATH404-SEC546
-//Schedule ID: SCH2712
-//Course: Course BIO - CSUEB | CourseID: BIO875
-//Section ID: BIO875-SEC061
-//Schedule ID: SCH0848
-//Section ID: BIO875-SEC428
-//Schedule ID: SCH1608
-//Section ID: BIO875-SEC886
-//Schedule ID: SCH6890
-//Section ID: BIO875-SEC966
-//Schedule ID: SCH7922
-//Section ID: BIO875-SEC484
-//Schedule ID: SCH8609
-//Section ID: BIO875-SEC649
-//Schedule ID: SCH0040
-//Course: Course PHYS - CSUEB | CourseID: PHYS761
-//Section ID: PHYS761-SEC259
-//Schedule ID: SCH6435
-//Section ID: PHYS761-SEC961
-//Schedule ID: SCH2082
-//Section ID: PHYS761-SEC403
-//Schedule ID: SCH6771
-//Section ID: PHYS761-SEC549
-//Schedule ID: SCH7677
-//Section ID: PHYS761-SEC534
-//Schedule ID: SCH0423
-//Section ID: PHYS761-SEC745
-//Schedule ID: SCH2134
-//Course: Course CHEM - CSUEB | CourseID: CHEM020
-//Section ID: CHEM020-SEC299
-//Schedule ID: SCH4757
-//Section ID: CHEM020-SEC272
-//Schedule ID: SCH4563
-//Section ID: CHEM020-SEC578
-//Schedule ID: SCH2248
-//Section ID: CHEM020-SEC285
-//Schedule ID: SCH7986
-//Section ID: CHEM020-SEC896
-//Schedule ID: SCH1800
-//Section ID: CHEM020-SEC077
-//Schedule ID: SCH2577
-//Courses for Institution: SJSU
-//Course: Course MATH - SJSU | CourseID: MATH910
-//Section ID: MATH910-SEC925
-//Schedule ID: SCH2493
-//Section ID: MATH910-SEC124
-//Schedule ID: SCH0052
-//Section ID: MATH910-SEC380
-//Schedule ID: SCH2304
-//Section ID: MATH910-SEC766
-//Schedule ID: SCH6116
-//Section ID: MATH910-SEC095
-//Schedule ID: SCH0481
-//Section ID: MATH910-SEC108
-//Schedule ID: SCH4216
-//Course: Course PHYS - SJSU | CourseID: PHYS278
-//Section ID: PHYS278-SEC573
-//Schedule ID: SCH9794
-//Section ID: PHYS278-SEC050
-//Schedule ID: SCH2509
-//Section ID: PHYS278-SEC626
-//Schedule ID: SCH5517
-//Section ID: PHYS278-SEC401
-//Schedule ID: SCH4526
-//Section ID: PHYS278-SEC646
-//Schedule ID: SCH1609
-//Section ID: PHYS278-SEC580
-//Schedule ID: SCH3150
-//Course: Course BIO - SJSU | CourseID: BIO118
-//Section ID: BIO118-SEC665
-//Schedule ID: SCH3193
-//Section ID: BIO118-SEC658
-//Schedule ID: SCH0065
-//Section ID: BIO118-SEC733
-//Schedule ID: SCH9642
-//Section ID: BIO118-SEC571
-//Schedule ID: SCH9780
-//Section ID: BIO118-SEC266
-//Schedule ID: SCH9524
-//Section ID: BIO118-SEC685
-//Schedule ID: SCH6558
-//Course: Course MATH - SJSU | CourseID: MATH361
-//Section ID: MATH361-SEC792
-//Schedule ID: SCH6466
-//Section ID: MATH361-SEC665
-//Schedule ID: SCH2444
-//Section ID: MATH361-SEC044
-//Schedule ID: SCH5506
-//Section ID: MATH361-SEC990
-//Schedule ID: SCH4031
-//Section ID: MATH361-SEC100
-//Schedule ID: SCH1736
-//Section ID: MATH361-SEC686
-//Schedule ID: SCH0002
-//Course: Course CHEM - SJSU | CourseID: CHEM498
-//Section ID: CHEM498-SEC752
-//Schedule ID: SCH6270
-//Section ID: CHEM498-SEC188
-//Schedule ID: SCH2213
-//Section ID: CHEM498-SEC688
-//Schedule ID: SCH2553
-//Section ID: CHEM498-SEC861
-//Schedule ID: SCH2975
-//Section ID: CHEM498-SEC771
-//Schedule ID: SCH5656
-//Section ID: CHEM498-SEC694
-//Schedule ID: SCH9335
-//Course: Course CS - SJSU | CourseID: CS966
-//Section ID: CS966-SEC475
-//Schedule ID: SCH6523
-//Section ID: CS966-SEC168
-//Schedule ID: SCH2697
-//Section ID: CS966-SEC382
-//Schedule ID: SCH9381
-//Section ID: CS966-SEC774
-//Schedule ID: SCH7956
-//Section ID: CS966-SEC178
-//Schedule ID: SCH2832
-//Section ID: CS966-SEC571
-//Schedule ID: SCH5675
-//Course: Course PHYS - SJSU | CourseID: PHYS922
-//Section ID: PHYS922-SEC995
-//Schedule ID: SCH2688
-//Section ID: PHYS922-SEC560
-//Schedule ID: SCH0091
-//Section ID: PHYS922-SEC554
-//Schedule ID: SCH4104
-//Section ID: PHYS922-SEC106
-//Schedule ID: SCH5130
-//Section ID: PHYS922-SEC985
-//Schedule ID: SCH8876
-//Section ID: PHYS922-SEC592
-//Schedule ID: SCH3298
-//Course: Course CHEM - SJSU | CourseID: CHEM752
-//Section ID: CHEM752-SEC721
-//Schedule ID: SCH5601
-//Section ID: CHEM752-SEC915
-//Schedule ID: SCH0020
-//Section ID: CHEM752-SEC715
-//Schedule ID: SCH0162
-//Section ID: CHEM752-SEC672
-//Schedule ID: SCH6009
-//Section ID: CHEM752-SEC555
-//Schedule ID: SCH2806
-//Section ID: CHEM752-SEC506
-//Schedule ID: SCH1655
-//Course: Course BIO - SJSU | CourseID: BIO159
-//Section ID: BIO159-SEC151
-//Schedule ID: SCH1181
-//Section ID: BIO159-SEC425
-//Schedule ID: SCH2086
-//Section ID: BIO159-SEC931
-//Schedule ID: SCH7891
-//Section ID: BIO159-SEC714
-//Schedule ID: SCH8872
-//Section ID: BIO159-SEC746
-//Schedule ID: SCH6815
-//Section ID: BIO159-SEC517
-//Schedule ID: SCH0997
-//Course: Course CS - SJSU | CourseID: CS049
-//Section ID: CS049-SEC701
-//Schedule ID: SCH4320
-//Section ID: CS049-SEC237
-//Schedule ID: SCH0542
-//Section ID: CS049-SEC783
-//Schedule ID: SCH7963
-//Section ID: CS049-SEC928
-//Schedule ID: SCH2709
-//Section ID: CS049-SEC246
-//Schedule ID: SCH8541
-//Section ID: CS049-SEC115
-//Schedule ID: SCH4522
-//Courses for Institution: CSUF
-//Course: Course PHYS - CSUF | CourseID: PHYS299
-//Section ID: PHYS299-SEC468
-//Schedule ID: SCH6141
-//Section ID: PHYS299-SEC339
-//Schedule ID: SCH0765
-//Section ID: PHYS299-SEC276
-//Schedule ID: SCH7609
-//Section ID: PHYS299-SEC589
-//Schedule ID: SCH0044
-//Section ID: PHYS299-SEC791
-//Schedule ID: SCH8377
-//Section ID: PHYS299-SEC374
-//Schedule ID: SCH8890
-//Course: Course CHEM - CSUF | CourseID: CHEM334
-//Section ID: CHEM334-SEC705
-//Schedule ID: SCH7095
-//Section ID: CHEM334-SEC096
-//Schedule ID: SCH3570
-//Section ID: CHEM334-SEC802
-//Schedule ID: SCH6929
-//Section ID: CHEM334-SEC954
-//Schedule ID: SCH3444
-//Section ID: CHEM334-SEC030
-//Schedule ID: SCH5267
-//Section ID: CHEM334-SEC111
-//Schedule ID: SCH7936
-//Course: Course CS - CSUF | CourseID: CS422
-//Section ID: CS422-SEC373
-//Schedule ID: SCH2548
-//Section ID: CS422-SEC775
-//Schedule ID: SCH9067
-//Section ID: CS422-SEC806
-//Schedule ID: SCH6194
-//Section ID: CS422-SEC344
-//Schedule ID: SCH2480
-//Section ID: CS422-SEC921
-//Schedule ID: SCH7472
-//Section ID: CS422-SEC477
-//Schedule ID: SCH4810
-//Course: Course BIO - CSUF | CourseID: BIO649
-//Section ID: BIO649-SEC223
-//Schedule ID: SCH8565
-//Section ID: BIO649-SEC077
-//Schedule ID: SCH9870
-//Section ID: BIO649-SEC537
-//Schedule ID: SCH2863
-//Section ID: BIO649-SEC220
-//Schedule ID: SCH0391
-//Section ID: BIO649-SEC917
-//Schedule ID: SCH7599
-//Section ID: BIO649-SEC176
-//Schedule ID: SCH9315
-//Course: Course BIO - CSUF | CourseID: BIO431
-//Section ID: BIO431-SEC778
-//Schedule ID: SCH6281
-//Section ID: BIO431-SEC256
-//Schedule ID: SCH5039
-//Section ID: BIO431-SEC595
-//Schedule ID: SCH6045
-//Section ID: BIO431-SEC582
-//Schedule ID: SCH2357
-//Section ID: BIO431-SEC938
-//Schedule ID: SCH1885
-//Section ID: BIO431-SEC338
-//Schedule ID: SCH6315
-//Course: Course CHEM - CSUF | CourseID: CHEM085
-//Section ID: CHEM085-SEC548
-//Schedule ID: SCH0813
-//Section ID: CHEM085-SEC522
-//Schedule ID: SCH4473
-//Section ID: CHEM085-SEC266
-//Schedule ID: SCH9804
-//Section ID: CHEM085-SEC379
-//Schedule ID: SCH8693
-//Section ID: CHEM085-SEC486
-//Schedule ID: SCH3583
-//Section ID: CHEM085-SEC999
-//Schedule ID: SCH8150
-//Course: Course MATH - CSUF | CourseID: MATH376
-//Section ID: MATH376-SEC289
-//Schedule ID: SCH5868
-//Section ID: MATH376-SEC619
-//Schedule ID: SCH5266
-//Section ID: MATH376-SEC548
-//Schedule ID: SCH2771
-//Section ID: MATH376-SEC697
-//Schedule ID: SCH6952
-//Section ID: MATH376-SEC947
-//Schedule ID: SCH6209
-//Section ID: MATH376-SEC728
-//Schedule ID: SCH4407
-//Course: Course MATH - CSUF | CourseID: MATH816
-//Section ID: MATH816-SEC405
-//Schedule ID: SCH2159
-//Section ID: MATH816-SEC289
-//Schedule ID: SCH5054
-//Section ID: MATH816-SEC345
-//Schedule ID: SCH7500
-//Section ID: MATH816-SEC892
-//Schedule ID: SCH9547
-//Section ID: MATH816-SEC718
-//Schedule ID: SCH9329
-//Section ID: MATH816-SEC342
-//Schedule ID: SCH7757
-//Course: Course CS - CSUF | CourseID: CS745
-//Section ID: CS745-SEC035
-//Schedule ID: SCH4435
-//Section ID: CS745-SEC212
-//Schedule ID: SCH2014
-//Section ID: CS745-SEC892
-//Schedule ID: SCH0809
-//Section ID: CS745-SEC846
-//Schedule ID: SCH5468
-//Section ID: CS745-SEC358
-//Schedule ID: SCH4970
-//Section ID: CS745-SEC646
-//Schedule ID: SCH0178
-//Course: Course PHYS - CSUF | CourseID: PHYS993
-//Section ID: PHYS993-SEC607
-//Schedule ID: SCH7225
-//Section ID: PHYS993-SEC774
-//Schedule ID: SCH4070
-//Section ID: PHYS993-SEC291
-//Schedule ID: SCH1579
-//Section ID: PHYS993-SEC606
-//Schedule ID: SCH8783
-//Section ID: PHYS993-SEC572
-//Schedule ID: SCH5014
-//Section ID: PHYS993-SEC019
-//Schedule ID: SCH3873
+//        Courses for Institution: CSUEB
+//        Course: Course PHYS - CSUEB | CourseID: PHYS961
+//        Section ID: PHYS961-SEC184
+//        Schedule ID: SCH9309
+//        Section ID: PHYS961-SEC988
+//        Schedule ID: SCH6555
+//        Section ID: PHYS961-SEC106
+//        Schedule ID: SCH1814
+//        Section ID: PHYS961-SEC287
+//        Schedule ID: SCH9824
+//        Section ID: PHYS961-SEC758
+//        Schedule ID: SCH6704
+//        Section ID: PHYS961-SEC480
+//        Schedule ID: SCH0868
+//        Course: Course CS - CSUEB | CourseID: CS638
+//        Section ID: CS638-SEC881
+//        Schedule ID: SCH9616
+//        Section ID: CS638-SEC626
+//        Schedule ID: SCH9260
+//        Section ID: CS638-SEC984
+//        Schedule ID: SCH8032
+//        Section ID: CS638-SEC981
+//        Schedule ID: SCH3640
+//        Section ID: CS638-SEC895
+//        Schedule ID: SCH9089
+//        Section ID: CS638-SEC208
+//        Schedule ID: SCH5088
+//        Course: Course MATH - CSUEB | CourseID: MATH874
+//        Section ID: MATH874-SEC251
+//        Schedule ID: SCH0190
+//        Section ID: MATH874-SEC061
+//        Schedule ID: SCH8387
+//        Section ID: MATH874-SEC982
+//        Schedule ID: SCH2626
+//        Section ID: MATH874-SEC530
+//        Schedule ID: SCH4410
+//        Section ID: MATH874-SEC244
+//        Schedule ID: SCH5244
+//        Section ID: MATH874-SEC474
+//        Schedule ID: SCH0221
+//        Course: Course BIO - CSUEB | CourseID: BIO804
+//        Section ID: BIO804-SEC549
+//        Schedule ID: SCH5109
+//        Section ID: BIO804-SEC491
+//        Schedule ID: SCH2540
+//        Section ID: BIO804-SEC555
+//        Schedule ID: SCH8342
+//        Section ID: BIO804-SEC828
+//        Schedule ID: SCH9613
+//        Section ID: BIO804-SEC403
+//        Schedule ID: SCH1133
+//        Section ID: BIO804-SEC701
+//        Schedule ID: SCH7389
+//        Course: Course CHEM - CSUEB | CourseID: CHEM198
+//        Section ID: CHEM198-SEC077
+//        Schedule ID: SCH3955
+//        Section ID: CHEM198-SEC458
+//        Schedule ID: SCH3770
+//        Section ID: CHEM198-SEC343
+//        Schedule ID: SCH0403
+//        Section ID: CHEM198-SEC185
+//        Schedule ID: SCH6643
+//        Section ID: CHEM198-SEC715
+//        Schedule ID: SCH2549
+//        Section ID: CHEM198-SEC656
+//        Schedule ID: SCH2241
+//        Courses for Institution: SJSU
+//        Course: Course MATH - SJSU | CourseID: MATH169
+//        Section ID: MATH169-SEC215
+//        Schedule ID: SCH1338
+//        Section ID: MATH169-SEC601
+//        Schedule ID: SCH2162
+//        Section ID: MATH169-SEC068
+//        Schedule ID: SCH2173
+//        Section ID: MATH169-SEC792
+//        Schedule ID: SCH8801
+//        Section ID: MATH169-SEC119
+//        Schedule ID: SCH1525
+//        Section ID: MATH169-SEC646
+//        Schedule ID: SCH7807
+//        Course: Course CS - SJSU | CourseID: CS287
+//        Section ID: CS287-SEC553
+//        Schedule ID: SCH5773
+//        Section ID: CS287-SEC013
+//        Schedule ID: SCH3358
+//        Section ID: CS287-SEC391
+//        Schedule ID: SCH0117
+//        Section ID: CS287-SEC817
+//        Schedule ID: SCH1408
+//        Section ID: CS287-SEC868
+//        Schedule ID: SCH2224
+//        Section ID: CS287-SEC533
+//        Schedule ID: SCH9539
+//        Course: Course BIO - SJSU | CourseID: BIO359
+//        Section ID: BIO359-SEC407
+//        Schedule ID: SCH6656
+//        Section ID: BIO359-SEC468
+//        Schedule ID: SCH0547
+//        Section ID: BIO359-SEC971
+//        Schedule ID: SCH7932
+//        Section ID: BIO359-SEC807
+//        Schedule ID: SCH0331
+//        Section ID: BIO359-SEC460
+//        Schedule ID: SCH3444
+//        Section ID: BIO359-SEC321
+//        Schedule ID: SCH9204
+//        Course: Course PHYS - SJSU | CourseID: PHYS837
+//        Section ID: PHYS837-SEC249
+//        Schedule ID: SCH6118
+//        Section ID: PHYS837-SEC490
+//        Schedule ID: SCH3407
+//        Section ID: PHYS837-SEC632
+//        Schedule ID: SCH0270
+//        Section ID: PHYS837-SEC403
+//        Schedule ID: SCH6345
+//        Section ID: PHYS837-SEC978
+//        Schedule ID: SCH3487
+//        Section ID: PHYS837-SEC352
+//        Schedule ID: SCH8743
+//        Course: Course CHEM - SJSU | CourseID: CHEM124
+//        Section ID: CHEM124-SEC123
+//        Schedule ID: SCH3924
+//        Section ID: CHEM124-SEC822
+//        Schedule ID: SCH7240
+//        Section ID: CHEM124-SEC798
+//        Schedule ID: SCH4257
+//        Section ID: CHEM124-SEC345
+//        Schedule ID: SCH8719
+//        Section ID: CHEM124-SEC075
+//        Schedule ID: SCH1410
+//        Section ID: CHEM124-SEC157
+//        Schedule ID: SCH7655
+//        Courses for Institution: CSUF
+//        Course: Course MATH - CSUF | CourseID: MATH815
+//        Section ID: MATH815-SEC847
+//        Schedule ID: SCH4756
+//        Section ID: MATH815-SEC761
+//        Schedule ID: SCH6450
+//        Section ID: MATH815-SEC596
+//        Schedule ID: SCH1572
+//        Section ID: MATH815-SEC601
+//        Schedule ID: SCH1224
+//        Section ID: MATH815-SEC122
+//        Schedule ID: SCH7439
+//        Section ID: MATH815-SEC168
+//        Schedule ID: SCH6294
+//        Course: Course CHEM - CSUF | CourseID: CHEM011
+//        Section ID: CHEM011-SEC755
+//        Schedule ID: SCH3926
+//        Section ID: CHEM011-SEC454
+//        Schedule ID: SCH7417
+//        Section ID: CHEM011-SEC837
+//        Schedule ID: SCH5259
+//        Section ID: CHEM011-SEC444
+//        Schedule ID: SCH7633
+//        Section ID: CHEM011-SEC938
+//        Schedule ID: SCH1790
+//        Section ID: CHEM011-SEC820
+//        Schedule ID: SCH4705
+//        Course: Course CS - CSUF | CourseID: CS462
+//        Section ID: CS462-SEC436
+//        Schedule ID: SCH4302
+//        Section ID: CS462-SEC549
+//        Schedule ID: SCH6763
+//        Section ID: CS462-SEC098
+//        Schedule ID: SCH0699
+//        Section ID: CS462-SEC420
+//        Schedule ID: SCH4814
+//        Section ID: CS462-SEC320
+//        Schedule ID: SCH7614
+//        Section ID: CS462-SEC812
+//        Schedule ID: SCH6316
+//        Course: Course PHYS - CSUF | CourseID: PHYS477
+//        Section ID: PHYS477-SEC497
+//        Schedule ID: SCH4818
+//        Section ID: PHYS477-SEC394
+//        Schedule ID: SCH4114
+//        Section ID: PHYS477-SEC051
+//        Schedule ID: SCH0213
+//        Section ID: PHYS477-SEC243
+//        Schedule ID: SCH7373
+//        Section ID: PHYS477-SEC298
+//        Schedule ID: SCH4899
+//        Section ID: PHYS477-SEC798
+//        Schedule ID: SCH4455
+//        Course: Course BIO - CSUF | CourseID: BIO416
+//        Section ID: BIO416-SEC237
+//        Schedule ID: SCH1328
+//        Section ID: BIO416-SEC760
+//        Schedule ID: SCH9214
+//        Section ID: BIO416-SEC485
+//        Schedule ID: SCH5506
+//        Section ID: BIO416-SEC587
+//        Schedule ID: SCH4441
+//        Section ID: BIO416-SEC781
+//        Schedule ID: SCH2889
+//        Section ID: BIO416-SEC657
+//        Schedule ID: SCH0741
