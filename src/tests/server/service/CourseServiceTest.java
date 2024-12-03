@@ -1,14 +1,20 @@
 package tests.server.service;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import server.dataManagers.CoursesDataManager;
 import server.dataManagers.UserDataManager;
 import server.service.CourseService;
 import server.service.UserService;
 import shared.enums.Institutions;
+import shared.models.Course;
 import shared.models.CourseSection;
+import shared.models.Faculty;
 import shared.models.Student;
 import shared.models.User;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.sql.ClientInfoStatus;
@@ -76,6 +82,39 @@ public class CourseServiceTest {
             System.out.println(s.getSectionID());
             System.out.println(s.getClassRoster().getEnrollmentCount());
         }
+    }
+    @Test
+    public void testGetSectionByID(){
+        CourseSection cs = new CourseSection(Institutions.CSUEB, "101");
+        CourseSection serviceID = service.getSectionById(Institutions.CSUEB, cs.getSectionID());
+
+        assertEquals(cs.getSectionID(), serviceID.getSectionID());
+    }
+    @Test
+    public void testGetCourseByID(){
+    	Course course = new Course(null, null, null, Institutions.CSUEB, null, null, null, null);
+    	Course result = service.getCourseByCourseID(Institutions.CSUEB, course.getCourseID());
+    	assertEquals(course.getCourseID(), result.getCourseID());
+    }
+    
+    @Test
+    public void testAddAndRemove() {
+    	Course course = new Course(null, null, null, Institutions.CSUEB, null, null, null, null);
+
+        boolean addResult = service.addOrUpdateCourse(Institutions.CSUEB, course);
+        assertTrue(addResult);
+
+        boolean removeResult = service.removeCourse(Institutions.CSUEB, course.getCourseID());
+        assertTrue(removeResult);
+    }
+    
+    @Ignore
+    public void testAssignAndUnAssign() { // Idea of how to implement don't know how to set faculty here
+    	boolean assignCourseResult = service.assignCourse(Institutions.CSUEB, faculty, section);
+    	assertTrue(assignCourseResult);
+  
+    	boolean unassignCourseResult = service.unassignCourse(Institutions.CSUEB, faculty, section);
+    	assertTrue(unassignCourseResult);
     }
 }
 //        Courses for Institution: CSUEB
