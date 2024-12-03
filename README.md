@@ -1,11 +1,8 @@
 # CS401ClassEnrollmentSystem
-##### 1.
-all the file path of dbs, images goes to clientConfig and serverManager class which access to whole client or server 
-##### 2.
-if you got casting problem check corresponding datamanager file, it returns a copy of the instance, may have problem there
-##### 3.
-username and password is in userdatamanagerTest file
-##### 4.
+1. **all the file path of dbs, images goes to clientConfig and serverManager class which access to whole client or server**
+2. **if you got casting problem check corresponding datamanager file, it returns a copy of the instance, may have problem there**
+3. **username and password is in userdatamanagerTest file, username: student/faculty/admin password: password1**
+4.
 student -> enroll course -> send enroll course request
 student -> drop course -> send drop course request
 student -> view enrolled courses -> student.enrolledcourse list get info
@@ -15,7 +12,6 @@ student -> view grade -> student.finishedcoursesGrade list get grade info
 faculty -> view assigned courses -> faculty.assignedcoures list get info
 faculty -> view class roster -> faculty.assignedcourse list get info
 faculty -> view waitlist -> faculty.assignedcourse list -> term + scheduleID list -> getscheduleList;
-
 In a course enrollment system dashboard, students, faculty, and administrators have distinct roles and permissions based on their responsibilities. Here's a breakdown of typical functionalities available to each user type:
 
 ---
@@ -41,9 +37,8 @@ Students primarily interact with the system to manage their courses and academic
     - Check waitlist status and position.
     - Receive notifications when a seat becomes available.
 
-6. **Administrative Features**
+5**Administrative Features**
     - Update personal details (e.g., address, phone number).
-    - Receive announcements and notifications from the university.
 ---
 
 ### **For Faculty**
@@ -64,17 +59,6 @@ Faculty members use the system to manage the courses they teach and interact wit
 
 4. **Schedule and Availability**
     - View teaching schedule.
-    - Manage office hours and meeting availability.
-
-
-** dont do for now**
-5. **Notifications and Feedback**
-    - Send announcements to students enrolled in their courses.
-    - Receive student feedback or course evaluations.
-
-6. **Advisory Roles**
-    - Advise assigned students (if acting as an advisor).
-    - Approve or reject course overrides or special enrollment requests.
 
 ---
 
@@ -101,11 +85,7 @@ Administrators manage the overall functioning of the enrollment system and maint
     - Analyze trends in enrollment data (e.g., course popularity).
     - Monitor system usage and detect issues.
 
-5. **Notifications and Announcements**
-    - Broadcast messages to specific user groups (e.g., students, faculty).
-    - Post system updates, academic calendars, or policy changes.
-
-6. **System Configuration**
+5**System Configuration**
     - Update grading policies, and academic regulations.
     - Monitor and resolve system errors or performance issues.
 
@@ -121,7 +101,6 @@ Administrators manage the overall functioning of the enrollment system and maint
 | View Grades                 | ✅           | ✅           | ✅                 |
 | Course Management           | ❌           | ✅           | ✅                 |
 | Manage User Accounts        | ❌           | ❌           | ✅                 |
-| Notifications/Announcements | ✅           | ✅           | ✅                 |
 | Generate Reports            | ❌           | ❌           | ✅                 |
 | System Configuration        | ❌           | ❌           | ✅                 |
 
