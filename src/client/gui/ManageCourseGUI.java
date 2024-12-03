@@ -5,12 +5,28 @@ import client.gui.dashboard.BaseDashboardGUI;
 import client.gui.dashboard.StudentDashboardGUI;
 import client.utils.ImageUtils;
 import client.handlers.*;
+import shared.enums.AcademicProgramType;
+import shared.enums.Days;
+import shared.enums.GradingType;
+import shared.enums.InstructionModeType;
+import shared.enums.LevelType;
+import shared.enums.Term;
+import shared.enums.Time;
 import shared.models.*;
 import server.service.*;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 public class ManageCourseGUI {
     private JPanel manageCoursesPanel; // Main panel for this GUI
@@ -24,10 +40,14 @@ public class ManageCourseGUI {
     private JPanel topRowPanel; // Top row of the options panel
     private final StudentDashboardGUI parentDashboard;
     private Student student;
+    private Course[] courses;
+    private String[] courseNames;
+    
 
     public ManageCourseGUI(StudentDashboardGUI parentDashboard) {
         this.parentDashboard = parentDashboard;
         this.student = (Student) parentDashboard.getUser();
+        createTestClasses();
         initializeManageCoursesPanel();
     }
 
@@ -143,24 +163,107 @@ public class ManageCourseGUI {
         }
     }
 
-    private void handleSearchCourses() {
+    private void handleSearchCourses() 
+    {
         //JOptionPane.showMessageDialog(manageCoursesPanel, "Search Courses clicked!");
-        SearchCourseHandler searchCourseHandler = new SearchCourseHandler();
-        searchCourseHandler.handleSearchCourse(student, manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
+        //SearchCourseHandler searchCourseHandler = new SearchCourseHandler();
+        //searchCourseHandler.handleSearchCourse(student, manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
+    	JList courseList = new JList(courseNames);
+    	courseList.addListSelectionListener(new ListSelectionListener()
+		{
+			public void valueChanged(ListSelectionEvent event)
+			{
+				JOptionPane.showMessageDialog(manageCoursesPanel, courses[courseList.getSelectedIndex()].toString());
+			}
+		});
+    	JOptionPane.showMessageDialog(manageCoursesPanel, courseList);
     }
 
-    private void handleEnroll() {
-        //JOptionPane.showMessageDialog(manageCoursesPanel, "Enroll Courses clicked!");
-        EnrollCourseHandler enrollCourseHandler = new EnrollCourseHandler();
+    private void handleEnroll() 
+    {
+        JOptionPane.showMessageDialog(manageCoursesPanel, "Enroll Courses clicked!");
+        //EnrollCourseHandler enrollCourseHandler = new EnrollCourseHandler();
         //public void handleStudentEnroll(Student student, Course course, String sectionId, JPanel parentGUI, final BaseDashboardGUI parentDashboard, String sessionToken
         //Dont know where to get Course yet.
-        enrollCourseHandler.handleStudentEnroll(student, null, null, manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
+        /*JList courseList = new JList(courseNames);
+      
+        courseList.addListSelectionListener(new ListSelectionListener()
+		{
+        	String[] courseSections = new String[courses[courseList.getSelectedIndex()].getSections().size()];
+        	JList sections = new JList(courseSections);
+			public void valueChanged(ListSelectionEvent event)
+			{
+				JOptionPane.showMessageDialog(manageCoursesPanel, sections);
+				sections.addListSelectionListener(new ListSelectionListener()
+				{
+					public void valueChanged(ListSelectionEvent event)
+					{
+						//String sectionId = courses[courseList.getSelectedIndex()].getSections()[sections.getSelectedIndex()];
+						enrollCourseHandler.handleStudentEnroll(student, courses[courseList.getSelectedIndex()], "123", manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
+					}
+				});
+			}
+		});
+    	JOptionPane.showMessageDialog(manageCoursesPanel, courseList); */
+        
     }
 
-    private void handleDrop() {
+    private void handleDrop() 
+    {
         //JOptionPane.showMessageDialog(manageCoursesPanel, "Drop Courses clicked!");
     	DropCourseHandler dropCourseHandler = new DropCourseHandler();
     	dropCourseHandler.handleDropCourse(student, null, null, manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
+    }
+    
+    public void createTestClasses()
+    {
+    	String[] departments = {"CS", "MATH", "PHYS", "BIO", "CHEM"};
+    	courses = new Course[15];
+    	courseNames = new String[15];
+    	for (int i = 0; i < 15; i++) 
+        { // 5 departments per institution
+            String department = departments[i % 5];
+
+            // Create 1 course per department
+            Course course = new Course(student.getInstitutionID(), department);
+            course.setName("Course " + department + " - " + student.getInstitutionID());
+            course.setDescription("Description for " + department + " course at " + student.getInstitutionID());
+            course.setLevel(LevelType.Lower);
+            course.setAcademicProgram(AcademicProgramType.UGM);
+            course.setUnits(3.0f + i);
+            course.setPrerequisites(Arrays.asList("PREREQ" + i));
+            courses[i] = course;
+            courseNames[i] = course.getCourseID();
+            // Create 2 sections per course
+            List<CourseSection> sections = new ArrayList<>();
+            for (int j = 1; j <= 2; j++) {
+                CourseSection section = new CourseSection(student.getInstitutionID(), course.getCourseID());
+                section.setEnrollmentLimit(30 + j * 5);
+                section.setGrading(GradingType.Letter);
+                section.setInstructionMode(InstructionModeType.InPerson);
+                section.setNotes("No prerequisites for this course.");
+
+                // Create a schedule for the section
+                Schedule schedule = new Schedule(student.getInstitutionID());
+                schedule.setCourseID(course.getCourseID());
+                schedule.setSectionID(section.getSectionID());
+                schedule.setTerm(Term.SPRING_SEMESTER);
+                schedule.setDays(new Days[]{Days.TUESDAY, Days.THURSDAY});
+                Calendar calendar = Calendar.getInstance();
+                // Set the start date
+                calendar.set(2024, Calendar.JANUARY, 15); // Jan 15, 2024
+                schedule.setStartDate(calendar.getTime());
+
+                calendar.set(2024, Calendar.MAY, 22); // May 22, 2024
+                schedule.setEndDate(calendar.getTime());
+                schedule.setStartTime(Time.TIME_1100);              // 11:00 AM
+                schedule.setEndTime(Time.TIME_1230);               // 12:30 PM
+
+                section.setScheduleID(schedule.getScheduleID());
+                sections.add(section);
+            }
+            course.setSections(sections);
+        } 
     }
 }
 

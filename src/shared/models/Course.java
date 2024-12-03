@@ -146,16 +146,16 @@ public class Course implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Course{" +
-				"courseID='" + courseID + '\'' +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
-				", institutionID=" + institutionID +
-				", level=" + level +
-				", academicProgram=" + academicProgram +
-				", units=" + units +
-				", department=" + department +
-				", prerequisites=" + prerequisites +
+		return "Course{ \n" +
+				"courseID = " + courseID + "\n" +
+				"name='" + name + '\'' +
+				"description =" + description + "\n" +
+				"institutionID =" + institutionID + "\n" +
+				"level = " + level + "\n" +
+				"academicProgram=" + academicProgram + "\n" +
+				"units = " + units + "\n" +
+				"department = " + department + "\n" +
+				"prerequisites = " + prerequisites + "\n" +
 				'}';
 	}
 }

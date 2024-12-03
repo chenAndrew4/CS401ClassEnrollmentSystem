@@ -23,7 +23,7 @@ public class GetAssignedCoursesHandler {
             public Void onSuccess(GetAssignedCoursesResponse getAssignedCoursesResponse) {
                 List<CourseSection> assignedCourses = getAssignedCoursesResponse.getAssignedCourses();
                 SwingUtilities.invokeLater(() -> {
-                    ViewAssignedCoursesGUI viewAssignedCoursesGUI = new ViewAssignedCoursesGUI(parentDashboard , assignedCourses);
+                    ViewAssignedCoursesGUI viewAssignedCoursesGUI = new ViewAssignedCoursesGUI(parentDashboard , assignedCourses, currentUser);
                     parentDashboard.replaceOptionPanel(viewAssignedCoursesGUI.getPanel());
                 });
                 return null;

@@ -4,6 +4,9 @@ import client.ClientConfig;
 import client.gui.dashboard.FacultyDashboardGUI;
 import client.handlers.GetAssignedCoursesHandler;
 import client.utils.ImageUtils;
+import server.service.CourseService;
+import shared.models.Course;
+import shared.models.CourseSection;
 import shared.models.Faculty;
 
 import java.awt.BorderLayout;
@@ -74,6 +77,16 @@ public class ManageAssignedCoursesGUI {
     }
     
     private void handleCourses() {
+        CourseSection section; // Just trying to populate assigned courses
+        CourseService service;
+        service = CourseService.getInstance();
+        CourseSection course1 = new CourseSection(currentUser.getInstitutionID(), "CS101");
+        CourseSection course2 = new CourseSection(currentUser.getInstitutionID(), "CS102");
+        CourseSection course3 = new CourseSection(currentUser.getInstitutionID(), "CS103");
+        service.assignCourse(currentUser.getInstitutionID(), currentUser, course1);
+        service.assignCourse(currentUser.getInstitutionID(), currentUser, course2);
+        service.assignCourse(currentUser.getInstitutionID(), currentUser, course3);
+        
         GetAssignedCoursesHandler handler = new GetAssignedCoursesHandler();
         handler.handleGetAssignedCourses(currentUser, currentUser.getInstitutionID(), manageAssignedCoursePanel, this);
     }
