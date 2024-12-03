@@ -34,7 +34,7 @@ public class Student extends User {
     public Student(String username, String firstName, String lastName, String password,
                    Institutions institutionID, AccountType accountType, Department department,
                    GenderIdentity genderIdentity, String phone, String address, Grade grade) {
-    	super(username, firstName, lastName, password, institutionID, department, AccountType.Administrator, genderIdentity, phone, address);
+    	super(username, firstName, lastName, password, institutionID, department, AccountType.Student, genderIdentity, phone, address);
         this.grade = grade;
         this.enrolledCourses = new ArrayList<>();
         this.waitlistedCourses = new ArrayList<>();
