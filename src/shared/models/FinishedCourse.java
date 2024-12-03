@@ -6,10 +6,10 @@ import shared.enums.GradingType;
 import java.util.Objects;
 
 public class FinishedCourse {
-    String courseID;
-    String sectionID;
-    String facultyID;
-    Grade grade;
+    private String courseID;
+    private String sectionID;
+    private String facultyID;
+    private Grade grade;
 
     public FinishedCourse() {
         this.courseID = null;
