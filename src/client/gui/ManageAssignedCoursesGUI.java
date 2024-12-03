@@ -38,7 +38,7 @@ public class ManageAssignedCoursesGUI {
 
         optionsPanel = new JPanel(new GridLayout(0, 2, GUIConfig.MARGIN, GUIConfig.MARGIN)); // Increase spacing
         optionsPanel.setOpaque(false);
-        parentDashboard.addOptionToPanel(optionsPanel, "Course", new ImageIcon(ClientConfig.ASSIGNED_COURSES), this::handleCourses);
+        parentDashboard.addOptionToPanel(optionsPanel, "Courses", new ImageIcon(ClientConfig.ASSIGNED_COURSES), this::handleCourses);
         parentDashboard.addOptionToPanel(optionsPanel, "Syllabus", new ImageIcon(ClientConfig.ASSIGNED_SYLLABUS), this::handleSyllabus);
         
         initializeTopRow();

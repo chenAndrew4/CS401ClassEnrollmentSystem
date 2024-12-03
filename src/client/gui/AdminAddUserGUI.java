@@ -1,16 +1,16 @@
 package client.gui;
 
 import client.ClientConfig;
-import client.gui.dashboard.AdminDashboardGUI;
-import client.gui.dashboard.BaseDashboardGUI;
-import client.gui.dashboard.StudentDashboardGUI;
 import client.handlers.AddUserHandler;
 import client.utils.ImageUtils;
 import shared.enums.AccountType;
 import shared.enums.Department;
 import shared.enums.GenderIdentity;
+import shared.enums.Grade;
 import shared.enums.Institutions;
 import shared.models.Administrator;
+import shared.models.Faculty;
+import shared.models.Student;
 import shared.models.User;
 
 import java.awt.BorderLayout;
@@ -18,8 +18,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -46,8 +44,9 @@ public class AdminAddUserGUI {
 
     public AdminAddUserGUI(Administrator user, AdminManageUsersGUI adminAddUserGUI) {
         this.parentDashboard = adminAddUserGUI;
-        initializeManageUsersPanel();
         this.adminUser = user;
+        
+        initializeManageUsersPanel();
     }
     
     private void initializeManageUsersPanel() {
@@ -56,6 +55,8 @@ public class AdminAddUserGUI {
 		firstName = new JTextField();
 		lastName = new JTextField();
     	institutionID = new JComboBox<Institutions>(Institutions.values());
+    	institutionID.setSelectedItem(adminUser.getInstitutionID());
+    	institutionID.setEnabled(false);
 		address = new JTextField();
 		phone = new JTextField();
 		department = new JComboBox<Department>(Department.values());
@@ -130,13 +131,24 @@ public class AdminAddUserGUI {
     }
     
     private void addUser() {
-    	User newUser = new User(username.getText(), firstName.getText(), lastName.getText(), password.getText(),
-    			(Institutions)institutionID.getSelectedItem(), (Department) department.getSelectedItem(),
-    			(AccountType)accountType.getSelectedItem(), (GenderIdentity)genderIdentity.getSelectedItem(),
-    			phone.getText(), address.getText());
-    			
     	AddUserHandler addUserHandler = new AddUserHandler();
-    	addUserHandler.handleAddUser(adminUser, newUser, addUsersPanel);
+    	
+    	if ((AccountType) accountType.getSelectedItem() == AccountType.Administrator) {
+	    	Administrator newAdmin = new Administrator(username.getText(), firstName.getText(), lastName.getText(), password.getText(),
+	    			(Institutions)institutionID.getSelectedItem(), (Department) department.getSelectedItem(),
+	    			(GenderIdentity)genderIdentity.getSelectedItem(), phone.getText(), address.getText());
+	    	addUserHandler.handleAddUser(adminUser, newAdmin, addUsersPanel);
+    	} else if((AccountType) accountType.getSelectedItem() == AccountType.Faculty) {
+	    	Faculty newFaculty = new Faculty(username.getText(), firstName.getText(), lastName.getText(), password.getText(),
+	    			(Institutions)institutionID.getSelectedItem(), (Department) department.getSelectedItem(),
+	    			(GenderIdentity)genderIdentity.getSelectedItem(), phone.getText(), address.getText());
+	    	addUserHandler.handleAddUser(adminUser, newFaculty, addUsersPanel);
+    	} else if((AccountType) accountType.getSelectedItem() == AccountType.Student) {
+	    	Student newStudent = new Student(username.getText(), firstName.getText(), lastName.getText(), password.getText(),
+	    			(Institutions)institutionID.getSelectedItem(), (AccountType) accountType.getSelectedItem(), (Department) department.getSelectedItem(),
+	    			(GenderIdentity)genderIdentity.getSelectedItem(), phone.getText(), address.getText(), Grade.NO_CREDIT);
+	    	addUserHandler.handleAddUser(adminUser, newStudent, addUsersPanel);
+    	}    	    	
     }
     
 	public JPanel getPanel() {

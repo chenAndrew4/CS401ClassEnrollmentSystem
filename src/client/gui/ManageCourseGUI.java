@@ -1,8 +1,12 @@
 package client.gui;
 
 import client.ClientConfig;
+import client.gui.dashboard.BaseDashboardGUI;
 import client.gui.dashboard.StudentDashboardGUI;
 import client.utils.ImageUtils;
+import client.handlers.*;
+import shared.models.*;
+import server.service.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,9 +23,11 @@ public class ManageCourseGUI {
     private int currentYear; // Current year
     private JPanel topRowPanel; // Top row of the options panel
     private final StudentDashboardGUI parentDashboard;
+    private Student student;
 
     public ManageCourseGUI(StudentDashboardGUI parentDashboard) {
         this.parentDashboard = parentDashboard;
+        this.student = (Student) parentDashboard.getUser();
         initializeManageCoursesPanel();
     }
 
@@ -138,15 +144,23 @@ public class ManageCourseGUI {
     }
 
     private void handleSearchCourses() {
-        JOptionPane.showMessageDialog(manageCoursesPanel, "Search Courses clicked!");
+        //JOptionPane.showMessageDialog(manageCoursesPanel, "Search Courses clicked!");
+        SearchCourseHandler searchCourseHandler = new SearchCourseHandler();
+        searchCourseHandler.handleSearchCourse(student, manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
     }
 
     private void handleEnroll() {
-        JOptionPane.showMessageDialog(manageCoursesPanel, "Enroll Courses clicked!");
+        //JOptionPane.showMessageDialog(manageCoursesPanel, "Enroll Courses clicked!");
+        EnrollCourseHandler enrollCourseHandler = new EnrollCourseHandler();
+        //public void handleStudentEnroll(Student student, Course course, String sectionId, JPanel parentGUI, final BaseDashboardGUI parentDashboard, String sessionToken
+        //Dont know where to get Course yet.
+        enrollCourseHandler.handleStudentEnroll(student, null, null, manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
     }
 
     private void handleDrop() {
-        JOptionPane.showMessageDialog(manageCoursesPanel, "Drop Courses clicked!");
+        //JOptionPane.showMessageDialog(manageCoursesPanel, "Drop Courses clicked!");
+    	DropCourseHandler dropCourseHandler = new DropCourseHandler();
+    	dropCourseHandler.handleDropCourse(student, null, null, manageCoursesPanel, parentDashboard, SessionService.getInstance().createSession(student.getUserId()));
     }
 }
 

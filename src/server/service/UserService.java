@@ -1,6 +1,7 @@
 package server.service;
 
 import server.dataManagers.UserDataManager;
+import server.gui.ServerGUI;
 import server.utils.Log;
 import shared.enums.Institutions;
 import shared.models.User;
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class UserService implements Serializable{
+	private static Log log;
 	private static UserService instance;
 	private UserDataManager userDataManager;
 
@@ -21,6 +23,7 @@ public class UserService implements Serializable{
 		if (instance == null) {
 			instance = new UserService();
 		}
+		log = Log.getInstance(ServerGUI.logTextArea);
 		return instance;
 	}
 
@@ -29,7 +32,10 @@ public class UserService implements Serializable{
 	}
 	
 	public boolean doesUsernameExistByInstitution(Institutions institutionID, String username) {
-		return userDataManager.getUserByInstitutionAndUserName(institutionID, username).getUsername().equals(username);
+		User user = userDataManager.getUserByInstitutionAndUserName(institutionID, username);
+		if (user == null)
+			return false;
+		return true;
 	}
 
 	public boolean doesUsernameAndPasswordEqualByInstitution(Institutions institutionID, String username, String password) {

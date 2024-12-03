@@ -6,6 +6,7 @@ import shared.models.CourseSection;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 public class ViewAssignedCoursesGUI {
     private ManageAssignedCoursesGUI parentDashboard;
@@ -27,12 +28,22 @@ public class ViewAssignedCoursesGUI {
         assignedCoursesPanel = new JPanel(new BorderLayout());
         assignedCoursesPanel.setOpaque(false);
 
-        coursesPanel = new JPanel(new BorderLayout());
+        coursesPanel = new JPanel();
+        coursesPanel.setLayout(new BoxLayout(coursesPanel, BoxLayout.Y_AXIS));
         coursesPanel.setOpaque(false);
 
-        for (CourseSection courseSection : assignedCourses){
-            coursesPanel.add(new JLabel(courseSection.getSectionID()));
+        List<String> testList = new ArrayList<>(); // Tests Layout of GUI
+        testList.add("Math 101");
+        testList.add("CS 321");
+        testList.add("CS 101");
+
+        for (String course : testList) {
+            coursesPanel.add(new JLabel(course));
         }
+
+ //       for (CourseSection courseSection : assignedCourses){ // No clue how to populate it currently
+ //           coursesPanel.add(new JLabel(courseSection.getSectionID()));
+ //       }
 
         initializeTopRow();
 

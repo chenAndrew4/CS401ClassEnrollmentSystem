@@ -85,6 +85,13 @@ public class WaitlistService {
        cur.addToWaitlist(student);
        return waitlistDataManager.addOrUpdateWaitlist(institutionID, sectionID, cur);
     }
+    
+    public boolean removeFromWaitlist(Institutions institutionID, Student student, String sectionID)
+    {
+    	WaitList cur = waitlistDataManager.getWaitlist(institutionID, sectionID);
+        cur.removeFromWaitlist(student);
+        return waitlistDataManager.addOrUpdateWaitlist(institutionID, sectionID, cur);
+    }
 
     public int getWaitlistPositions(Institutions institutionID, String sectionID, Student student) {
         CourseSection section = CoursesDataManager.getInstance().getSectionById(institutionID, sectionID);

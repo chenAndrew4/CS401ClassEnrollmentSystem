@@ -89,9 +89,14 @@ public class UserDataManager {
     public synchronized User getUserByInstitutionAndUserName(Institutions institutionID, String username) {
         isImported(institutionID);
         for (User u : userMap.get(institutionID).values()) {
-            if (username.equals(u.getUsername())) {
-                return returnUser(institutionID, u);
-            }
+        	if(u.getUsername().isEmpty()) {
+        		log.warn("We have a user with a null username!");
+        	} else {
+                if (username.equals(u.getUsername())) {
+                    return returnUser(institutionID, u);
+                }
+        	}
+
         }
         return null; // Retrieve by userId
     }
