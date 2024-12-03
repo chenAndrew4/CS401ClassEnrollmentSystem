@@ -25,7 +25,7 @@ public class CourseSection implements Serializable {
         this.sectionID = other.sectionID;
         this.enrollmentLimit = other.enrollmentLimit;
         this.waitlistID = other.waitlistID; // Assuming WaitList has a copy constructor
-        this.classRoster = other.classRoster != null ? new ClassRoster(other.classRoster) : null;
+        this.classRoster = other.classRoster != null ? new ClassRoster(other.classRoster) : new ClassRoster(sectionID);
         this.grading = other.grading;
         this.instructionMode = other.instructionMode;
         this.scheduleID = other.scheduleID;

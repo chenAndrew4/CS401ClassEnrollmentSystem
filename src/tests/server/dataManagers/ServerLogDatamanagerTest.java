@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,17 +59,17 @@ class ServerLogDatamanagerTest {//Date methods have not been done, maybe will do
 		assertTrue(log.get(0).contains(entry));
 	}
 	
-	@Ignore
-	void testGetLogsByDate() { //Don't know how to work with date
-	}
-	
-	@Ignore
-	void testGetLogsByInstitutionIDAndDate() {
-	}
-	
-	@Ignore
-	void testGetLogsByTimeRange() {
-	}
+//	@Ignore
+//	void testGetLogsByDate() { //Don't know how to work with date
+//	}
+//
+//	@Ignore
+//	void testGetLogsByInstitutionIDAndDate() {
+//	}
+//
+//	@Ignore
+//	void testGetLogsByTimeRange() {
+//	}
 	
 	@SuppressWarnings("unchecked")
 	@Test

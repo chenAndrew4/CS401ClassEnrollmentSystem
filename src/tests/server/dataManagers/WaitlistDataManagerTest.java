@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,23 +51,23 @@ class WaitlistDataManagerTest {
 
 	}
 	
-	@Ignore
-	void testSaveAndLoadAllWaitLists() {
-		Institutions institution = Institutions.CSUEB;
-		String sectionID = "7837";
-		WaitList waitlist = new WaitList(institution, sectionID, 30);
-
-		String waitlistId = waitlist.getWaitlistID();
-        
-		waitlistDataManager.addOrUpdateWaitlist(institution, sectionID, waitlist);
-		waitlistDataManager.saveAllWaitlists();        
-		waitlistDataManager.removeAllWaitlists(Institutions.CSUEB);		
-		waitlistDataManager.loadAllWaitlists();
-
-		WaitList get = waitlistDataManager.getWaitlistByWaitlistID(waitlistId);
-        
-		assertEquals(sectionID, get.getSectionID());
-	}
+//	@Ignore
+//	void testSaveAndLoadAllWaitLists() {
+//		Institutions institution = Institutions.CSUEB;
+//		String sectionID = "7837";
+//		WaitList waitlist = new WaitList(institution, sectionID, 30);
+//
+//		String waitlistId = waitlist.getWaitlistID();
+//
+//		waitlistDataManager.addOrUpdateWaitlist(institution, sectionID, waitlist);
+//		waitlistDataManager.saveAllWaitlists();
+//		waitlistDataManager.removeAllWaitlists(Institutions.CSUEB);
+//		waitlistDataManager.loadAllWaitlists();
+//
+//		WaitList get = waitlistDataManager.getWaitlistByWaitlistID(waitlistId);
+//
+//		assertEquals(sectionID, get.getSectionID());
+//	}
 	
 	@Test
 	void testGetAllWaitLists() {
