@@ -12,17 +12,18 @@ import shared.enums.MessageStatus;
 import shared.enums.MessageType;
 import shared.models.Course;
 import shared.models.Student;
+import shared.models.WaitList;
 import shared.models.requests.DropWaitlistRequest;
 import shared.models.responses.DropWaitlistResponse;
 
 public class DropWaitlistHandler {
-	public void handleStudentDropWaitlist(Student student, Course course, String sectionId, JPanel parentGUI, final BaseDashboardGUI parentDashboard, String sessionToken) 
+	public void handleStudentDropWaitlist(Student student, WaitList waitlist, String sectionId, JPanel parentGUI, final BaseDashboardGUI parentDashboard, String sessionToken) 
 	{
-		DropWaitlistRequest dropWaitlistRequest = new DropWaitlistRequest(MessageType.DROP_WAITLIST, null, sessionToken, course.getCourseID(), sectionId, student);
+		DropWaitlistRequest dropWaitlistRequest = new DropWaitlistRequest(MessageType.DROP_WAITLIST, null, sessionToken, waitlist.getWaitlistID(), sectionId, student);
 		Client.getInstance().sendRequest(dropWaitlistRequest, new ResponseCallback<DropWaitlistResponse, Void>() {
             @Override
             public Void onSuccess(DropWaitlistResponse dropWaitlistResponse) {
-            	JOptionPane.showMessageDialog(parentGUI, "Student has successfully been dropped from " + course.getCourseID() + " Section: " + sectionId, "Drop Waitlist", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ClientConfig.SUCCESS_ICON));
+            	JOptionPane.showMessageDialog(parentGUI, "Student has successfully been dropped from " + waitlist.getWaitlistID() + " Section: " + sectionId, "Drop Waitlist", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ClientConfig.SUCCESS_ICON));
                 return null;
             }
 
