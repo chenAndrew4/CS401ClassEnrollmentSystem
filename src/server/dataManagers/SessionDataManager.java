@@ -65,7 +65,7 @@ public class SessionDataManager {
                 sessionData.clear();
                 sessionData.putAll((Map<String, String>) loadedData);
                 log.println("SessionDataManager: Session data loaded successfully.");
-                toLog();
+                //toLog();
             } else {
                 throw new IOException("Invalid data format in session file.");
             }
