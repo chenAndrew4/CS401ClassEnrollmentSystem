@@ -2,11 +2,12 @@ package client.gui;
 
 import client.ClientConfig;
 import client.utils.ImageUtils;
+import server.service.CourseService;
 import shared.models.CourseSection;
+import shared.models.Faculty;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 public class ViewAssignedCoursesGUI {
     private ManageAssignedCoursesGUI parentDashboard;
@@ -17,10 +18,12 @@ public class ViewAssignedCoursesGUI {
     private JTextField enrollmentLimit;
     private JPanel assignedCoursesPanel;
     private JPanel coursesPanel;
+    Faculty currentUser;
 
-    public ViewAssignedCoursesGUI(ManageAssignedCoursesGUI parentDashboard, List<CourseSection> assignedCourses) {
+    public ViewAssignedCoursesGUI(ManageAssignedCoursesGUI parentDashboard, List<CourseSection> assignedCourses, Faculty currentUser) {
         this.parentDashboard = parentDashboard;
         this.assignedCourses = assignedCourses;
+        this.currentUser = currentUser;
         initializeManageAssignedCoursesPanel();
     }
 
@@ -32,18 +35,18 @@ public class ViewAssignedCoursesGUI {
         coursesPanel.setLayout(new BoxLayout(coursesPanel, BoxLayout.Y_AXIS));
         coursesPanel.setOpaque(false);
 
-        List<String> testList = new ArrayList<>(); // Tests Layout of GUI
-        testList.add("Math 101");
-        testList.add("CS 321");
-        testList.add("CS 101");
+ //       List<String> testList = new ArrayList<>(); // Tests Layout of GUI
+ //       testList.add("Math 101");
+  //      testList.add("CS 321");
+   //     testList.add("CS 101");
 
-        for (String course : testList) {
-            coursesPanel.add(new JLabel(course));
-        }
-
- //       for (CourseSection courseSection : assignedCourses){ // No clue how to populate it currently
- //           coursesPanel.add(new JLabel(courseSection.getSectionID()));
+ //       for (String course : testList) {
+  //          coursesPanel.add(new JLabel(course));
  //       }
+
+        for (CourseSection courseSection : assignedCourses){
+            coursesPanel.add(new JLabel(courseSection.toString()));
+        }
 
         initializeTopRow();
 

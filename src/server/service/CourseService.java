@@ -235,7 +235,7 @@ public class CourseService {
     public boolean assignCourse(Institutions institutionID,  Faculty faculty, CourseSection section) {
         List<CourseSection> assignedCourses = faculty.getAssignedCourses();
         if (!assignedCourses.contains(section)) {
-            ScheduleService.getInstance().getSchedule(institutionID, section.getScheduleID()).setFacultyID(faculty.getUserId());
+            ScheduleService.getInstance().getSchedule(institutionID, section.getScheduleID());
             assignedCourses.add(section);
             return true;
         }
